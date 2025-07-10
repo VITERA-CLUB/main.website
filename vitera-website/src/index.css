@@ -1,0 +1,95 @@
+:root {
+  font-family: 'Poppins', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Club theme colors */
+  --primary: #ff4500; /* Orange-red */
+  --secondary: #ff8c00; /* Dark orange */
+  --dark: #1a1a1a; /* Matte black - updated */
+  --dark-accent: #232323; /* Slightly lighter matte black - updated */
+  --text: #f5f5f5; /* Off-white for text */
+  --text-secondary: #aaaaaa; /* Gray for secondary text */
+
+  color-scheme: dark;
+  color: var(--text);
+  background-color: var(--dark);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: var(--secondary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: var(--primary);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button {
+  border-radius: 4px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--dark-accent);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+button:hover {
+  background-color: var(--primary);
+  color: white;
+}
+button:focus,
+button:focus-visible {
+  outline: 2px solid var(--secondary);
+}
+
+/* Utility classes */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
