@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import MessageSection from './MessageSection'
 import Footer from './components/Footer'
+import EventsSection from './components/Event'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -117,7 +118,7 @@ function App() {
       )}
 
       {/* Main Content */}
-      <div className={`main-content ${!isLoading ? 'show' : ''}`}>
+      <div className={`body main-content ${!isLoading ? 'show' : ''}`}>
         {/* Navigation Bar */}
         <nav className="navbar">
           <div className="container navbar-container">
@@ -194,53 +195,7 @@ function App() {
             </div>
           </div>
         </section>
-
-        {/* Gallery Section */}
-        <section className="gallery-section">
-          <div className="container">
-            <h2 className="section-title">Our Gallery</h2>
-            
-            {/* Dynamic Desktop Collage Gallery */}
-            <div className="gallery-grid desktop-gallery">
-              {galleryImages.map((img, idx) => (
-                <div className={getCollageClass(idx)} key={idx}>
-                  <img src={img.src} alt={img.alt} />
-                </div>
-              ))}
-            </div>
-            
-            {/* Slider: 3 images at a time on desktop, 1 image at a time on mobile */}
-            <div className="mobile-gallery-container">
-              <div className="gallery-nav-buttons">
-                <button className="gallery-nav-btn prev-btn" onClick={prevSlide}>
-                  <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
-                </button>
-                <button className="gallery-nav-btn next-btn" onClick={nextSlide}>
-                  <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </button>
-              </div>
-              <div className="mobile-gallery-slider" ref={sliderRef}>
-                {galleryImages.map((img, idx) => (
-                  <div
-                    className="mobile-gallery-slide"
-                    key={idx}
-                    style={{
-                      minWidth: visibleSlides === 1 ? "100%" : "calc(100% / 3)"
-                    }}
-                  >
-                    <img src={img.src} alt={img.alt} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        
+          <EventsSection/>
         {/* Message Section */}
         <MessageSection />
 
