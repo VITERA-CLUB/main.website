@@ -1,0 +1,127 @@
+.feedback-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  background: url('../assets/Grpimg.jpg') no-repeat center center/cover;
+  z-index: 1;
+}
+
+/* Optional: add a light overlay */
+.feedback-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(37, 37, 37, 0.9); /* lightens the image */
+  z-index: 2;
+}
+
+/* Your inner content should sit above the overlay */
+.feedback-page > * {
+  position: relative;
+  z-index: 3;
+}
+
+
+/* Background Logo */
+.background-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 500px;
+  background: url('../assets/vitera_main.png') no-repeat center;
+  background-size: contain;
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+/* Feedback Form Container */
+.feedback-container {
+  position: relative;
+  z-index: 2;
+  background: #1c1c1c;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* Heading */
+.feedback-container h2 {
+  color: #ff5c00;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.feedback-container p {
+  color: #bbb;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.feedback-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.feedback-container label {
+  text-align: left;
+  font-weight: 600;
+  color: #fff;
+}
+
+.feedback-container input,
+.feedback-container textarea {
+  background: #2a2a2a;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+}
+
+.feedback-container textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+/* Button */
+.feedback-container button {
+  background: #ff5c00;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.feedback-container button:hover {
+  background: #ff7300;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .background-logo {
+    width: 300px;
+    height: 300px;
+  }
+
+  .feedback-container {
+    width: 95%;
+    padding: 20px;
+  }
+}
