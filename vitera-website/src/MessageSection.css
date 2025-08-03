@@ -1,13 +1,18 @@
 .message-section {
-  background: #1a1a1a;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(20, 20, 20, 0.90) 60%,
+    rgba(255, 87, 34, 0.08) 100%
+  );
   padding: 5rem 0 4rem 0;
 }
 
 .message-title {
   text-align: center;
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   letter-spacing: 0.5px;
 }
 
@@ -31,6 +36,7 @@
 }
 
 .message-cards {
+  width: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
@@ -60,12 +66,12 @@
 }
 
 .message-card {
-  background: var(--dark-accent);
+  /* background: var(--dark-accent); */
   border-radius: 18px;
   box-shadow: 0 4px 18px rgba(255, 69, 0, 0.08);
-  padding: 2.2rem 1.5rem 1.5rem 1.5rem;
-  max-width: 340px;
-  width: 100%;
+  padding: 1.8rem 1.2rem 1.2rem 1.2rem;
+  max-width: 60%;
+  /* width: 100%; */
   display: flex;
   flex-direction: column;
   align-items: center;
