@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom'; //
 import './FeedbackPage.css';
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api/feedback";
-
 function Feedback() {
+  // Use your actual deployed backend URL here
+  const API_URL = "https://backendforvitera.onrender.com/api/feedback";
+  
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -12,6 +13,7 @@ function Feedback() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting to:", API_URL); // Debug log
 
     try {
       const response = await fetch(API_URL, {
@@ -31,6 +33,7 @@ function Feedback() {
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
+      alert("Connection error. Please try again later.");
     }
   };
 
