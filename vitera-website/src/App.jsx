@@ -157,7 +157,7 @@ function App() {
             {/* Mobile Navigation Menu */}
             <div className={`mobile-nav-menu ${isMenuOpen ? 'active' : ''}`}>
               <div className="mobile-sidebar-logo">
-                <img src="/src/assets/vitera_logo.png" alt="VITERA Club Logo" />
+                <img src="/vitera_logo.png" alt="VITERA Club Logo" />
                 <h3>VITERA Club</h3>
               </div>
               <div className="mobile-nav-links">
