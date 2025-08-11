@@ -8,11 +8,16 @@ function Feedback() {
   const [feedback, setFeedback] = useState('');
   // const navigate = useNavigate(); //
 
+  // Use an environment variable or determine API URL based on environment
+  const API_URL = process.env.NODE_ENV === 'production' 
+    ? "https://backendforvitera.vercel.app/api/feedback"
+    : "http://localhost:5000/api/feedback";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://backendforvitera.vercel.app/api/feedback", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, feedback }),
