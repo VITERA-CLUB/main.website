@@ -12,7 +12,7 @@ function Feedback() {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://vitera.onrender.com/api/feedback", {
+      const response = await fetch("https://backendforvitera.vercel.app/api/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, feedback }),
