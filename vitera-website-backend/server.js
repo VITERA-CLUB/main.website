@@ -6,7 +6,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+const allowedOrigin = process.env.ALLOWED_ORIGIN || "*";
+app.use(cors({
+  origin: allowedOrigin,
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+
 app.use(express.json());
 
 const PORTNO = process.env.PORT || 5000;
@@ -37,6 +44,10 @@ app.get("/api/feedback", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error fetching feedback", error });
   }
+});
+
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok" });
 });
 
 const PORT = PORTNO;
