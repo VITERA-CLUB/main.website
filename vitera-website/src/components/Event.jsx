@@ -95,12 +95,14 @@ const EventsSection = () => {
   return (
     <div 
       ref={sectionRef}
+      id="events"
       className="events-section"
     >
       <style jsx>{`
         .events-section {
           min-height: 70vh;
           padding: 3rem 2rem;
+          scroll-margin-top: 90px;
 background: linear-gradient(
   135deg,
   rgba(0, 0, 0, 0.97) 0%,

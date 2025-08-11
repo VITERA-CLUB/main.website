@@ -7,8 +7,8 @@
     rgba(20, 20, 20, 0.90) 60%,
     rgba(255, 87, 34, 0.08) 100%
   );
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px); /* For Safari */
+  backdrop-filter: blur(14px);
   background-blend-mode: overlay;
 }
 
@@ -308,6 +308,16 @@
   color: var(--text-secondary);
 }
 
+/* Smooth transition for team member cards */
+.member-card {
+  transform: translateY(0) scale(1);
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+  will-change: transform;
+}
+.member-card:hover {
+  transform: translateY(-8px) scale(1.03);
+}
+
 /* Hero Section - Improved Layout */
 .hero-section {
   min-height: calc(100vh - 80px);
@@ -334,6 +344,7 @@ background: linear-gradient(
   rgba(15, 15, 15, 0.94) 65%,
   rgba(255, 69, 0, 0.12) 100%
 );
+-webkit-backdrop-filter: blur(14px); /* For Safari */
 backdrop-filter: blur(14px);
   z-index: 0;
 }

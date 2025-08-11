@@ -3,11 +3,66 @@ import './App.css'
 import MessageSection from './MessageSection'
 import Footer from './components/Footer'
 import EventsSection from './components/Event'
+import About from './components/About'
+import TeamMembers from './components/teamMembers'
+import { Routes, Route, Link, useLocation } from 'react-router-dom'
 
-function App() {
+// Reusable header logo with robust fallbacks
+function HeaderLogo({ className }) {
+  const primary = `${import.meta.env.BASE_URL}vitera_logo.png`;
+  const secondary = `${import.meta.env.BASE_URL}vitera_main.png`;
+  const fallback = `${import.meta.env.BASE_URL}logo.svg`;
+  const handleError = (e) => {
+    const img = e.currentTarget;
+    if (img.dataset.stage === 'primary') {
+      img.src = secondary;
+      img.dataset.stage = 'secondary';
+    } else if (img.dataset.stage === 'secondary') {
+      img.src = fallback;
+      img.dataset.stage = 'fallback';
+    } else {
+      // stop looping
+      img.onerror = null;
+    }
+  };
+  return (
+    <img
+      src={primary}
+      data-stage="primary"
+      onError={handleError}
+      alt="VITERA Club Logo"
+      className={className}
+    />
+  );
+}
+
+function ScrollToHash() {
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [location]);
+  return null;
+}
+
+function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [glowEffect, setGlowEffect] = useState(false);
+  // Logo paths and onError fallback
+  const logoSrc = `${import.meta.env.BASE_URL}vitera_logo.png`;
+  const logoFallback = `${import.meta.env.BASE_URL}logo.svg`;
+  const mainLogoSrc = `${import.meta.env.BASE_URL}vitera_main.png`;
+  const onLogoError = (e) => {
+    if (e?.currentTarget && e.currentTarget.src !== logoFallback) {
+      e.currentTarget.src = logoFallback;
+      e.currentTarget.onerror = null;
+    }
+  };
 
   // Responsive slides
   const [visibleSlides, setVisibleSlides] = useState(window.innerWidth < 768 ? 1 : 3);
@@ -111,7 +166,7 @@ function App() {
         <div className="loading-screen">
           <div className="loading-content">
             <div className={`loading-logo ${glowEffect ? 'glow-effect zoom-in' : ''}`}>
-              <img src="/src/assets/vitera_main.png" alt="VITERA Club Logo" />
+              <img src={mainLogoSrc} alt="VITERA Club Logo" onError={onLogoError} />
             </div>
           </div>
         </div>
@@ -120,11 +175,11 @@ function App() {
       {/* Main Content */}
       <div className={`body main-content ${!isLoading ? 'show' : ''}`}>
         {/* Navigation Bar */}
-        <nav className="navbar">
+  <nav className="navbar">
           <div className="container navbar-container">
             {/* Logo Section - Left */}
             <div className="logo-container">
-              <img src="/vitera_logo.png" alt="VITERA Club Logo" className="logo" />
+              <HeaderLogo className="logo" />
               <h2 className="club-name">VITERA Club</h2>
             </div>
             
@@ -133,14 +188,22 @@ function App() {
               <div className="nav-links">
                 <a href="#events" className="nav-link">Events</a>
                 <a href="#about" className="nav-link">About</a>
-                <a href="#team" className="nav-link">Team</a>
+                <Link to="/team" className="nav-link">Team</Link>
               </div>
             </div>
             
-            {/* Feedback Link - Right */}
+            {/* Feedback Link - Right (inert for now) */}
             <div className="right-nav">
               <div className="nav-cta">
-                <a href="#feedback" className="nav-link feedback-link">Feedback/Suggestions</a>
+                <a
+                  href="#"
+                  className="nav-link feedback-link"
+                  onClick={(e) => e.preventDefault()}
+                  role="button"
+                  aria-disabled="true"
+                >
+                  Feedback/Suggestions
+                </a>
               </div>
             </div>
             
@@ -155,16 +218,24 @@ function App() {
             <div className={`mobile-nav-overlay ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}></div>
             
             {/* Mobile Navigation Menu */}
-            <div className={`mobile-nav-menu ${isMenuOpen ? 'active' : ''}`}>
+      <div className={`mobile-nav-menu ${isMenuOpen ? 'active' : ''}`}>
               <div className="mobile-sidebar-logo">
-                <img src="/vitera_logo.png" alt="VITERA Club Logo" />
+                <HeaderLogo />
                 <h3>VITERA Club</h3>
               </div>
               <div className="mobile-nav-links">
-                <a href="#events" className="nav-link" onClick={toggleMenu}>Events</a>
-                <a href="#about" className="nav-link" onClick={toggleMenu}>About</a>
-                <a href="#team" className="nav-link" onClick={toggleMenu}>Team</a>
-                <a href="#feedback" className="nav-link" onClick={toggleMenu}>Feedback/Suggestions</a>
+        <a href="#events" className="nav-link" onClick={toggleMenu}>Events</a>
+        <a href="#about" className="nav-link" onClick={toggleMenu}>About</a>
+        <Link to="/team" className="nav-link" onClick={toggleMenu}>Team</Link>
+        <a
+          href="#"
+          className="nav-link"
+          onClick={(e) => { e.preventDefault(); toggleMenu(); }}
+          role="button"
+          aria-disabled="true"
+        >
+          Feedback/Suggestions
+        </a>
               </div>
             </div>
           </div>
@@ -185,16 +256,17 @@ function App() {
               </p>
               <div className="hero-buttons">
                 <a href="#events" className="btn btn-primary">Explore Events</a>
-                <a href="#team" className="btn btn-secondary">Meet the Team</a>
+                <Link to="/team" className="btn btn-secondary">Meet the Team</Link>
               </div>
             </div>
             
             {/* Right Side - Logo */}
             <div className="hero-logo">
-              <img src="/vitera_main.png" alt="VITERA Club Logo" />
+              <img src={mainLogoSrc} alt="VITERA Club Logo" onError={onLogoError} />
             </div>
           </div>
         </section>
+          <About />
           <EventsSection/>
         {/* Message Section */}
         <MessageSection />
@@ -205,5 +277,96 @@ function App() {
   )
 }
 
+function TeamPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  useEffect(() => {
+    if (isMenuOpen) document.body.classList.add('sidebar-open');
+    else document.body.classList.remove('sidebar-open');
+    return () => document.body.classList.remove('sidebar-open');
+  }, [isMenuOpen]);
+
+  return (
+    <div className="body main-content show">
+      <nav className="navbar">
+        <div className="container navbar-container">
+          <div className="logo-container">
+            <HeaderLogo className="logo" />
+            <h2 className="club-name">VITERA Club</h2>
+          </div>
+
+          <div className="center-nav">
+            <div className="nav-links">
+              <Link to="/" className="nav-link">Home</Link>
+              <Link to="/#events" className="nav-link">Events</Link>
+              <Link to="/#about" className="nav-link">About</Link>
+            </div>
+          </div>
+
+          <div className="right-nav">
+            <div className="nav-cta">
+              <a
+                href="#"
+                className="nav-link feedback-link"
+                onClick={(e) => e.preventDefault()}
+                role="button"
+                aria-disabled="true"
+              >
+                Feedback/Suggestions
+              </a>
+            </div>
+          </div>
+
+          {/* Hamburger menu button for mobile */}
+          <div className="mobile-menu-toggle" onClick={toggleMenu}>
+            <span className={`hamburger-line ${isMenuOpen ? 'open' : ''}`}></span>
+            <span className={`hamburger-line ${isMenuOpen ? 'open' : ''}`}></span>
+            <span className={`hamburger-line ${isMenuOpen ? 'open' : ''}`}></span>
+          </div>
+
+          {/* Mobile Navigation Overlay */}
+          <div className={`mobile-nav-overlay ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}></div>
+
+          {/* Mobile Navigation Menu */}
+          <div className={`mobile-nav-menu ${isMenuOpen ? 'active' : ''}`}>
+            <div className="mobile-sidebar-logo">
+              <HeaderLogo />
+              <h3>VITERA Club</h3>
+            </div>
+            <div className="mobile-nav-links">
+              <Link to="/" className="nav-link" onClick={toggleMenu}>Home</Link>
+              <Link to="/#events" className="nav-link" onClick={toggleMenu}>Events</Link>
+              <Link to="/#about" className="nav-link" onClick={toggleMenu}>About</Link>
+              <a
+                href="#"
+                className="nav-link"
+                onClick={(e) => { e.preventDefault(); toggleMenu(); }}
+                role="button"
+                aria-disabled="true"
+              >
+                Feedback/Suggestions
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <TeamMembers />
+      <Footer />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <ScrollToHash />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/team" element={<TeamPage />} />
+      </Routes>
+    </>
+  );
+}
 
 export default App
