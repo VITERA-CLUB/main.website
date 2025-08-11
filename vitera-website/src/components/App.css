@@ -124,6 +124,9 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .club-name {
+    font-size: 1.4rem;
+  }
   .mobile-menu-toggle {
     display: flex !important;
     position: fixed;
@@ -353,11 +356,11 @@ backdrop-filter: blur(14px);
 .hero-content {
   flex: 1.2; /* Give slightly more space to content */
   max-width: 560px;
-  padding-right: 2rem;
+  padding-right: 2.5rem;
 }
 
 .hero-title {
-  font-size: 4.5rem; /* Increased size */
+  font-size: 3.5rem; /* Increased size */
   font-weight: 800;
   color: #ffffff; /* Changed to white */
   margin-bottom: 0.5rem;
@@ -378,7 +381,7 @@ backdrop-filter: blur(14px);
 }
 
 .hero-subtitle {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #ffffff; /* Changed to white */
   margin-bottom: 2rem;
@@ -386,10 +389,10 @@ backdrop-filter: blur(14px);
 }
 
 .hero-description {
-  font-size: 1.15rem;
-  line-height: 1.8;
+  font-size: 1.1rem;
+  line-height: 1.6;
   color: var(--text-secondary);
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 /* Add styling for emphasized text */
@@ -405,8 +408,8 @@ backdrop-filter: blur(14px);
 
 .btn {
   display: inline-block;
-  padding: 1rem 2.2rem; /* Slightly larger buttons */
-  border-radius: 30px;
+  padding: 1rem 1.5rem; /* Slightly larger buttons */
+  border-radius: 20px;
   font-weight: 600;
   font-size: 1rem;
   text-align: center;
@@ -455,7 +458,7 @@ backdrop-filter: blur(14px);
 .hero-logo img {
   max-width: 100%;
   height: auto;
-  max-height: 520px;
+  max-height: 450px;
   filter: drop-shadow(0 0 25px rgba(255, 200, 0, 0.3)); /* Changed to yellowish glow */
   animation: float 6s ease-in-out infinite;
   transform-origin: center center;
@@ -467,7 +470,7 @@ backdrop-filter: blur(14px);
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-20px) rotate(1deg);
+    transform: translateY(-20px) rotate(0deg);
   }
   100% {
     transform: translateY(0px) rotate(0deg);
@@ -492,7 +495,7 @@ backdrop-filter: blur(14px);
   }
   
   .hero-logo img {
-    max-height: 480px;
+    max-height: 420px;
   }
 }
 
@@ -515,6 +518,7 @@ backdrop-filter: blur(14px);
 }
 
 @media (max-width: 768px) {
+  
   .hero-section {
     padding: 3rem 0;
   }
