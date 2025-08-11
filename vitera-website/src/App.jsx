@@ -124,7 +124,7 @@ function App() {
           <div className="container navbar-container">
             {/* Logo Section - Left */}
             <div className="logo-container">
-              <img src="/src/assets/vitera_logo.png" alt="VITERA Club Logo" className="logo" />
+              <img src="/vitera_logo.png" alt="VITERA Club Logo" className="logo" />
               <h2 className="club-name">VITERA Club</h2>
             </div>
             
@@ -157,7 +157,7 @@ function App() {
             {/* Mobile Navigation Menu */}
             <div className={`mobile-nav-menu ${isMenuOpen ? 'active' : ''}`}>
               <div className="mobile-sidebar-logo">
-                <img src="/src/assets/vitera_logo.png" alt="VITERA Club Logo" />
+                <img src="/vitera_logo.png" alt="VITERA Club Logo" />
                 <h3>VITERA Club</h3>
               </div>
               <div className="mobile-nav-links">
@@ -191,7 +191,7 @@ function App() {
             
             {/* Right Side - Logo */}
             <div className="hero-logo">
-              <img src="/src/assets/vitera_main.png" alt="VITERA Club Logo" />
+              <img src="/vitera_main.png" alt="VITERA Club Logo" />
             </div>
           </div>
         </section>
