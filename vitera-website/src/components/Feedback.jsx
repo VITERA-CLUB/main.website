@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom'; //
 import './FeedbackPage.css';
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api/feedback";
+
 function Feedback() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -12,7 +14,7 @@ function Feedback() {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://backendforvitera.vercel.app/api/feedback", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, feedback }),
