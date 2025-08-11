@@ -6,51 +6,47 @@ const EventsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
+  //only two keywords allowed
   // Enhanced events data
   const eventOBJ = [
     {
       id: 1,
       name: "Tech Innovation Summit 2025",
       bannerPath: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop&auto=format",
-      keyWords: ["Innovation", "Technology", "Future"],
+      keyWords: ["Innovation", "Technology"],
       date: "August 15, 2025",
-      description: "Join us for a day of cutting-edge tech discussions and networking opportunities.",
       featured: true
     },
     {
       id: 2,
       name: "Social Impact Workshop",
       bannerPath: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=600&fit=crop&auto=format",
-      keyWords: ["Impact", "Community", "Change"],
+      keyWords: ["Impact", "Community"],
       date: "August 22, 2025",
-      description: "Learn how to create meaningful change in your community.",
       featured: false
     },
     {
       id: 3,
       name: "Leadership Bootcamp",
       bannerPath: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop&auto=format",
-      keyWords: ["Leadership", "Growth", "Skills"],
+      keyWords: ["Leadership", "Growth"],
       date: "September 5, 2025",
-      description: "Develop your leadership skills through interactive sessions.",
       featured: false
     },
     {
       id: 4,
       name: "Clean Campus Initiative",
       bannerPath: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&auto=format",
-      keyWords: ["Environment", "Campus", "Clean"],
+      keyWords: ["Environment", "Campus"],
       date: "September 20, 2025",
-      description: "A campus-wide cleaning drive bringing everyone together.",
       featured: false
     },
     {
       id: 5,
       name: "Mental Health Awareness",
       bannerPath: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=800&h=600&fit=crop&auto=format",
-      keyWords: ["Health", "Awareness", "Support"],
+      keyWords: ["Health", "Awareness"],
       date: "October 10, 2025",
-      description: "Promoting mental health awareness and support systems.",
       featured: false
     }
   ];
@@ -141,7 +137,7 @@ backdrop-filter: blur(14px);
           z-index: 2;
           opacity: ${isVisible ? 1 : 0};
           transform: translateY(${isVisible ? 0 : 30}px);
-          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .title-text {
@@ -161,7 +157,7 @@ backdrop-filter: blur(14px);
           max-width: 600px;
           opacity: ${isVisible ? 1 : 0};
           transform: translateY(${isVisible ? 0 : 20}px);
-          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
         }
 
         .slider-container {
@@ -170,7 +166,7 @@ backdrop-filter: blur(14px);
           max-width: 1200px;
           opacity: ${isVisible ? 1 : 0};
           transform: translateY(${isVisible ? 0 : 40}px);
-          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
         }
 
         .events-slider {
@@ -220,11 +216,11 @@ backdrop-filter: blur(14px);
 
         .event-card {
           width: 300px;
-          height: 380px;
+          height: 350px;
           position: relative;
           cursor: pointer;
           transform-style: preserve-3d;
-          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           flex-shrink: 0;
         }
 
@@ -268,7 +264,7 @@ backdrop-filter: blur(14px);
 
         .card-image {
           width: 100%;
-          height: 60%;
+          height: 50%;
           position: relative;
           overflow: hidden;
         }
@@ -277,7 +273,7 @@ backdrop-filter: blur(14px);
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
           filter: brightness(0.9) contrast(1.1);
         }
 
