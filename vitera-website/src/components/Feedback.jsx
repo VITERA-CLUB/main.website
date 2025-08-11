@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import './FeedbackPage.css';
 
 function Feedback() {
+  // Use your actual deployed backend URL here
+  const API_URL = "https://backendforvitera.onrender.com/api/feedback";
+  
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -10,9 +13,10 @@ function Feedback() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting to:", API_URL); // Debug log
 
     try {
-      const response = await fetch("https://vitera.onrender.com/api/feedback", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, feedback }),
@@ -29,6 +33,7 @@ function Feedback() {
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
+      alert("Connection error. Please try again later.");
     }
   };
 
