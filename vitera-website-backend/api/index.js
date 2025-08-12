@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import Feedback from "./Feedback.js";
+import Feedback from "../Feedback.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -50,5 +50,10 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-const PORT = PORTNO;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Export the app for Vercel
+export default app;
+
+// If running locally, start the server
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORTNO, () => console.log(`Server running on http://localhost:${PORTNO}`));
+}
