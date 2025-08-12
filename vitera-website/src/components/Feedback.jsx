@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import './FeedbackPage.css';
 
 function Feedback() {
-  // Use your actual deployed backend URL here
-  const API_URL = "https://backendforvitera.onrender.com/api/feedback";
+  // Use API base URL from .env and append endpoint (Vite syntax)
+  const API_URL = `${import.meta.env.VITE_API_URL}/api/feedback`;
   
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
