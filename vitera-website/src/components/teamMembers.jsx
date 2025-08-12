@@ -8,7 +8,7 @@ const teams = [
 			{ 
 				name: 'Lakshya Pandey ', 
 				role: 'Founder & President ', 
-				img: '/images/panel/lakshya.jpg', 
+				img: '/images/Panel/lakshya.jpg', 
 				linkedin: 'https://www.linkedin.com/in/lakshya-pandey-31456628a/' 
 			},
 			{ 
