@@ -43,6 +43,13 @@ function Feedback() {
 
   return (
     <div className="feedback-page">
+      {/* Loading Modal */}
+      {loading && (
+        <div className="loading-modal">
+          <div className="loading-spinner"></div>
+          <div>Submitting...</div>
+        </div>
+      )}
       <div className="background-logo"></div>
       <div className="feedback-container">
         <h2>Feedback & Suggestions</h2>
