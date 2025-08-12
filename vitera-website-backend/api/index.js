@@ -21,7 +21,7 @@ const MONGO_URL = process.env.MONGO_URL;
 
 // ✅ Connect MongoDB
 mongoose
-  .connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO_URL)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error(err));
 
@@ -38,6 +38,13 @@ app.post("/api/feedback", async (req, res) => {
 });
 
 app.get("/api/feedback", async (req, res) => {
+  const allowedOrigin = process.env.ALLOWED_ORIGIN;
+  const requestOrigin = req.headers.origin;
+
+  if (allowedOrigin && requestOrigin !== allowedOrigin) {
+    return res.status(403).json({ message: "Forbidden: Not authorized" });
+  }
+
   try {
     const feedbacks = await Feedback.find().sort({ createdAt: -1 });
     res.json(feedbacks);
