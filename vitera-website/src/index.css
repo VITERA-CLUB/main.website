@@ -100,3 +100,106 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* --- Swiper customizations: keep nav buttons inside the card --- */
+.team-swiper {
+  position: relative;
+  /* Align arrows to the sides of the centered content area */
+  --content-max-w: 1280px;
+  --content-half: calc(var(--content-max-w) / 2);
+  --nav-gap: 40px; /* distance outside content edge */
+}
+.team-swiper .swiper-button-prev,
+.team-swiper .swiper-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  z-index: 5;
+  background: var(--primary);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  color: #ffffff; /* white chevron on orange circle */
+  text-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.team-swiper .swiper-button-prev:hover,
+.team-swiper .swiper-button-next:hover {
+  background: #ff6a1a; /* brighter orange on hover */
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+}
+.team-swiper .swiper-button-prev { left: max(8px, calc(50% - var(--content-half) - var(--nav-gap))); }
+.team-swiper .swiper-button-next { right: max(8px, calc(50% - var(--content-half) - var(--nav-gap))); }
+.team-swiper .swiper-button-prev::after,
+.team-swiper .swiper-button-next::after {
+  font-size: 28px; /* larger chevrons */
+}
+
+.team-swiper .swiper-button-prev:focus-visible,
+.team-swiper .swiper-button-next:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+.team-swiper .swiper-button-disabled { opacity: 0.35; }
+.team-swiper .swiper-pagination-bullets {
+  bottom: 0px !important; /* keep dots within the section padding */
+}
+
+/* On small screens keep arrows just inside to avoid clipping */
+@media (max-width: 1024px) {
+  /* On tablet/phone keep arrows inside viewport edges */
+  .team-swiper .swiper-button-prev { left: 8px; }
+  .team-swiper .swiper-button-next { right: 8px; }
+}
+
+/* --- Team page black–orange background --- */
+.team-page-bg {
+  position: relative;
+  overflow: hidden;
+  /* layered gradients: subtle orange glows over deep black */
+  background:
+    radial-gradient(820px 520px at 10% 15%, rgba(255, 69, 0, 0.20), rgba(255, 69, 0, 0) 62%),
+    radial-gradient(760px 460px at 85% 80%, rgba(255, 140, 0, 0.18), rgba(255, 140, 0, 0) 60%),
+    radial-gradient(600px 360px at 55% 35%, rgba(255, 90, 0, 0.10), rgba(255, 90, 0, 0) 55%),
+    linear-gradient(180deg, #0a0a0a 0%, #0b0b0b 60%, #0a0a0a 100%);
+}
+
+/* gradient headings for more orange pop */
+.team-page-bg h2,
+.team-page-bg h3,
+.team-page-bg h4 {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* base text remains readable */
+.team-page-bg p,
+.team-page-bg .body-text {
+  color: #ffffff;
+}
+
+/* orange accent ring and glow around the hero circular photo */
+.team-page-bg .hero-photo {
+  box-shadow: 0 0 0 10px rgba(255, 69, 0, 0.06), 0 16px 48px rgba(255, 69, 0, 0.18);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.team-page-bg .hero-photo:hover {
+  box-shadow: 0 0 0 12px rgba(255, 106, 26, 0.08), 0 22px 58px rgba(255, 106, 26, 0.24);
+}
+
+/* orange pagination bullets */
+.team-swiper .swiper-pagination-bullet {
+  background: rgba(255, 69, 0, 0.35);
+  opacity: 1;
+}
+.team-swiper .swiper-pagination-bullet-active {
+  background: var(--primary);
+  transform: scale(1.15);
+  box-shadow: 0 0 0 6px rgba(255, 69, 0, 0.15);
+}

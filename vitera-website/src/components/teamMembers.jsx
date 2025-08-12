@@ -1,4 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Linkedin } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const teams = [
 	{
@@ -17,12 +23,6 @@ const teams = [
 				img: '/images/Panel/spandan.jpg', 
 				linkedin: 'https://www.linkedin.com/in/s-74917028a/' 
 			},
-			{ 
-				name: 'Panelist Three', 
-				role: 'Panel Member', 
-				img: 'https://randomuser.me/api/portraits/men/13.jpg', 
-				linkedin: 'https://www.linkedin.com/in/panelist-three' 
-			},
 		],
 	},
 	
@@ -33,18 +33,8 @@ const teams = [
 		id: 'tech-team',
 		title: 'Tech Team',
 		members: [
-		{ 
-			name: 'Asdfksd',
-			role: 'LEAD',
-			img: '/images/avi.png',
-			linkedin: 'http://www.linkedin.com/in/avinashgautam007'
-		},
-		{ 
-			name: 'Priya Sharma',
-			role: 'Frontend Dev',
-			img: 'https://randomuser.me/api/portraits/women/44.jpg',
-			linkedin: 'https://www.linkedin.com/in/priya-sharma'
-		},
+		
+		
 		{ 
 			name: 'Avinash Kumar',
 			role: 'Core Member',
@@ -196,18 +186,8 @@ const teams = [
 		id: 'social-media-team',
 		title: 'Social Media Team',
 		members: [
-		{ 
-			name: 'Riya Kapoor', 
-			role: 'Social Lead', 
-			img: 'https://randomuser.me/api/portraits/women/60.jpg', 
-			linkedin: 'https://www.linkedin.com/in/riya-kapoor' 
-		},
-		{ 
-			name: 'Ankit Yadav', 
-			role: 'Content Strategist', 
-			img: 'https://randomuser.me/api/portraits/men/24.jpg', 
-			linkedin: 'https://www.linkedin.com/in/ankit-yadav' 
-		},
+		
+		
 		{ 
 			name: 'Vedanti Gajbhiye ', 
 			role: 'Core Member', 
@@ -226,18 +206,8 @@ const teams = [
 		id: 'editing-team',
 		title: 'Editing Team',
 		members: [
-		{ 
-			name: 'Meera Nair', 
-			role: 'Video Editor', 
-			img: 'https://randomuser.me/api/portraits/women/13.jpg', 
-			linkedin: 'https://www.linkedin.com/in/meera-nair' 
-		},
-		{ 
-			name: 'Dev Patel', 
-			role: 'Post Production', 
-			img: 'https://randomuser.me/api/portraits/men/18.jpg', 
-			linkedin: 'https://www.linkedin.com/in/dev-patel' 
-		},
+		
+		
 
 		{ 
 			name: 'Manas Gursahani', 
@@ -264,8 +234,13 @@ const teams = [
 			id: 'linkedin-team',
 			title: 'LinkedIn Team',
 			members: [
-			{ name: 'Sarthak Jain', role: 'LinkedIn Manager', img: 'https://randomuser.me/api/portraits/men/7.jpg', linkedin: 'https://www.linkedin.com/in/sarthak-jain' },
-			{ name: 'Pooja Sinha', role: 'Content Writer', img: 'https://randomuser.me/api/portraits/women/71.jpg', linkedin: 'https://www.linkedin.com/in/pooja-sinha' },
+			{
+				 name: 'Sarthak Jain', 
+				 role: 'LinkedIn Manager', 
+				 img: 'https://randomuser.me/api/portraits/men/7.jpg', 
+				 linkedin: 'https://www.linkedin.com/in/sarthak-jain' 
+				},
+			
 			],
 	},
 	{
@@ -300,50 +275,265 @@ const teams = [
 	},
 ];
 
+// Fallback quotes about social responsibility and service
+const defaultQuotes = [
+	{ text: 'The greatest threat to our planet is the belief that someone else will save it.', author: 'Robert Swan' },
+	{ text: 'We do not inherit the Earth from our ancestors; we borrow it from our children.', author: 'Native American Proverb' },
+	{ text: 'The best way to find yourself is to lose yourself in the service of others.', author: 'Mahatma Gandhi' },
+	{ text: 'Life’s most persistent and urgent question is: “What are you doing for others?”', author: 'Martin Luther King Jr.' },
+	{ text: 'No act of kindness, no matter how small, is ever wasted.', author: 'Aesop' },
+	{ text: 'Be the change that you wish to see in the world.', author: 'Mahatma Gandhi' },
+	{ text: 'It is not enough to be compassionate—you must act.', author: 'Dalai Lama' },
+	{ text: 'We rise by lifting others.', author: 'Robert Ingersoll' },
+	{ text: 'What you do makes a difference, and you have to decide what kind of difference you want to make.', author: 'Jane Goodall' },
+	{ text: 'The purpose of human life is to serve, and to show compassion and the will to help others.', author: 'Albert Schweitzer' },
+];
+
 const TeamMembers = () => {
+	// Dropdown open state and selected team id
+	const [isOpen, setIsOpen] = useState(false);
+	const [selectedTeamId, setSelectedTeamId] = useState(null);
+	const menuRef = useRef(null);
+
+	// Close on outside click or on Escape
+	useEffect(() => {
+		const onClickAway = (e) => {
+			if (menuRef.current && !menuRef.current.contains(e.target)) {
+				setIsOpen(false);
+			}
+		};
+		const onEsc = (e) => {
+			if (e.key === 'Escape') setIsOpen(false);
+		};
+		document.addEventListener('mousedown', onClickAway);
+		document.addEventListener('keydown', onEsc);
+		return () => {
+			document.removeEventListener('mousedown', onClickAway);
+			document.removeEventListener('keydown', onEsc);
+		};
+	}, []);
+
+	const selectedTeam = teams.find((t) => t.id === selectedTeamId) || null;
+
+	// Quotes state: attempt to fetch, fallback to defaults
+	const [quotes, setQuotes] = useState(defaultQuotes);
+	const [quoteIndex, setQuoteIndex] = useState(0);
+
+	useEffect(() => {
+		let ignore = false;
+		const controller = new AbortController();
+		// Build a large, unique pool using multiple sources; fallback gracefully
+		(async () => {
+			const keywords = /(responsib|responsibil|societ|community|serve|service|help|care|give|giving|kind|kindness|compassion|human|humanity|change|world|earth|planet|environment|climate|duty|justice|equality|inclusion|diversity|future|children)/i;
+			const mapFiltered = new Map(); // filtered unique
+			const mapAll = new Map(); // all unique (fallback)
+
+			const addAll = (arr) => {
+				for (const q of arr || []) {
+					if (!q?.text) continue;
+					const item = { text: q.text, author: q.author || 'Unknown' };
+					mapAll.set(item.text, item);
+					if (keywords.test(item.text)) mapFiltered.set(item.text, item);
+				}
+			};
+
+			try {
+				// 1) Quotable random in batches (reduces repetition)
+				const tags = [
+					'inspirational', 'wisdom', 'life', 'leadership', 'success', 'learning', 'friendship', 'happiness', 'courage', 'hope', 'famous-quotes'
+				].join('|');
+				const batchSize = 30;
+				const maxBatches = 8;
+				for (let i = 0; i < maxBatches; i++) {
+					const url = `https://api.quotable.io/quotes/random?limit=${batchSize}&tags=${encodeURIComponent(tags)}&t=${Date.now()+i}`;
+					const res = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+					if (!res.ok) break;
+					const data = await res.json();
+					if (ignore) return;
+					const list = (Array.isArray(data) ? data : []).map((d) => ({ text: d.content, author: d.author || 'Unknown' }));
+					addAll(list);
+					if (map.size >= 180) break; // stop early if we have enough
+				}
+			} catch (_) { /* ignore */ }
+
+			try {
+				// 2) Fallback/augment with Type.fit (~1600 quotes)
+				if (map.size < 120) {
+					const res = await fetch('https://type.fit/api/quotes', { signal: controller.signal, cache: 'no-store' });
+					if (res.ok) {
+						const data = await res.json();
+						if (ignore) return;
+						const list = (Array.isArray(data) ? data : []).slice(0, 1000).map((d) => ({ text: d.text, author: d.author || 'Unknown' }));
+						addAll(list);
+					}
+				}
+			} catch (_) { /* ignore */ }
+
+			try {
+				// 3) As a last resort, page Quotable /quotes
+				if (map.size < 80) {
+					for (let page = 1; page <= 3; page++) {
+						const url = `https://api.quotable.io/quotes?limit=50&page=${page}&tags=inspirational|wisdom|famous-quotes`;
+						const res = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+						if (!res.ok) break;
+						const data = await res.json();
+						if (ignore) return;
+						const list = (data?.results || []).map((d) => ({ text: d.content, author: d.author || 'Unknown' }));
+						addAll(list);
+						if (map.size >= 120) break;
+					}
+				}
+			} catch (_) { /* ignore */ }
+
+			if (ignore) return;
+				const uniqueFiltered = Array.from(mapFiltered.values());
+				const uniqueAll = Array.from(mapAll.values());
+				const chosen = uniqueFiltered.length >= 15 ? uniqueFiltered : uniqueAll; // relax filter if too few
+				if (chosen.length > 0) {
+				// Shuffle
+					for (let i = chosen.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+						[chosen[i], chosen[j]] = [chosen[j], chosen[i]];
+				}
+					setQuotes(chosen.slice(0, 200));
+			}
+		})();
+		return () => {
+			ignore = true;
+			controller.abort();
+		};
+	}, []);
+
+	// Rotate quote every 10 seconds
+	useEffect(() => {
+		if (!quotes?.length) return;
+		const id = setInterval(() => {
+			setQuoteIndex((i) => (i + 1) % quotes.length);
+		}, 10000);
+		return () => clearInterval(id);
+	}, [quotes]);
+
+	// normalize image src: keep http(s) as-is, ensure leading slash for local paths
+	const normalizeSrc = (p) => {
+		if (!p) return '';
+		if (/^https?:\/\//i.test(p)) return p;
+		return p.startsWith('/') ? p : `/${p}`;
+	};
+
 	return (
-		<section id="team" className="py-16 scroll-mt-[90px]">
+		<section id="team" className="team-page-bg py-16 scroll-mt-[90px]">
 			<div className="max-w-[1100px] mx-auto px-4">
 				<h2 className="text-center text-[3rem] font-extrabold mb-4 text-white">Our Teams</h2>
 				<p className="text-center text-[color:var(--text-secondary)] mb-5">Meet the people powering VITERA across different domains.</p>
 
-				{/* navigation  */}
-				<div className="w-full flex rounded-[1rem] flex-wrap gap-3 justify-center p-1">
-					{teams.map((t) => (
-						<a
-							key={t.id}
-							href={`#${t.id}`}
-							className="bg-[rgba(255,255,255,0.06)] border border-white !text-white visited:!text-white active:!text-white py-[0.55rem] px-[1.1rem] rounded-full text-[1rem] transition hover:bg-[var(--primary)] hover:!text-white hover:border-white hover:-translate-y-[1px] cursor-pointer"
+				{/* Team selector: click the button to open the team list */}
+				<div className="relative flex justify-center" ref={menuRef}>
+					<button
+						type="button"
+						onClick={() => setIsOpen((v) => !v)}
+						className="inline-flex items-center gap-2 bg-[rgba(255,255,255,0.06)] border border-white text-white py-3 px-5 rounded-full text-[1rem] hover:bg-[var(--primary)] transition focus:outline-none focus:ring-2 focus:ring-white"
+						aria-haspopup="listbox"
+						aria-expanded={isOpen}
+					>
+						{selectedTeam ? selectedTeam.title : 'Select a Team'}
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+							<path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+						</svg>
+					</button>
+
+					{isOpen && (
+						<ul
+							role="listbox"
+							className="absolute z-20 mt-2 max-h-[320px] w-[min(720px,92vw)] overflow-auto rounded-2xl border border-white/50 bg-[#0e0e0f] p-2 shadow-[0_18px_60px_rgba(0,0,0,0.6)] grid grid-cols-2 gap-2 max-[520px]:grid-cols-1"
+							aria-label="Teams"
 						>
-							{t.title}
-						</a>
-					))}
+							{teams.map((t) => (
+								<li key={t.id} role="option" aria-selected={selectedTeamId === t.id}>
+									<button
+										className={`w-full text-left py-2.5 px-3 rounded-xl border transition ${
+											selectedTeamId === t.id
+												? 'bg-[var(--primary)] text-white border-white'
+												: 'bg-[rgba(255,255,255,0.04)] text-white border-white hover:bg-[rgba(255,255,255,0.12)]'
+										}`}
+										onClick={() => {
+											setSelectedTeamId(t.id);
+											setIsOpen(false);
+										}}
+									>
+										{t.title}
+									</button>
+								</li>
+							))}
+						</ul>
+					)}
 				</div>
 
-				{/* Teams */}
-				{teams.map((team) => (
-					<div key={team.id} id={team.id} className="my-[2.2rem]  scroll-mt-[100px]">
-						<h3 className="text-[1.6rem] gap-5 mx-5 font-extrabold mb-[0.9rem] text-white">{team.title}</h3>
-						<div className="grid grid-cols-4 gap-[2.5rem] max-[992px]:grid-cols-2 max-[992px]:gap-8 max-[640px]:grid-cols-1">
-							{team.members.map((m, idx) => (
-								<a
-									key={idx}
-									href={m.linkedin || '#'}
-									target={m.linkedin ? '_blank' : undefined}
-									rel={m.linkedin ? 'noopener noreferrer' : undefined}
-									className="member-card block rounded-[18px] pt-[1.8rem] px-[1.2rem] pb-[1.2rem] text-center transform-gpu shadow-[0_4px_18px_rgba(255,69,0,0.08)] hover:shadow-[0_8px_32px_rgba(255,140,0,0.18)]"
-									aria-label={`Open ${m.name}'s LinkedIn profile`}
-								>
-									<div className="w-[90px] h-[90px] rounded-full overflow-hidden mx-auto mb-[1.2rem] border-[3px] border-[var(--primary)] shadow-[0_0_0_6px_rgba(255,69,0,0.08)] bg-[#232323]">
-										<img src={m.img} alt={m.name} className="w-full h-full object-cover" />
-									</div>
-									<p className="font-bold text-[1.25rem] mt-[0.2rem] mb-[0.1rem] text-white">{m.name}</p>
-									<p className="text-[color:var(--secondary)] font-medium text-[1rem] m-0">{m.role}</p>
-								</a>
-							))}
+				{/* Selected team members or a rotating quote when none selected. */}
+				{!selectedTeam && (
+					<div className="my-[2.2rem]">
+						<div className="max-w-[1000px] mx-auto text-center px-4">
+							<span className="inline-block text-white/70 uppercase tracking-widest text-xs">Social Responsibility</span>
+							<blockquote key={quoteIndex} className="mt-4 text-white text-3xl md:text-5xl font-extrabold leading-tight">
+								“{quotes[quoteIndex]?.text}”
+							</blockquote>
+							<p className="mt-4 text-white/85 text-lg font-medium">— {quotes[quoteIndex]?.author}</p>
 						</div>
 					</div>
-				))}
+				)}
+
+				{selectedTeam && (
+					<div className="my-[2.2rem]">
+						<div className="flex items-center justify-between gap-3 mb-[0.9rem] mx-1">
+							<h3 className="text-[1.6rem] font-extrabold text-white">{selectedTeam.title}</h3>
+							<button
+								className="text-white/80 hover:text-white text-sm underline underline-offset-4"
+								onClick={() => setSelectedTeamId(null)}
+							>
+								Clear selection
+							</button>
+						</div>
+
+						{/* Carousel per member styled like the provided hero reference */}
+						<div className="team-swiper mt-6 relative w-screen max-w-[100vw] left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+							<Swiper
+								modules={[Navigation, Pagination]}
+								navigation
+								pagination={{ clickable: true }}
+								loop={selectedTeam.members.length > 1}
+								className="!pb-12 w-full"
+							>
+								{selectedTeam.members.map((m, idx) => (
+									<SwiperSlide key={idx}>
+										<div className="max-w-[1280px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+											{/* Left: name, role, linkedin */}
+											<div className="px-2 md:px-6">
+												<h4 className="text-white text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
+													{m.name}
+												</h4>
+												<p className="mt-6 text-white text-2xl font-semibold">{m.role}</p>
+												{m.linkedin && (
+													<a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-3 rounded-full border border-white px-6 py-3 text-white hover:bg-white/10 transition">
+														<Linkedin size={20} />
+														View LinkedIn
+													</a>
+												)}
+											</div>
+
+											{/* Right: large circular image mask */}
+											<div className="relative flex justify-center lg:justify-end">
+												<div className="hero-photo relative w-[78vw] max-w-[780px] aspect-square rounded-full overflow-hidden border border-white/15 bg-[rgba(255,255,255,0.05)]">
+													<img src={normalizeSrc(m.img)} alt={m.name} className="h-full w-full object-cover" />
+													{/* soft vignette */}
+													<div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_70%_50%,transparent_40%,rgba(0,0,0,0.25)_100%)]" />
+												</div>
+											</div>
+										</div>
+									</SwiperSlide>
+								))}
+							</Swiper>
+						</div>
+					</div>
+				)}
 			</div>
 		</section>
 	);

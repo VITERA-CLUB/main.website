@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+
 import { useState, useEffect, useRef } from 'react'
-import './App.css'
-import MessageSection from './MessageSection'
+import './components/App.css'
+import MessageSection from './components/MessageSection'
 import Footer from './components/Footer'
 import EventsSection from './components/Event'
 import About from './components/About'
@@ -371,26 +371,3 @@ function App() {
 }
 
 export default App
-=======
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './components/Home';
-import Feedback from './components/Feedback';
-
-function App() {
-  return (
-    <Router>
-      {/* Navbar is always on top */}
-      <Navbar />
-
-      {/* Routes below Navbar */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/feedback" element={<Feedback />} />
-      </Routes>
-    </Router>
-  );
-}
-
-export default App;
->>>>>>> b76128316a094cc69224b5ff94170c6726e8ec9a
