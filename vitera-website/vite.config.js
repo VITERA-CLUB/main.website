@@ -8,7 +8,6 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  // Use root base for local dev; adjust during deploy if needed
   base: '/',
   server: {
     allowedHosts: [

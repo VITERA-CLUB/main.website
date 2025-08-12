@@ -1,3 +1,4 @@
+import { Routes, Route, Link, useLocation } from 'react-router-dom'
 
 import { useState, useEffect, useRef } from 'react'
 import './components/App.css'
@@ -6,7 +7,6 @@ import Footer from './components/Footer'
 import EventsSection from './components/Event'
 import About from './components/About'
 import TeamMembers from './components/teamMembers'
-import { Routes, Route, Link, useLocation } from 'react-router-dom'
 
 // Reusable header logo with robust fallbacks
 function HeaderLogo({ className }) {

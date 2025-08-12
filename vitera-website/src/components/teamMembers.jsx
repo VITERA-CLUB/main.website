@@ -14,7 +14,7 @@ const teams = [
 			{ 
 				name: 'Lakshya Pandey ', 
 				role: 'Founder & President ', 
-				img: '/images/panel/lakshya.jpg', 
+				img: '/images/Panel/lakshya.jpg', 
 				linkedin: 'https://www.linkedin.com/in/lakshya-pandey-31456628a/' 
 			},
 			{ 
@@ -28,7 +28,6 @@ const teams = [
 	
 
 
-	
 	{
 		id: 'tech-team',
 		title: 'Tech Team',
@@ -352,13 +351,13 @@ const TeamMembers = () => {
 					if (ignore) return;
 					const list = (Array.isArray(data) ? data : []).map((d) => ({ text: d.content, author: d.author || 'Unknown' }));
 					addAll(list);
-					if (map.size >= 180) break; // stop early if we have enough
+					if (mapAll.size >= 180) break; // stop early if we have enough
 				}
 			} catch (_) { /* ignore */ }
 
 			try {
 				// 2) Fallback/augment with Type.fit (~1600 quotes)
-				if (map.size < 120) {
+				if (mapAll.size < 120) {
 					const res = await fetch('https://type.fit/api/quotes', { signal: controller.signal, cache: 'no-store' });
 					if (res.ok) {
 						const data = await res.json();
@@ -371,7 +370,7 @@ const TeamMembers = () => {
 
 			try {
 				// 3) As a last resort, page Quotable /quotes
-				if (map.size < 80) {
+				if (mapAll.size < 80) {
 					for (let page = 1; page <= 3; page++) {
 						const url = `https://api.quotable.io/quotes?limit=50&page=${page}&tags=inspirational|wisdom|famous-quotes`;
 						const res = await fetch(url, { signal: controller.signal, cache: 'no-store' });
@@ -380,22 +379,22 @@ const TeamMembers = () => {
 						if (ignore) return;
 						const list = (data?.results || []).map((d) => ({ text: d.content, author: d.author || 'Unknown' }));
 						addAll(list);
-						if (map.size >= 120) break;
+						if (mapAll.size >= 120) break;
 					}
 				}
 			} catch (_) { /* ignore */ }
 
 			if (ignore) return;
-				const uniqueFiltered = Array.from(mapFiltered.values());
-				const uniqueAll = Array.from(mapAll.values());
-				const chosen = uniqueFiltered.length >= 15 ? uniqueFiltered : uniqueAll; // relax filter if too few
-				if (chosen.length > 0) {
+			const uniqueFiltered = Array.from(mapFiltered.values());
+			const uniqueAll = Array.from(mapAll.values());
+			const chosen = uniqueFiltered.length >= 15 ? uniqueFiltered : uniqueAll; // relax filter if too few
+			if (chosen.length > 0) {
 				// Shuffle
-					for (let i = chosen.length - 1; i > 0; i--) {
-						const j = Math.floor(Math.random() * (i + 1));
-						[chosen[i], chosen[j]] = [chosen[j], chosen[i]];
+				for (let i = chosen.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[chosen[i], chosen[j]] = [chosen[j], chosen[i]];
 				}
-					setQuotes(chosen.slice(0, 200));
+				setQuotes(chosen.slice(0, 200));
 			}
 		})();
 		return () => {
@@ -540,4 +539,3 @@ const TeamMembers = () => {
 };
 
 export default TeamMembers;
-

@@ -556,66 +556,7 @@ backdrop-filter: blur(14px);
   .hero-logo img {
     max-height: 350px;
   }
-  .gallery-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .mobile-gallery-container {
-    margin: initial;
-    left: 0;
-    right: 0;
-    position: relative;
-  }
-  .mobile-gallery-slider {
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-  }
-  .gallery-nav-buttons {
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-  }
-}
-
-/* Fix mobile gallery container and slider for full width and prevent scroll */
-@media (max-width: 768px) {
-  .mobile-gallery-container {
-    display: block;
-    max-width: 95vw;
-    width: 95vw;
-    margin: initial;
-    padding: 0;
-    border-radius: 0;
-    overflow: hidden;
-    position: relative;
-  }
-  .mobile-gallery-slider {
-    width: 95vw;
-    margin: 0;
-    padding: 0;
-  }
-  .mobile-gallery-slide {
-    min-width: 95vw;
-    width: 95vw;
-    height: 270px;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  .mobile-gallery-slide img {
-    width: 95vw;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    display: block;
-  }
-  .gallery-nav-buttons {
-    left: 0;
-    width: 95vw;
-    padding: 0 2px;
-  }
+  
 }
 
 /* Prevent horizontal scroll on body for mobile */
@@ -722,13 +663,6 @@ html {
   animation: pulse 2s infinite;
 }
 
-/* Gallery Section Styles */
-.gallery-section {
-  padding: 5rem 0;
-  background-color: #1a1a1a; /* Matte black background to match theme */
-  position: relative;
-}
-
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -749,251 +683,34 @@ html {
   border-radius: 2px;
 }
 
-/* Desktop Gallery Grid Layout */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 250px;
-  gap: 15px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
-.gallery-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-.gallery-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(255, 69, 0, 0.2);
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
-}
-
-.gallery-item:hover img {
-  transform: scale(1.05);
-}
-
-/* Special sized items for collage effect */
-.gallery-item-large {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-.gallery-item-wide {
-  grid-column: span 2;
-}
-
-.gallery-item-tall {
-  grid-row: span 2;
-}
-
-/* Add subtle overlay to images */
-.gallery-item::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 50%);
-  pointer-events: none;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-}
-
-.gallery-item:hover::after {
-  opacity: 0.4;
-}
-
-/* Mobile Gallery Slider */
-.mobile-gallery-container {
-  display: none;
-  position: relative;
-  width: 100%;
-  max-width: 700px;
-  margin: initial;
-  overflow: visible;
-  border-radius: 8px;
-}
-
-.mobile-gallery-slider {
-  display: flex;
-  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-  width: 100%;
-}
-
-.mobile-gallery-slide {
-  min-width: calc(100% / 3);
-  height: 350px;
-  position: relative;
-}
-
-.mobile-gallery-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* Gallery Navigation Buttons - outside the frame */
-.gallery-nav-buttons {
-  position: absolute;
-  top: 50%;
-  left: -56px;
-  width: calc(100% + 112px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  pointer-events: none;
-  z-index: 10;
-  transform: translateY(-50%);
-  padding: 0;
-}
-
-.gallery-nav-btn {
-  background-color: #fff;
-  color: var(--primary);
-  border: none;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(255,69,0,0.08);
-  font-size: 1.3rem;
-  pointer-events: auto;
-  margin: 0;
-  padding: 0;
-}
-
-.gallery-nav-btn:hover {
-  background-color: var(--primary);
-  color: #fff;
-  transform: scale(1.1);
-}
-
-.gallery-nav-btn svg {
-  width: 26px;
-  height: 26px;
-  display: block;
-  stroke: currentColor;
-  fill: none;
-}
 
 /* Responsive: 3 images at a time for >= 768px, 1 image at a time for < 768px */
-@media (max-width: 992px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 220px;
-  }
-  .gallery-item-large {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-}
+
 
 @media (max-width: 768px) {
-  .gallery-section {
-    padding: 4rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  
   .section-title {
     font-size: 2.2rem;
     margin-bottom: 2rem;
   }
-  .desktop-gallery {
-    display: none;
-  }
-  .mobile-gallery-container {
-    display: block;
-    max-width: 95vw;
-    width: 95vw;
-    margin: 0;
-    padding: 0;
-    border-radius: 0;
-    overflow: hidden;
-    position: relative;
-    margin: initial;
-    left: 0;
-    right: 0;
-  }
-  .mobile-gallery-slider {
-    width: 95vw;
-    margin: 0;
-    padding: 0;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-  }
-  .mobile-gallery-slide {
-    min-width: 95vw;
-    width: 95vw;
-    height: 270px;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  .mobile-gallery-slide img {
-    width: 95vw;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    display: block;
-  }
-  .gallery-nav-buttons {
-    left: 0;
-    width: 95vw;
-    padding: 0 2px;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-  }
-  .gallery-nav-btn {
-    width: 40px;
-    height: 40px;
-  }
-  .gallery-nav-btn svg {
-    width: 20px;
-    height: 20px;
-  }
+  
 }
 
 @media (max-width: 480px) {
-  .gallery-section {
-    padding: 3rem 0;
-  }
+  
   .section-title {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
   }
-  .gallery-nav-buttons {
-    left: 0;
-    width: 92vw;
-    padding: 0 1px;
-  }
-  .gallery-nav-btn {
-    width: 32px;
-    height: 32px;
-  }
-  .gallery-nav-btn svg {
-    width: 16px;
-    height: 16px;
-  }
+}
+
+/* Smooth transition for team member cards */
+.member-card {
+  transform: translateY(0) scale(1);
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+  will-change: transform;
+}
+.member-card:hover {
+  transform: translateY(-8px) scale(1.03);
 }

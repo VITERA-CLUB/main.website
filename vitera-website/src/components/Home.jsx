@@ -7,35 +7,7 @@ import EventsSection from './Event';
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [glowEffect, setGlowEffect] = useState(false);
-  const [visibleSlides, setVisibleSlides] = useState(window.innerWidth < 768 ? 1 : 3);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const sliderRef = useRef(null);
-
-  const galleryImages = [
-    { src: "https://picsum.photos/id/1/800/600", alt: "Gallery image 1" },
-    { src: "https://picsum.photos/id/10/400/400", alt: "Gallery image 2" },
-    { src: "https://picsum.photos/id/100/400/400", alt: "Gallery image 3" },
-    { src: "https://picsum.photos/id/1000/400/400", alt: "Gallery image 4" },
-    { src: "https://picsum.photos/id/1001/400/800", alt: "Gallery image 5" },
-    { src: "https://picsum.photos/id/1002/400/400", alt: "Gallery image 6" },
-    { src: "https://picsum.photos/id/1003/400/400", alt: "Gallery image 7" },
-    { src: "https://picsum.photos/id/1004/400/400", alt: "Gallery image 8" },
-    { src: "https://picsum.photos/id/1005/800/400", alt: "Gallery image 9" },
-    { src: "https://picsum.photos/id/1006/400/400", alt: "Gallery image 10" },
-  ];
-
-  useEffect(() => {
-    if (currentSlide > galleryImages.length - visibleSlides) {
-      setCurrentSlide(Math.max(0, galleryImages.length - visibleSlides));
-    }
-  }, [visibleSlides]);
-
-  useEffect(() => {
-    if (sliderRef.current) {
-      sliderRef.current.style.transform = `translateX(-${currentSlide * (100 / visibleSlides)}%)`;
-    }
-  }, [currentSlide, visibleSlides]);
-
+  
   useEffect(() => {
     const glowTimer = setTimeout(() => {
       setGlowEffect(true);
@@ -47,14 +19,6 @@ function Home() {
     return () => clearTimeout(glowTimer);
   }, []);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setVisibleSlides(window.innerWidth < 768 ? 1 : 3);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <>
       {/* Loading Screen */}
@@ -62,7 +26,7 @@ function Home() {
         <div className="loading-screen">
           <div className="loading-content">
             <div className={`loading-logo ${glowEffect ? 'glow-effect zoom-in' : ''}`}>
-              <img src="/src/assets/vitera_main.png" alt="VITERA Club Logo" />
+              <img src="/vitera_main.png" alt="VITERA Club Logo" />
             </div>
           </div>
         </div>
@@ -101,5 +65,6 @@ function Home() {
     </>
   );
 }
+
 
 export default Home;
