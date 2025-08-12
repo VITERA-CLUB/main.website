@@ -9,10 +9,12 @@ function Feedback() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [feedback, setFeedback] = useState('');
+  const [loading, setLoading] = useState(false);
   // const navigate = useNavigate(); //
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     console.log("Submitting to:", API_URL); // Debug log
 
     try {
@@ -34,6 +36,8 @@ function Feedback() {
     } catch (error) {
       console.error("Error submitting feedback:", error);
       alert("Connection error. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,7 +75,9 @@ function Feedback() {
             required
           ></textarea>
 
-          <button type="submit">Submit Feedback</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit Feedback"}
+          </button>
         </form>
       </div>
     </div>
