@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Calendar, Clock, MapPin, Users, Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const EventsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -93,17 +93,19 @@ const EventsSection = () => {
       ref={sectionRef}
       className="events-section"
     >
-      <style jsx>{`
+      <style>
+      {`
         .events-section {
           min-height: 70vh;
           padding: 3rem 2rem;
-background: linear-gradient(
-  135deg,
-  rgba(0, 0, 0, 0.97) 0%,
-  rgba(15, 15, 15, 0.94) 65%,
-  rgba(255, 69, 0, 0.12) 100%
-);
-backdrop-filter: blur(14px);
+          scroll-margin-top: 90px;
+          background: linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.97) 0%,
+            rgba(15, 15, 15, 0.94) 65%,
+            rgba(255, 69, 0, 0.12) 100%
+          );
+          backdrop-filter: blur(14px);
 
 
           position: relative;
@@ -510,7 +512,8 @@ backdrop-filter: blur(14px);
             height: 320px;
           }
         }
-      `}</style>
+      `}
+      </style>
 
       <div className="events-title">
         <span className="title-text">Events</span>
