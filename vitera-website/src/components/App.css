@@ -555,7 +555,6 @@ html {
   max-width: 100vw;
 }
 
-/* Loading Screen Styles */
 .loading-screen {
   position: fixed;
   top: 0;
@@ -588,6 +587,15 @@ html {
   height: auto;
 }
 
+/* Glow Effect */
+.loading-logo.glow-effect img {
+  animation: glowPulse 1s ease-in-out;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+}
+
+.loading-logo.zoom-in {
+  transform: scale(1.1);
+}
 /* Yellow flash effect */
 @keyframes flash {
   0% {
