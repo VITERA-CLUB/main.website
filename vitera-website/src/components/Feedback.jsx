@@ -3,16 +3,22 @@ import React, { useState } from 'react';
 import './FeedbackPage.css';
 
 function Feedback() {
+  // Use API base URL from .env and append endpoint (Vite syntax)
+  const API_URL = `${import.meta.env.VITE_API_URL}/api/feedback`;
+  
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [feedback, setFeedback] = useState('');
+  const [loading, setLoading] = useState(false);
   // const navigate = useNavigate(); //
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    console.log("Submitting to:", API_URL); // Debug log
 
     try {
-      const response = await fetch("https://vitera.onrender.com/api/feedback", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, feedback }),
@@ -29,11 +35,21 @@ function Feedback() {
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
+      alert("Connection error. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="feedback-page">
+      {/* Loading Modal */}
+      {loading && (
+        <div className="loading-modal">
+          <div className="loading-spinner"></div>
+          <div>Submitting...</div>
+        </div>
+      )}
       <div className="background-logo"></div>
       <div className="feedback-container">
         <h2>Feedback & Suggestions</h2>
@@ -66,7 +82,9 @@ function Feedback() {
             required
           ></textarea>
 
-          <button type="submit">Submit Feedback</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit Feedback"}
+          </button>
         </form>
       </div>
     </div>
