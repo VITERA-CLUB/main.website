@@ -315,7 +315,6 @@
 .hero-section {
   min-height: calc(100vh - 80px);
   padding: 2rem 0;
-  background-color: #1a1a1a; /* Updated to matte black */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -345,8 +344,7 @@ backdrop-filter: blur(14px);
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  gap: 4rem; /* Increased gap between content and logo */
+  justify-content: space-around;
   position: relative;
   z-index: 1;
   
@@ -384,13 +382,14 @@ backdrop-filter: blur(14px);
   font-size: 1.2rem;
   font-weight: 600;
   color: #ffffff; /* Changed to white */
-  margin-bottom: 2rem;
+  /* margin-bottom: rem; */
   letter-spacing: 0.5px;
 }
 
 .hero-description {
   font-size: 1.1rem;
   line-height: 1.6;
+  text-align: justify;
   color: var(--text-secondary);
   margin-bottom: 1rem;
 }
