@@ -91,6 +91,7 @@ const EventsSection = () => {
   return (
     <div 
       ref={sectionRef}
+      id="events"
       className="events-section"
     >
       <style>

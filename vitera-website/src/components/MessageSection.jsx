@@ -78,7 +78,7 @@ function MessageSection() {
   }, [currentMobileSlide]);
 
   return (
-    <section className="message-section">
+    <section id="team-messages" className="message-section">
       <div className="container">
         <h2 className="message-title">
           <span className="white-text">Message From </span><br></br>
