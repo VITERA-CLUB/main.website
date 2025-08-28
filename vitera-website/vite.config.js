@@ -12,7 +12,10 @@ export default defineConfig({
   server: {
     allowedHosts: [
       'localhost',
+      
       // Add other allowed hosts (for testing purposes)
-    ]
+    ],proxy: {
+      '/api': 'http://localhost:5000'  // your backend API port here
+    }
   }
 })
