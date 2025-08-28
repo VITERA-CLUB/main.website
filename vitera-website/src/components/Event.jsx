@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const EventsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
-
+  const navigate = useNavigate();
   //only two keywords allowed
   // Enhanced events data
   const eventOBJ = [
@@ -50,7 +51,9 @@ const EventsSection = () => {
       featured: false
     }
   ];
-
+  const handleViewEvent = (eventName) => {
+    navigate(`/event/${encodeURIComponent(eventName)}`);
+  };
   // Visibility detection
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -567,10 +570,13 @@ const EventsSection = () => {
                     <p className="event-description">{event.description}</p>
                   </div>
                   
-                  <button className="view-event-btn">
-                    View Event
-                    <ArrowRight size={12} className="btn-icon" />
-                  </button>
+  <button
+    className="view-event-btn"
+    onClick={() => handleViewEvent(event.name)}
+  >
+    View Event
+    <ArrowRight size={12} className="btn-icon" />
+  </button>
                 </div>
               </div>
             </div>
