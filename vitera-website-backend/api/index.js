@@ -2,7 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import Feedback from "../Feedback.js";
-import Event from "../Event.js";  // Import the Event model
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -60,45 +59,6 @@ app.get("/api/feedback", async (req, res) => {
     res.status(500).json({ message: "Error fetching feedback", error });
   }
 });
-
-// Event routes
-app.get("/api/event", async (req, res) => {
-  try {
-    const events = await Event.find().sort({ date: -1 });
-    res.json(events);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching events", error });
-  }
-});
-
-app.get("/api/event/:name", async (req, res) => {
-  const eventName = req.params.name;
-  try {
-    const event = await Event.findOne({
-      name: { $regex: new RegExp('^' + eventName + '$', 'i') }
-    });
-    if (!event) {
-      return res.status(404).json({ message: "Event not found" });
-    }
-    res.json(event);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching event", error });
-  }
-});
-
-
-app.post("/api/event", async (req, res) => {
-  try {
-    const { id, name, description, image, keywords, date, imagesStrip1, imagesStrip2 } = req.body;
-    const newEvent = new Event({ id, name, description, image, keywords, date, imagesStrip1, imagesStrip2 });
-    await newEvent.save();
-    res.status(201).json({ message: "Event created successfully", event: newEvent });
-  } catch (error) {
-    res.status(500).json({ message: "Error creating event", error });
-  }
-});
-
-
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });

@@ -27,7 +27,7 @@ function Navbar() {
         <div className="center-nav">
           <div className="nav-links">
             <Link to="/" className="nav-link">Home</Link>
-            <a href="#events" className="nav-link">Events</a>
+            <a href="/events" className="nav-link">Events</a>
             <a href="#about" className="nav-link">About</a>
             <a href="/team" className="nav-link">Team</a>
           </div>
