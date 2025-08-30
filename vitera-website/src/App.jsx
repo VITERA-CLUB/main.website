@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Feedback from './components/Feedback';
+import Events from './components/EventTimeline';
 import Event from './components/Eventspage';
 import TeamMembers from './components/teamMembers';
 import { useState, useEffect } from 'react';
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/team" element={<TeamPage />} />
+        <Route path="/events" element={<Events />} />
         <Route path="/event/:name" element={<Event />} />
       </Routes>
     </>
