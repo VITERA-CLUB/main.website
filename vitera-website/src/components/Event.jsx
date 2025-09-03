@@ -166,15 +166,7 @@ const EventsSection = () => {
           min-height: 70vh;
           padding: 3rem 2rem;
           scroll-margin-top: 90px;
-          background: linear-gradient(
-            135deg,
-            rgba(0, 0, 0, 0.97) 0%,
-            rgba(15, 15, 15, 0.94) 65%,
-            rgba(255, 69, 0, 0.12) 100%
-          );
-          backdrop-filter: blur(14px);
-
-
+          background: transparent; /* Remove the background */
           position: relative;
           overflow: hidden;
           display: flex;
@@ -190,8 +182,9 @@ const EventsSection = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          background: radial-gradient(circle at 30% 20%, rgba(255, 107, 53, 0.15) 0%, transparent 50%), 
-                      radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+          /* Softer, more blended gradient */
+          background: radial-gradient(circle at 30% 20%, rgba(255, 107, 53, 0.08) 0%, transparent 60%), 
+                      radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 60%);
           pointer-events: none;
         }
 

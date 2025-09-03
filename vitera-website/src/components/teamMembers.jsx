@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const teams = [
 	{
@@ -301,52 +301,211 @@ const teams = [
 ];
 
 const TeamMembers = () => {
-	return (
-		<section id="team" className="py-16 scroll-mt-[90px]">
-			<div className="max-w-[1100px] mx-auto px-4">
-				<h2 className="text-center text-[3rem] font-extrabold mb-4 text-white">Our Teams</h2>
-				<p className="text-center text-[color:var(--text-secondary)] mb-5">Meet the people powering VITERA across different domains.</p>
+  const [selectedTeam, setSelectedTeam] = useState('panel-team');
 
-				{/* navigation  */}
-				<div className="w-full flex rounded-[1rem] flex-wrap gap-3 justify-center p-1">
-					{teams.map((t) => (
-						<a
-							key={t.id}
-							href={`#${t.id}`}
-							className="bg-[rgba(255,255,255,0.06)] border border-white !text-white visited:!text-white active:!text-white py-[0.55rem] px-[1.1rem] rounded-full text-[1rem] transition hover:bg-[var(--primary)] hover:!text-white hover:border-white hover:-translate-y-[1px] cursor-pointer"
-						>
-							{t.title}
-						</a>
-					))}
-				</div>
+  return (
+    <section id="team" className="py-16 scroll-mt-[90px]">
+      <div className="max-w-[1200px] mx-auto px-4">
+        <h2 className="text-center text-[3rem] font-extrabold mb-8 text-white">Our Teams</h2>
+        <p className="text-center text-[color:var(--text-secondary)] mb-12 max-w-[700px] mx-auto">
+          Meet the passionate individuals driving VITERA's mission forward across different domains
+        </p>
 
-				{/* Teams */}
-				{teams.map((team) => (
-					<div key={team.id} id={team.id} className="my-[2.2rem]  scroll-mt-[100px]">
-						<h3 className="text-[1.6rem] gap-5 mx-5 font-extrabold mb-[0.9rem] text-white">{team.title}</h3>
-						<div className="grid grid-cols-4 gap-[2.5rem] max-[992px]:grid-cols-2 max-[992px]:gap-8 max-[640px]:grid-cols-1">
-							{team.members.map((m, idx) => (
-								<a
-									key={idx}
-									href={m.linkedin || '#'}
-									target={m.linkedin ? '_blank' : undefined}
-									rel={m.linkedin ? 'noopener noreferrer' : undefined}
-									className="member-card block rounded-[18px] pt-[1.8rem] px-[1.2rem] pb-[1.2rem] text-center transform-gpu shadow-[0_4px_18px_rgba(255,69,0,0.08)] hover:shadow-[0_8px_32px_rgba(255,140,0,0.18)]"
-									aria-label={`Open ${m.name}'s LinkedIn profile`}
-								>
-									<div className="w-[90px] h-[90px] rounded-full overflow-hidden mx-auto mb-[1.2rem] border-[3px] border-[var(--primary)] shadow-[0_0_0_6px_rgba(255,69,0,0.08)] bg-[#232323]">
-										<img src={m.img} alt={m.name} className="w-full h-full object-cover" />
-									</div>
-									<p className="font-bold text-[1.25rem] mt-[0.2rem] mb-[0.1rem] text-white">{m.name}</p>
-									<p className="text-[color:var(--secondary)] font-medium text-[1rem] m-0">{m.role}</p>
-								</a>
-							))}
-						</div>
-					</div>
-				))}
-			</div>
-		</section>
-	);
+        {/* Team Navigation */}
+        <div className="team-nav">
+          {teams.map((t) => (
+            <button
+              key={t.id}
+              className={`team-nav-btn ${selectedTeam === t.id ? 'active' : ''}`}
+              onClick={() => setSelectedTeam(t.id)}
+            >
+              {t.title}
+            </button>
+          ))}
+        </div>
+
+        {/* Team Members Grid */}
+        <div className="team-members-container">
+          {teams.map((team) => (
+            <div 
+              key={team.id} 
+              className={`team-section ${selectedTeam === team.id ? 'active' : ''}`}
+            >
+              <div className="members-grid">
+                {team.members.map((member, idx) => (
+                  <a
+                    key={idx}
+                    href={member.linkedin || '#'}
+                    target={member.linkedin ? '_blank' : undefined}
+                    rel={member.linkedin ? 'noopener noreferrer' : undefined}
+                    className="member-card"
+                  >
+                    <div className="member-image-wrapper">
+                      <img src={member.img} alt={member.name} className="member-image" />
+                      <div className="member-overlay">
+                        <span className="view-profile">View Profile</span>
+                      </div>
+                    </div>
+                    <div className="member-info">
+                      <h3 className="member-name">{member.name}</h3>
+                      <p className="member-role">{member.role}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <style jsx>{`
+        .team-nav {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
+          justify-content: center;
+          margin-bottom: 3rem;
+        }
+
+        .team-nav-btn {
+          padding: 0.7rem 1.5rem;
+          border-radius: 30px;
+          font-weight: 600;
+          background: rgba(255,255,255,0.05);
+          color: #fff;
+          border: 1px solid rgba(255,255,255,0.1);
+          transition: all 0.3s ease;
+        }
+
+        .team-nav-btn:hover {
+          background: rgba(255,92,0,0.15);
+          border-color: var(--primary);
+        }
+
+        .team-nav-btn.active {
+          background: var(--primary);
+          border-color: var(--primary);
+        }
+
+        .team-section {
+          display: none;
+          animation: fadeIn 0.5s ease;
+        }
+
+        .team-section.active {
+          display: block;
+        }
+
+        .members-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 2rem;
+          padding: 1rem;
+        }
+
+        .member-card {
+          background: rgba(255,255,255,0.03);
+          border-radius: 16px;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .member-card:hover {
+          transform: translateY(-5px);
+          background: rgba(255,255,255,0.05);
+          border-color: var(--primary);
+        }
+
+        .member-image-wrapper {
+          position: relative;
+          padding-top: 100%;
+          overflow: hidden;
+        }
+
+        .member-image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+
+        .member-card:hover .member-image {
+          transform: scale(1.1);
+        }
+
+        .member-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0,0,0,0.4);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .member-card:hover .member-overlay {
+          opacity: 1;
+        }
+
+        .view-profile {
+          color: #fff;
+          font-weight: 600;
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          background: var(--primary);
+          transform: translateY(20px);
+          transition: transform 0.3s ease;
+        }
+
+        .member-card:hover .view-profile {
+          transform: translateY(0);
+        }
+
+        .member-info {
+          padding: 1.2rem;
+        }
+
+        .member-name {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #fff;
+          margin-bottom: 0.3rem;
+        }
+
+        .member-role {
+          color: var(--primary);
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: none; }
+        }
+
+        @media (max-width: 768px) {
+          .members-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+          }
+          
+          .team-nav {
+            gap: 0.7rem;
+          }
+          
+          .team-nav-btn {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+          }
+        }
+      `}</style>
+    </section>
+  );
 };
 
 export default TeamMembers;

@@ -5,6 +5,7 @@ import Feedback from './components/Feedback';
 import Events from './components/EventTimeline';
 import Event from './components/Eventspage';
 import TeamMembers from './components/teamMembers';
+import ScrollToTopButton from './components/ScrollToTop';
 import { useState, useEffect } from 'react';
 
 function TeamPage() {
@@ -34,6 +35,9 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/event/:name" element={<Event />} />
       </Routes>
+
+     {/* Global scroll-to-top button */}
+     <ScrollToTopButton />
     </>
   );
 }
