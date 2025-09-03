@@ -4,6 +4,7 @@ import './App.css';
 import MessageSection from './MessageSection';
 import Footer from './Footer';
 import EventsSection from './Event';
+import GallerySection from './GallerySection';
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -90,6 +91,7 @@ function Home() {
         </div>
       </section>
 
+      <GallerySection />
       <EventsSection />
       <MessageSection />
       <Footer />

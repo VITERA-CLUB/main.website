@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './MessageSection.css';
 
 const teamMessages = [
@@ -51,6 +51,14 @@ function MessageSection() {
   const [currentMobileSlide, setCurrentMobileSlide] = useState(0);
   const mobileSliderRef = useRef(null);
 
+  // Touch event states
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  // Auto-slide settings
+  const AUTO_SLIDE_INTERVAL = 5000; // ms (change as needed)
+  const [isPaused, setIsPaused] = useState(false);
+
   // Navigate to previous set of messages
   const prevMessages = () => {
     setCurrentMessageIndex((prev) => (prev <= 0 ? maxStartIndex : prev - messagesPerPage));
@@ -77,6 +85,58 @@ function MessageSection() {
     }
   }, [currentMobileSlide]);
 
+  // Desktop auto-slide (advances to next set)
+  useEffect(() => {
+    if (isPaused) return;
+    const id = setInterval(() => {
+      nextMessages();
+    }, AUTO_SLIDE_INTERVAL);
+    return () => clearInterval(id);
+  }, [isPaused, currentMessageIndex]); // re-start when index changes or pause toggles
+
+  // Mobile auto-slide
+  useEffect(() => {
+    if (isPaused) return;
+    const id = setInterval(() => {
+      nextMobileMessage();
+    }, AUTO_SLIDE_INTERVAL);
+    return () => clearInterval(id);
+  }, [isPaused, currentMobileSlide]);
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsPaused(true); // pause when touching
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) {
+      setIsPaused(false);
+      setTouchStart(null);
+      setTouchEnd(null);
+      return;
+    }
+    
+    const diff = touchStart - touchEnd;
+    const threshold = 50; // minimum distance for swipe
+
+    if (diff > threshold) {
+      // Swipe left
+      nextMobileMessage();
+    } else if (diff < -threshold) {
+      // Swipe right
+      prevMobileMessage();
+    }
+
+    setTouchStart(null);
+    setTouchEnd(null);
+    // resume after short delay to avoid immediate auto-move while finishing interaction
+    setTimeout(() => setIsPaused(false), 400);
+  };
+
   return (
     <section className="message-section">
       <div className="container">
@@ -86,7 +146,11 @@ function MessageSection() {
         </h2>
         
         {/* Desktop Messages View */}
-        <div className="desktop-message-container">
+        <div
+          className="desktop-message-container"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           <div className="message-cards">
             {teamMessages.slice(currentMessageIndex, currentMessageIndex + messagesPerPage).map((member, idx) => (
               <div className="message-card" key={idx}>
@@ -118,8 +182,21 @@ function MessageSection() {
         </div>
         
         {/* Mobile Messages Slider */}
-        <div className="mobile-message-container">
-          <div className="mobile-message-slider" ref={mobileSliderRef}>
+        <div
+          className="mobile-message-container"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div 
+            className="mobile-message-slider"
+            ref={mobileSliderRef}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            style={{
+              transform: `translateX(-${currentMobileSlide * 100}%)`
+            }}
+          >
             {teamMessages.map((member, idx) => (
               <div className="mobile-message-slide" key={idx}>
                 <div className="message-card">
@@ -136,18 +213,15 @@ function MessageSection() {
             ))}
           </div>
           
-          {/* Mobile Navigation Buttons */}
-          <div className="mobile-message-nav-buttons">
-            <button className="message-nav-btn" onClick={prevMobileMessage}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-            <button className="message-nav-btn" onClick={nextMobileMessage}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
+          {/* Mobile Navigation Dots */}
+          <div className="mobile-nav-dots">
+            {teamMessages.map((_, idx) => (
+              <div
+                key={idx}
+                className={`nav-dot ${currentMobileSlide === idx ? 'active' : ''}`}
+                onClick={() => { setCurrentMobileSlide(idx); setIsPaused(true); setTimeout(()=>setIsPaused(false), 800); }}
+              />
+            ))}
           </div>
         </div>
       </div>
