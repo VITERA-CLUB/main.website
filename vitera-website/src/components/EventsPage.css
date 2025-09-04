@@ -35,6 +35,7 @@
   line-height: 1.6;
   color: #dcdcdc;
   user-select: none;
+  white-space: pre-line;
 }
 
 /* Container for images */
