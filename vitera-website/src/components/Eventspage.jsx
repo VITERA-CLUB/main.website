@@ -15,8 +15,13 @@ function EventsPage() {
     <div className="events-page">
       <div className="event-info">
         <h1 className="event-title">{title}</h1>
-        <p className="event-desc">{description}</p>
+        <div className="event-desc">
+          {description.split('\n').map((line, i) => (
+            <p key={i}>{line}</p>
+          ))}
+        </div>
       </div>
+      
       <div className="event-images">
         <div className="scroll-strip scroll-strip-1">
           {imagesStrip1.map((img, idx) => (
