@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import '../images/Events Pics/TRAILBLAZERS/2.jpg'
 const EventsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -39,23 +40,23 @@ The event featured four interactive games. Qriosity challenged participants to s
 A jamming session followed, transforming the hall into a lively concert space where students sang, clapped, and bonded. Winners were honored: Team Victorious Secret (1st), Team Jumanji (2nd), and Team Desi Kalakar (3rd). Beyond trophies and certificates, participants carried home memories of teamwork, creativity, and inspiration.
 \n
 TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and thought-provoking, reinforcing VITERA’s mission of making responsibility an everyday habit.`,
-  bannerPath: "../../public/images/Events Pics/TRAILBLAZERS/1.jpg",
+  bannerPath: "/images/Events Pics/TRAILBLAZERS/1.jpg",
   keyWords: ["Impact", "Community"],
   date: "August 22, 2025",
   imagesStrip1: [
-    "../../public/images/Events Pics/TRAILBLAZERS/6.jpg",
-    "../../public/images/Events Pics/TRAILBLAZERS/7.jpg",
-    "../../public/images/Events Pics/TRAILBLAZERS/8.jpg",
-    "../../public/images/Events Pics/TRAILBLAZERS/9.jpg",
-    "../../public/images/Events Pics/TRAILBLAZERS/10.jpg",
-    "../../public/images/Events Pics/TRAILBLAZERS/11.jpg",
+    "/images/Events Pics/TRAILBLAZERS/6.jpg",
+    "/images/Events Pics/TRAILBLAZERS/7.jpg",
+    "/images/Events Pics/TRAILBLAZERS/8.jpg",
+    "/images/Events Pics/TRAILBLAZERS/9.jpg",
+    "/images/Events Pics/TRAILBLAZERS/10.jpg",
+    "/images/Events Pics/TRAILBLAZERS/11.jpg",
   ],
   imagesStrip2: [
-    "../../public/images/Events Pics/TRAILBLAZERS/5.jpg",
-    "../../public/images/Events Pics/TRAILBLAZERS/4.jpg",
-    "../../public/images/Events Pics/TRAILBLAZERS/3.jpg",
-    "../../public/images/Events Pics/TRAILBLAZERS/2.jpg",
-    "../../public/images/Events Pics/TRAILBLAZERS/1.jpg",
+    "/images/Events Pics/TRAILBLAZERS/5.jpg",
+    "/images/Events Pics/TRAILBLAZERS/4.jpg",
+    "/images/Events Pics/TRAILBLAZERS/3.jpg",
+    "/images/Events Pics/TRAILBLAZERS/2.jpg",
+    "/images/Events Pics/TRAILBLAZERS/1.jpg",
   ],
   featured: false
 }
