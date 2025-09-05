@@ -13,27 +13,82 @@ The event featured four interactive games. Qriosity challenged participants to s
 A jamming session followed, transforming the hall into a lively concert space where students sang, clapped, and bonded. Winners were honored: Team Victorious Secret (1st), Team Jumanji (2nd), and Team Desi Kalakar (3rd). Beyond trophies and certificates, participants carried home memories of teamwork, creativity, and inspiration.
 \n
 TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and thought-provoking, reinforcing VITERA’s mission of making responsibility an everyday habit.`,
-  bannerPath: "/images/Events Pics/TRAILBLAZERS/1.jpg",
+  bannerPath: "/images/Events_Pics/Trailblazers/1.webp",
   keyWords: ["Impact", "Community"],
   date: "August 22, 2025",
   imagesStrip1: [
-    "/images/Events Pics/TRAILBLAZERS/6.jpg",
-    "/images/Events Pics/TRAILBLAZERS/7.jpg",
-    "/images/Events Pics/TRAILBLAZERS/8.jpg",
-    "/images/Events Pics/TRAILBLAZERS/9.jpg",
-    "/images/Events Pics/TRAILBLAZERS/10.jpg",
-    "/images/Events Pics/TRAILBLAZERS/11.jpg",
+    "/images/Events_Pics/Trailblazers/6.webp",
+    "/images/Events_Pics/Trailblazers/7.webp",
+    "/images/Events_Pics/Trailblazers/8.webp",
+    "/images/Events_Pics/Trailblazers/9.webp",
+    "/images/Events_Pics/Trailblazers/10.webp",
+    "/images/Events_Pics/Trailblazers/11.webp",
   ],
   imagesStrip2: [
-    "/images/Events Pics/TRAILBLAZERS/5.jpg",
-    "/images/Events Pics/TRAILBLAZERS/4.jpg",
-    "/images/Events Pics/TRAILBLAZERS/3.jpg",
-    "/images/Events Pics/TRAILBLAZERS/2.jpg",
-    "/images/Events Pics/TRAILBLAZERS/1.jpg",
+    "/images/Events_Pics/Trailblazers/5.webp",
+    "/images/Events_Pics/Trailblazers/4.webp",
+    "/images/Events_Pics/Trailblazers/3.webp",
+    "/images/Events_Pics/Trailblazers/2.webp",
+    "/images/Events_Pics/Trailblazers/1.webp",
   ],
   featured: false
-}
+},
+  {
+    id: 2,
+    name: "To Be Announced",
+    description: "Details coming soon. Stay tuned for upcoming events from VITERA.",
+    bannerPath: "/images/coming.jpg", // replace with an actual placeholder image in public/images
+    keyWords: ["TBA"],
+    date: "TBA",
+    imagesStrip1: [],
+    imagesStrip2: [],
+    featured: false
+  }
   ];
+
+const SmartImage = ({ src, alt, className }) => {
+  const makeVariants = (original) => {
+    try {
+      const url = new URL(original, window.location.href).pathname;
+      const enc = encodeURI(url);
+      const lower = url.toLowerCase();
+      const variants = new Set([original, url, enc, lower]);
+
+      // try common extensions
+      const exts = ['jpg','jpeg','png','webp','JPG','JPEG','PNG','WEBP'];
+      const match = url.match(/(.+)\.([a-zA-Z0-9]+)$/);
+      if (match) {
+        const base = match[1];
+        exts.forEach(e => variants.add(base + '.' + e));
+        // also add encoded variants
+        exts.forEach(e => variants.add(encodeURI(base + '.' + e)));
+      }
+      return Array.from(variants);
+    } catch {
+      return [src];
+    }
+  };
+
+  const variants = makeVariants(src);
+  const [idx, setIdx] = useState(0);
+
+  // reset when src changes
+  React.useEffect(() => {
+    setIdx(0);
+  }, [src]);
+
+  const onError = () => {
+    if (idx + 1 < variants.length) setIdx(idx + 1);
+    else setIdx(variants.length); // mark as failed
+  };
+
+  if (idx >= variants.length) {
+    // final fallback: tiny transparent placeholder to avoid broken icon
+    return <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3C/svg%3E" alt={alt} className={className} />;
+  }
+
+  return <img src={variants[idx]} alt={alt} className={className} onError={onError} loading="lazy" />;
+};
 
 const EventTimeline = () => {
   const [hovered, setHovered] = useState(null);
@@ -63,13 +118,9 @@ const EventTimeline = () => {
               {new Date(event.date).toLocaleDateString()}
             </div>
             <div className="timeline-content">
-              <div className="timeline-main">
-                <img
-                  src={event.bannerPath}
-                  alt={event.name}
-                  className="event-image"
-                />
-                <div>
+<div className="timeline-main">
+  <SmartImage src={event.bannerPath} alt={event.name} className="event-image" />
+  <div>
                   <h2 className="event-name">{event.name}</h2>
                   {!hovered && (
                     <p className="event-short">
