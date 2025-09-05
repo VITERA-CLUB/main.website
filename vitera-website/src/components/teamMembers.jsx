@@ -8,62 +8,96 @@ const teams = [
 			{ 
 				name: 'Lakshya Pandey ', 
 				role: 'Founder & President ', 
-				img: '/images/Panel/lakshya.jpg', 
-				linkedin: 'https://www.linkedin.com/in/lakshya-pandey-31456628a/' 
+				img: '/images/Our Team/Panel/lakshya.webp', 
+				linkedin: 'https://www.linkedin.com/in/lakshya-pandey-31456628a' 
 			},
 			{ 
 				name: 'Spandan Agrawal', 
 				role: 'Founder & Vice-President', 
-				img: '/images/Panel/spandan.jpg', 
+				img: '/images/Our Team/Panel/spandan.webp', 
 				linkedin: 'https://www.linkedin.com/in/s-74917028a/' 
 			},
 			{ 
-				name: 'Panelist Three', 
-				role: 'Panel Member', 
-				img: 'https://randomuser.me/api/portraits/men/13.jpg', 
-				linkedin: 'https://www.linkedin.com/in/panelist-three' 
+				name: 'Parthib Datta Muhuri', 
+				role: 'General Secretary', 
+				img: '/images/Our Team/Panel/parthib.webp', 
+				linkedin: 'https://www.instagram.com/parthib_d_muhuri/profilecard/?igsh=aWRzNXp0ZWhpZGRm' 
 			},
+			{
+				name: 'Azhan Javed',
+				role: 'Joint Secretary',
+				img: '/images/Our Team/Panel/azhan.webp',
+				linkedin: 'https://www.linkedin.com/in/azhan-javed-12b32028a/'
+			},
+			{
+				name: 'Prashant Kundal',
+				role: 'Chairperson',
+				img: '/images/Our Team/Panel/prashant.webp',
+				linkedin:'https://wa.me/+919317104238'
+			},
+			{
+				name: 'Udit Gupta',
+				role: 'Financial Head',
+				img: '/images/Our Team/Panel/udit.webp',
+				linkedin:'https://www.linkedin.com/in/udit-gupta-aa89732b8'
+			}
 		],
 	},
 	
-
-
 	
 	{
 		id: 'tech-team',
-		title: 'Tech Team',
+		title: 'Technical Team',
 		members: [
 		{ 
-			name: 'Asdfksd',
-			role: 'LEAD',
-			img: '/images/avi.png',
-			linkedin: 'http://www.linkedin.com/in/avinashgautam007'
+			name: 'Taneesh Patel',
+			role: 'Technical Lead',
+			img: '/images/Our Team/Tech Team/taneesh.jpeg',
+			linkedin: 'https://www.linkedin.com/in/taneesh-patel-53b83b26b/'
 		},
 		{ 
-			name: 'Priya Sharma',
-			role: 'Frontend Dev',
-			img: 'https://randomuser.me/api/portraits/women/44.jpg',
-			linkedin: 'https://www.linkedin.com/in/priya-sharma'
+			name: 'Shravan Jain',
+			role: 'Technical Co-Lead',
+			img: '/images/Our Team/Tech Team/shravan.webp',
+			linkedin: 'https://www.linkedin.com/in/shravan-jain-630009280/'
 		},
 		{ 
 			name: 'Avinash Kumar',
 			role: 'Core Member',
-			img: '/images/Tech Team/avinash.jpg',
+			img: '/images/Our Team/Tech Team/avinash.jpg',
 			linkedin: 'http://www.linkedin.com/in/avinashgautam007'
 		},
 
 		{ 
 			name: 'Bhaskar Ojha',
 			role: 'Core Member',
-			img: '/images/Tech Team/bhaskar.jpg',
+			img: '/images/Our Team/Tech Team/bhaskar.jpg',
 			linkedin: 'https://www.linkedin.com/in/itsbhaskarojha/'
 		},
 		{ 
 			name: 'Saksham Jaiswal',
 			role: 'Core Member',
-			img: '/images/Tech Team/saksham.png',
+			img: '/images/Our Team/Tech Team/saksham.png',
 			linkedin: 'https://www.linkedin.com/in/saksham-jaiswal-57022626b/'
-		}
+		},
+		{
+			name: 'Akshay Kumar Mishra',
+			role: 'Core Member',
+			img: '/images/Our Team/Tech Team/akshay.jpg',
+			linkedin: 'https://www.linkedin.com/in/akshay-kumar-mishra-320413246'
+		},
+		{
+			name: 'Anisha Garg',
+			role: 'Core Member',
+			img: '/images/Our Team/Tech Team/anisha.jpg',
+			linkedin: 'https://www.linkedin.com/in/anisha-garg-b90918349'
+		},
+		{
+			name: 'Kapil Kumar Arya',
+			role: 'Core Member',
+			img: '/images/Our Team/Tech Team/kapil.jpg',
+			linkedin: 'https://www.linkedin.com/in/kapil-kumar-arya-b0636528a'
+		},
 		],
 	},
 	{
@@ -72,16 +106,22 @@ const teams = [
 		members: [
 		{ 
 			name: 'Arya Sharma ', 
-			role: 'Lead', 
-			img: '/images/PR & Outreach Team/arya sharma.jpg', 
-			linkedin: 'https://www.linkedin.com/in/arya-sharma-460715340?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' 
+			role: 'Team Lead', 
+			img: '/images/Our Team/PR & Outreach Team/arya sharma.jpg', 
+			linkedin: 'https://www.linkedin.com/in/arya-sharma-460715340' 
 		},
 		{ 
-			name: 'Vikram Singh', 
-			role: 'Outreach Coordinator', 
-			img: 'https://randomuser.me/api/portraits/men/77.jpg', 
-			linkedin: 'https://www.linkedin.com/in/vikram-singh' 
+			name: 'Ankshit Dey', 
+			role: 'Core Member', 
+			img: '/images/Our Team/PR & Outreach Team/ankshit.jpg', 
+			linkedin: 'https://www.linkedin.com/in/ankshit-dey-074946329' 
 		},
+		{
+			name: 'Navya Trisha Singh',
+			role: 'Core Member',
+			img: '/images/Our Team/PR & Outreach Team/trisha.jpg',
+			linkedin: 'https://www.linkedin.com/in/navya-trisha-singh-23a77a32a'
+		}
 		],
 	},
 	{
@@ -91,26 +131,32 @@ const teams = [
 		{ 
 			name: 'Mohd Hammad', 
 			role: 'Lead', 
-			img: '/images/Photography Team/hammad.jpg', 
-			linkedin: 'https://www.linkedin.com/in/hammad-khan-47864a28a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' 
+			img: '/images/Our Team/Photography Team/hammad.jpg', 
+			linkedin: 'https://www.linkedin.com/in/hammad-khan-47864a28a' 
 		},
 		{ 
 			name: 'Janhavi Vinaykumar Raut ', 
 			role: 'Co-Lead', 
-			img: '/images/Photography Team/janhvi.jpg', 
-			linkedin: 'https://www.linkedin.com/in/janhavi-raut-1a3859340?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' 
+			img: '/images/Our Team/Photography Team/janhvi.jpg', 
+			linkedin: 'https://www.linkedin.com/in/janhavi-raut-1a3859340' 
 		},
 		{ 
 			name: 'Shamim Uz Zaman', 
 			role: 'Core Member', 
-			img: '/images/Photography Team/shamim.jpeg', 
+			img: '/images/Our Team/Photography Team/shamim.jpeg', 
 			linkedin: 'https://www.linkedin.com/in/shamim-uz-zaman-88788531a' 
 		},
 		{ 
 			name: 'Pradeep Vishnoi', 
 			role: 'Editor', 
-			img: '/images/Photography Team/pradeep.jpg', 
+			img: '/images/Our Team/Photography Team/pradeep.jpg', 
 			linkedin: 'https://www.linkedin.com/in/pradeep-vishnoi-04169a342' 
+		},
+		{
+			name: 'Nehal Tomar',
+			role: 'Core Member',
+			img: '/images/Our Team/Photography Team/nehal.jpeg',
+			linkedin: '#'
 		},
 		],
 	},
@@ -227,46 +273,12 @@ const teams = [
 		title: 'Editing Team',
 		members: [
 		{ 
-			name: 'Meera Nair', 
-			role: 'Video Editor', 
-			img: 'https://randomuser.me/api/portraits/women/13.jpg', 
-			linkedin: 'https://www.linkedin.com/in/meera-nair' 
-		},
-		{ 
-			name: 'Dev Patel', 
-			role: 'Post Production', 
-			img: 'https://randomuser.me/api/portraits/men/18.jpg', 
-			linkedin: 'https://www.linkedin.com/in/dev-patel' 
-		},
-
-		{ 
-			name: 'Manas Gursahani', 
-			role: 'Core Member', 
-			img: '/images/Editing Team/MANAS GURSAHANI.jpeg', 
-			linkedin: 'https://www.linkedin.com/in/manas-gursahani-4b5aa3332?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app' 
-		},
-
-		{ 
 			name: 'Sahil Singh ', 
-			role: 'Member', 
-			img: '/images/Editing Team/sahil.jpg', 
-			linkedin: '' 
+			role: 'Core Member', 
+			img: '/images/Our Team/Editing Team/sahil.jpg', 
+			linkedin: '#' 
 		},
-
-
-
-
-
-
 		],
-	},
-	{
-			id: 'linkedin-team',
-			title: 'LinkedIn Team',
-			members: [
-			{ name: 'Sarthak Jain', role: 'LinkedIn Manager', img: 'https://randomuser.me/api/portraits/men/7.jpg', linkedin: 'https://www.linkedin.com/in/sarthak-jain' },
-			{ name: 'Pooja Sinha', role: 'Content Writer', img: 'https://randomuser.me/api/portraits/women/71.jpg', linkedin: 'https://www.linkedin.com/in/pooja-sinha' },
-			],
 	},
 	{
 			id: 'content-team',

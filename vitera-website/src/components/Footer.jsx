@@ -49,8 +49,8 @@ const Footer = () => (
             <a href="mailto:viteraclub@vitbhopal.ac.in">viteraclub@vitbhopal.ac.in</a>
           </div>
           <div className="footer-contact-address">
-            <span>Kothri Kalan, Ashta, Near,</span>
-            <span>Indore Road, Bhopal,</span>
+            <span>Kothri Kalan, Near,</span>
+            <span>Indore Bhopal Highway,</span>
             <span>Madhya Pradesh 466114</span>
           </div>
 
