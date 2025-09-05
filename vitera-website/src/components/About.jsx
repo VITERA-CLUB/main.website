@@ -4,8 +4,8 @@ import { Linkedin, Mail, Instagram } from 'lucide-react';
 import './About.css';
 
 const faculty = [
-  { name: 'Dr. Santosh K. Bhal', role: 'Faculty Coordinator', img: '/images/faculty/santosh.jpg' },
-  { name: 'Dr. Sonjoy Pan', role: 'Faculty Coordinator', img: '/images/faculty/sonjoy.jpg' },
+  { name: 'Dr. Santosh Kumar Bhal', role: 'Faculty Coordinator', img: '/images/faculty/santosh.webp' },
+  { name: 'Dr. Sonjoy Pan', role: 'Faculty Coordinator', img: '/images/faculty/sonjoy.webp' },
   // ...add more faculty if needed
 ];
 
@@ -51,7 +51,7 @@ const About = () => {
         <h2 className="leadership-title">Leadership</h2>
         <div className="leadership-grid">
           <div className="lead-card">
-            <img src="/images/Panel/lakshya.jpg" alt="President" className="lead-img" />
+            <img src="/images/Our Team/Panel/lakshya.webp" alt="President" className="lead-img" />
             <div className="lead-body">
               <h3>Lakshya Pandey</h3>
               <div className="lead-role">Founder & President</div>
@@ -61,19 +61,20 @@ const About = () => {
                 and empower students to become agents of positive change."
               </p>
               <div className="lead-social">
-                <a href="https://linkedin.com/in/lakshya" target="_blank" rel="noopener noreferrer"
+                <a href="#" target="_blank" rel="noopener noreferrer"
                    className="social-link" title="LinkedIn">
                   <Linkedin size={20} />
                 </a>
-                <a href="mailto:lakshya@vitera.org" className="social-link" title="Email">
-                  <Mail size={20} />
+                 <a href="#" target="_blank" rel="noopener noreferrer"
+                   className="social-link" title="Instagram">
+                  <Instagram size={20} />
                 </a>
               </div>
             </div>
           </div>
 
           <div className="lead-card">
-            <img src="/images/Panel/spandan.jpg" alt="Vice President" className="lead-img" />
+            <img src="/images/Our Team/Panel/spandan.webp" alt="Vice President" className="lead-img" />
             <div className="lead-body">
               <h3>Spandan Agrawal</h3>
               <div className="lead-role">Founder & Vice President</div>
@@ -83,11 +84,11 @@ const About = () => {
                 accessible for everyone in our community."
               </p>
               <div className="lead-social">
-                <a href="https://linkedin.com/in/spandan" target="_blank" rel="noopener noreferrer"
+                <a href="#" target="_blank" rel="noopener noreferrer"
                    className="social-link" title="LinkedIn">
                   <Linkedin size={20} />
                 </a>
-                <a href="https://instagram.com/spandan" target="_blank" rel="noopener noreferrer"
+                <a href="#" target="_blank" rel="noopener noreferrer"
                    className="social-link" title="Instagram">
                   <Instagram size={20} />
                 </a>

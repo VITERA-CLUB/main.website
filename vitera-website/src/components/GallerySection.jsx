@@ -13,17 +13,17 @@ const GallerySection = () => {
 
   // Gallery images array
   const galleryImages = [
-    { src: '/images/gallery/1.jpg', size: 'large' },
-    { src: '/images/gallery/2.jpg', size: 'tall' },
-    { src: '/images/gallery/3.jpg', size: 'small' },
-    { src: '/images/gallery/4.jpg', size: 'small' },
-    { src: '/images/gallery/5.jpg', size: 'tall' },
-    { src: '/images/gallery/6.jpg', size: 'large' },
-    { src: '/images/gallery/7.jpg', size: 'small' },
-    { src: '/images/gallery/8.jpg', size: 'small' },
-    { src: '/images/gallery/9.jpg', size: 'small' },
-    { src: '/images/gallery/10.jpg', size: 'small' },
-    { src: '/images/gallery/12.jpg', size: 'wide' },
+    { src: '/images/gallery/1.webp', size: 'large' },
+    { src: '/images/gallery/2.webp', size: 'tall' },
+    { src: '/images/gallery/3.webp', size: 'small' },
+    { src: '/images/gallery/4.webp', size: 'small' },
+    { src: '/images/gallery/5.webp', size: 'tall' },
+    { src: '/images/gallery/13.webp', size: 'large' },
+    { src: '/images/gallery/7.webp', size: 'small' },
+    { src: '/images/gallery/8.webp', size: 'small' },
+    { src: '/images/gallery/9.webp', size: 'small' },
+    { src: '/images/gallery/10.webp', size: 'small' },
+    { src: '/images/gallery/6.webp', size: 'wide' },
 
 
     // Add more images as needed

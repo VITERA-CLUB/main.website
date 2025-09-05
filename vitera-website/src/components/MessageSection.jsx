@@ -3,37 +3,37 @@ import './MessageSection.css';
 
 const teamMessages = [
   {
-    img: 'https://randomuser.me/api/portraits/men/32.jpg',
+    img: '/images/Our Team/Panel/lakshya.webp',
     name: 'Lakshya Pandey',
     occupation: 'President',
     message: 'Leading Vitera has been a journey of growth and unity. Together, we create impact beyond boundaries.',
   },
   {
-    img: 'https://randomuser.me/api/portraits/women/44.jpg',
-    name: 'Spandan Aggarwal',
+    img: '/images/Our Team/Panel/spandan.webp',
+    name: 'Spandan Agrawal',
     occupation: 'Vice President',
     message: 'Every event is a new opportunity to inspire and empower. Proud to be part of this vibrant family.',
   },
   {
-    img: 'https://randomuser.me/api/portraits/men/65.jpg',
-    name: 'Parthib Dutta Muhuri',
+    img: '/images/Our Team/Panel/parthib.webp',
+    name: 'Parthib Datta Muhuri',
     occupation: 'General Secretary',
     message: 'Vitera is where ideas turn into action. Let\'s keep making a difference, one step at a time.',
   },
   {
-    img: 'https://randomuser.me/api/portraits/women/68.jpg',
+    img: '/images/Our Team/Panel/azhan.webp',
     name: 'Azhan Javed',
     occupation: 'Joint Secretary',
     message: 'Managing resources for Vitera is a privilege. Our collective effort is our greatest asset.',
   },
   {
-    img: 'https://randomuser.me/api/portraits/men/77.jpg',
+    img: '/images/Our Team/Panel/prashant.webp',
     name: 'Prashant Kundal',
     occupation: 'Chairperson',
     message: 'Organizing events with this team is always exciting. Here\'s to more memories and milestones!',
   },
   {
-    img: 'https://randomuser.me/api/portraits/women/85.jpg',
+    img: '/images/Our Team/Panel/udit.webp',
     name: 'Udit Gupta',
     occupation: 'Financial Head',
     message: 'Connecting with our community is at the heart of Vitera. Thank you for your constant support!',
@@ -141,8 +141,8 @@ function MessageSection() {
     <section className="message-section">
       <div className="container">
         <h2 className="message-title">
-          <span className="white-text">Message From </span><br></br>
-          <span className="orange-text">The Core Team Members</span>
+          <span className="white-text">Message From </span>
+          <span className="orange-text">The Team</span>
         </h2>
         
         {/* Desktop Messages View */}

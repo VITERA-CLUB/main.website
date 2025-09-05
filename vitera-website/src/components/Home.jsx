@@ -80,8 +80,8 @@ function Home() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.6, delay: 1.0 }}
             >
-              <a href="#events" className="btn btn-primary">Explore Events</a>
-              <a href="#team" className="btn btn-secondary">Meet the Team</a>
+              <a href="/events" className="btn btn-primary">Explore Events</a>
+              <a href="/team" className="btn btn-secondary">Meet the Team</a>
             </motion.div>
           </motion.div>
           

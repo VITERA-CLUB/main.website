@@ -29,7 +29,7 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
     "/images/Events_Pics/Trailblazers/4.webp",
     "/images/Events_Pics/Trailblazers/3.webp",
     "/images/Events_Pics/Trailblazers/2.webp",
-    "/images/Events_Pics/Trailblazers/1.webp",
+    "/images/Events_Pics/Trailblazers/12.webp",
   ],
   featured: false
 },
