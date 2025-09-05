@@ -1,122 +1,98 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import '../images/Events Pics/TRAILBLAZERS/2.jpg'
+
+// SmartImage helper (same logic as in EventTimeline)
+const SmartImage = ({ src, alt, className }) => {
+  const makeVariants = (original) => {
+    try {
+      const url = new URL(original, window.location.href).pathname;
+      const enc = encodeURI(url);
+      const lower = url.toLowerCase();
+      const variants = new Set([original, url, enc, lower]);
+      const exts = ['jpg','jpeg','png','webp','JPG','JPEG','PNG','WEBP'];
+      const match = url.match(/(.+)\.([a-zA-Z0-9]+)$/);
+      if (match) {
+        const base = match[1];
+        exts.forEach(e => variants.add(base + '.' + e));
+        exts.forEach(e => variants.add(encodeURI(base + '.' + e)));
+      }
+      return Array.from(variants);
+    } catch {
+      return [src];
+    }
+  };
+
+  const variants = makeVariants(src);
+  const [idx, setIdx] = useState(0);
+
+  React.useEffect(() => setIdx(0), [src]);
+
+  const onError = () => {
+    if (idx + 1 < variants.length) setIdx(idx + 1);
+    else setIdx(variants.length);
+  };
+
+  if (idx >= variants.length) {
+    return <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3C/svg%3E" alt={alt} className={className} />;
+  }
+
+  return <img className={className} src={variants[idx]} alt={alt} onError={onError} loading="lazy" />;
+};
+
 const EventsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
   const navigate = useNavigate();
 
-  //only two keywords allowed
-  // Enhanced events data
+  // Replace eventOBJ with three cards: left TBA, center Trailblazers, right TBA
   const eventOBJ = [
     {
       id: 1,
-      name: "Tech Innovation Summit",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer feugiat, ligula a iaculis semper, magna sapien laoreet nisl, nec rhoncus leo sem sed lacus. Suspendisse potenti. Sed in quam nec arcu faucibus sodales. Donec consequat, purus at tincidunt faucibus, eros elit maximus lectus, at vestibulum mauris lorem vel nulla. Nam vitae diam eget arcu imperdiet sollicitudin. Praesent vulputate, mi sit amet fringilla porttitor, lacus odio porta libero, nec gravida mi erat sed mauris. Sed viverra, erat in feugiat luctus, erat urna aliquet est, in suscipit nulla turpis sed nulla. Etiam nec lorem ac dui facilisis finibus. Vestibulum a massa et dui commodo varius. Integer sed ex id metus ullamcorper cursus nec vel leo. Morbi aliquet tortor in odio sagittis laoreet. Curabitur in lorem sed nulla porttitor vehicula. Ut sed bibendum est. Aenean quis justo et eros tempor commodo. Vivamus vulputate dolor a tellus interdum, vel volutpat lorem sagittis. Proin euismod, elit ac fermentum fringilla, sapien sem posuere orci, nec egestas eros nisl vel ante. Integer tincidunt felis et ex rhoncus, ut pretium leo ultricies. Mauris eget mi nec risus feugiat fermentum.",
-      bannerPath: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop&auto=format",
-      keyWords: ["Innovation", "Technology"],
-      date: "August 15, 2025",
-          imagesStrip1: [
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop&auto=format"
-    ],
-      imagesStrip2: [
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?w=600&h=400&fit=crop&auto=format"
-    ],
-      featured: true
+      name: "To Be Announced",
+      description: "Details coming soon. Stay tuned for upcoming events from VITERA.",
+      bannerPath: "/images/coming.jpg",
+      keyWords: ["TBA"],
+      date: "TBA",
+      imagesStrip1: [],
+      imagesStrip2: [],
+      featured: false
     },
-{
-  id: 2,
-  name: "TRAILBLAZERS QUESTS",
-  description: `On February 21, 2025, VITERA organized its flagship event TRAILBLAZERS QUESTS at VIT Bhopal University. The event brought together 95 students in AB-420, creating an atmosphere filled with excitement, curiosity, and energy. Guided by the mentorship of Dr. Santosh K. Bhal and Dr. Sonjoy Pan, the day was designed to blend fun with learning and to remind everyone that social responsibility is a way of life.
-\n
+    {
+      id: 2,
+      name: "TRAILBLAZERS QUESTS",
+      description: `On February 21, 2025, VITERA organized its flagship event TRAILBLAZERS QUESTS at VIT Bhopal University. The event brought together 95 students in AB-420, creating an atmosphere filled with excitement, curiosity, and energy. Guided by the mentorship of Dr. Santosh K. Bhal and Dr. Sonjoy Pan, the day was designed to blend fun with learning and to remind everyone that social responsibility is a way of life.
+      
 The event featured four interactive games. Qriosity challenged participants to scan QR codes and solve puzzles based on social causes. Think Link connected pop culture clues to real-world issues. Popportunity combined the thrill of popping balloons with answering quizzes on awareness topics. Lens of Change encouraged students to reflect on real-life acts of kindness and sacrifice, sparking meaningful conversations.
-\n
-A jamming session followed, transforming the hall into a lively concert space where students sang, clapped, and bonded. Winners were honored: Team Victorious Secret (1st), Team Jumanji (2nd), and Team Desi Kalakar (3rd). Beyond trophies and certificates, participants carried home memories of teamwork, creativity, and inspiration.
-\n
-TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and thought-provoking, reinforcing VITERA’s mission of making responsibility an everyday habit.`,
-  bannerPath: "/images/Events Pics/TRAILBLAZERS/1.jpg",
-  keyWords: ["Impact", "Community"],
-  date: "August 22, 2025",
-  imagesStrip1: [
-    "/images/Events Pics/TRAILBLAZERS/6.jpg",
-    "/images/Events Pics/TRAILBLAZERS/7.jpg",
-    "/images/Events Pics/TRAILBLAZERS/8.jpg",
-    "/images/Events Pics/TRAILBLAZERS/9.jpg",
-    "/images/Events Pics/TRAILBLAZERS/10.jpg",
-    "/images/Events Pics/TRAILBLAZERS/11.jpg",
-  ],
-  imagesStrip2: [
-    "/images/Events Pics/TRAILBLAZERS/5.jpg",
-    "/images/Events Pics/TRAILBLAZERS/4.jpg",
-    "/images/Events Pics/TRAILBLAZERS/3.jpg",
-    "/images/Events Pics/TRAILBLAZERS/2.jpg",
-    "/images/Events Pics/TRAILBLAZERS/1.jpg",
-  ],
-  featured: false
-}
 
-,
+A jamming session followed, transforming the hall into a lively concert space where students sang, clapped, and bonded. Winners were honored: Team Victorious Secret (1st), Team Jumanji (2nd), and Team Desi Kalakar (3rd). Beyond trophies and certificates, participants carried home memories of teamwork, creativity, and inspiration.
+
+TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and thought-provoking, reinforcing VITERA’s mission of making responsibility an everyday habit.`,
+      bannerPath: "/images/Events_Pics/Trailblazers/1.webp",
+      keyWords: ["Impact", "Community"],
+      date: "August 22, 2025",
+      imagesStrip1: [
+        "/images/Events_Pics/Trailblazers/6.webp",
+        "/images/Events_Pics/Trailblazers/7.webp",
+        "/images/Events_Pics/Trailblazers/8.webp"
+      ],
+      imagesStrip2: [
+        "/images/Events_Pics/Trailblazers/5.webp",
+        "/images/Events_Pics/Trailblazers/4.webp",
+        "/images/Events_Pics/Trailblazers/3.webp"
+      ],
+      featured: false
+    },
     {
       id: 3,
-      name: "Leadership Bootcamp",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer feugiat, ligula a iaculis semper, magna sapien laoreet nisl, nec rhoncus leo sem sed lacus. Suspendisse potenti. Sed in quam nec arcu faucibus sodales. Donec consequat, purus at tincidunt faucibus, eros elit maximus lectus, at vestibulum mauris lorem vel nulla. Nam vitae diam eget arcu imperdiet sollicitudin. Praesent vulputate, mi sit amet fringilla porttitor, lacus odio porta libero, nec gravida mi erat sed mauris. Sed viverra, erat in feugiat luctus, erat urna aliquet est, in suscipit nulla turpis sed nulla. Etiam nec lorem ac dui facilisis finibus. Vestibulum a massa et dui commodo varius. Integer sed ex id metus ullamcorper cursus nec vel leo. Morbi aliquet tortor in odio sagittis laoreet. Curabitur in lorem sed nulla porttitor vehicula. Ut sed bibendum est. Aenean quis justo et eros tempor commodo. Vivamus vulputate dolor a tellus interdum, vel volutpat lorem sagittis. Proin euismod, elit ac fermentum fringilla, sapien sem posuere orci, nec egestas eros nisl vel ante. Integer tincidunt felis et ex rhoncus, ut pretium leo ultricies. Mauris eget mi nec risus feugiat fermentum.",
-      bannerPath: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop&auto=format",
-      keyWords: ["Leadership", "Growth"],
-      date: "September 5, 2025",
-                imagesStrip1: [
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop&auto=format"
-    ],
-      imagesStrip2: [
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?w=600&h=400&fit=crop&auto=format"
-    ],
-      featured: false
-    },
-    {
-      id: 4,
-      name: "Clean Campus Initiative",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer feugiat, ligula a iaculis semper, magna sapien laoreet nisl, nec rhoncus leo sem sed lacus. Suspendisse potenti. Sed in quam nec arcu faucibus sodales. Donec consequat, purus at tincidunt faucibus, eros elit maximus lectus, at vestibulum mauris lorem vel nulla. Nam vitae diam eget arcu imperdiet sollicitudin. Praesent vulputate, mi sit amet fringilla porttitor, lacus odio porta libero, nec gravida mi erat sed mauris. Sed viverra, erat in feugiat luctus, erat urna aliquet est, in suscipit nulla turpis sed nulla. Etiam nec lorem ac dui facilisis finibus. Vestibulum a massa et dui commodo varius. Integer sed ex id metus ullamcorper cursus nec vel leo. Morbi aliquet tortor in odio sagittis laoreet. Curabitur in lorem sed nulla porttitor vehicula. Ut sed bibendum est. Aenean quis justo et eros tempor commodo. Vivamus vulputate dolor a tellus interdum, vel volutpat lorem sagittis. Proin euismod, elit ac fermentum fringilla, sapien sem posuere orci, nec egestas eros nisl vel ante. Integer tincidunt felis et ex rhoncus, ut pretium leo ultricies. Mauris eget mi nec risus feugiat fermentum.",
-      bannerPath: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&auto=format",
-      keyWords: ["Environment", "Campus"],
-      date: "September 20, 2025",
-                imagesStrip1: [
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop&auto=format"
-    ],
-      imagesStrip2: [
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?w=600&h=400&fit=crop&auto=format"
-    ],
-      featured: false
-    },
-    {
-      id: 5,
-      name: "Mental Health Awareness",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer feugiat, ligula a iaculis semper, magna sapien laoreet nisl, nec rhoncus leo sem sed lacus. Suspendisse potenti. Sed in quam nec arcu faucibus sodales. Donec consequat, purus at tincidunt faucibus, eros elit maximus lectus, at vestibulum mauris lorem vel nulla. Nam vitae diam eget arcu imperdiet sollicitudin. Praesent vulputate, mi sit amet fringilla porttitor, lacus odio porta libero, nec gravida mi erat sed mauris. Sed viverra, erat in feugiat luctus, erat urna aliquet est, in suscipit nulla turpis sed nulla. Etiam nec lorem ac dui facilisis finibus. Vestibulum a massa et dui commodo varius. Integer sed ex id metus ullamcorper cursus nec vel leo. Morbi aliquet tortor in odio sagittis laoreet. Curabitur in lorem sed nulla porttitor vehicula. Ut sed bibendum est. Aenean quis justo et eros tempor commodo. Vivamus vulputate dolor a tellus interdum, vel volutpat lorem sagittis. Proin euismod, elit ac fermentum fringilla, sapien sem posuere orci, nec egestas eros nisl vel ante. Integer tincidunt felis et ex rhoncus, ut pretium leo ultricies. Mauris eget mi nec risus feugiat fermentum.",
-      bannerPath: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=800&h=600&fit=crop&auto=format",
-      keyWords: ["Health", "Awareness"],
-      date: "October 10, 2025",
-                imagesStrip1: [
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop&auto=format"
-    ],
-      imagesStrip2: [
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=600&h=400&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?w=600&h=400&fit=crop&auto=format"
-    ],
+      name: "To Be Announced",
+      description: "Details coming soon. Stay tuned for upcoming events from VITERA.",
+      bannerPath: "/images/coming.jpg",
+      keyWords: ["TBA"],
+      date: "TBA",
+      imagesStrip1: [],
+      imagesStrip2: [],
       featured: false
     }
   ];
@@ -489,27 +465,6 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
           transform: translateX(2px);
         }
 
-        .slide-indicators {
-          display: flex;
-          justify-content: center;
-          gap: 0.5rem;
-          margin-top: 2rem;
-        }
-
-        .indicator {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.3);
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        .indicator.active {
-          background: #ff6b35;
-          transform: scale(1.2);
-        }
-
         @keyframes titleGlow {
           0%, 100% {
             filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.5));
@@ -617,12 +572,7 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
                 )}
                 
                 <div className="card-image">
-                  <img
-                    className="banner-image"
-                    src={event.bannerPath}
-                    alt={event.name}
-                    loading="lazy"
-                  />
+                  <SmartImage className="banner-image" src={event.bannerPath} alt={event.name} />
                   <div className="image-overlay" />
                 </div>
                 
@@ -656,16 +606,6 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
         <button className="slider-btn next" onClick={nextSlide}>
           <ChevronRight size={24} color="white" />
         </button>
-
-        <div className="slide-indicators">
-          {eventOBJ.map((_, index) => (
-            <div
-              key={index}
-              className={`indicator ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => setCurrentIndex(index)}
-            />
-          ))}
-        </div>
       </div>
     </div>
   );

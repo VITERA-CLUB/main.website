@@ -7,6 +7,7 @@ import Event from './components/Eventspage';
 import TeamMembers from './components/teamMembers';
 import ScrollToTopButton from './components/ScrollToTop';
 import { useState, useEffect } from 'react';
+import About from './components/About';
 
 function TeamPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,6 +31,7 @@ function App() {
       {/* Routes below Navbar */}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/events" element={<Events />} />
