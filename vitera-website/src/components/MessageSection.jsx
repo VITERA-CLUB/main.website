@@ -28,7 +28,7 @@ const teamMessages = [
   },
   {
     img: '/images/Our Team/Panel/prashant.webp',
-    name: 'Prashant Kundal',
+    name: 'Prashant Kaundal',
     occupation: 'Chairperson',
     message: 'Organizing events with this team is always exciting. Here\'s to more memories and milestones!',
   },
