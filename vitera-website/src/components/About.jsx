@@ -61,11 +61,11 @@ const About = () => {
                 and empower students to become agents of positive change."
               </p>
               <div className="lead-social">
-                <a href="#" target="_blank" rel="noopener noreferrer"
+                <a href="https://www.linkedin.com/in/lakshya-pandey-31456628a/" target="_blank" rel="noopener noreferrer"
                    className="social-link" title="LinkedIn">
                   <Linkedin size={20} />
                 </a>
-                 <a href="#" target="_blank" rel="noopener noreferrer"
+                 <a href="https://www.instagram.com/lakshya_pandey19?igsh=aXN3OWQ4ZDhhODA5" target="_blank" rel="noopener noreferrer"
                    className="social-link" title="Instagram">
                   <Instagram size={20} />
                 </a>
@@ -84,11 +84,11 @@ const About = () => {
                 accessible for everyone in our community."
               </p>
               <div className="lead-social">
-                <a href="#" target="_blank" rel="noopener noreferrer"
+                <a href="https://www.linkedin.com/in/s-74917028a/" target="_blank" rel="noopener noreferrer"
                    className="social-link" title="LinkedIn">
                   <Linkedin size={20} />
                 </a>
-                <a href="#" target="_blank" rel="noopener noreferrer"
+                <a href="https://www.instagram.com/spandan_agrawal?igsh=NzN3a3Vva3J3eHdl" target="_blank" rel="noopener noreferrer"
                    className="social-link" title="Instagram">
                   <Instagram size={20} />
                 </a>
