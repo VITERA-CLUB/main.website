@@ -30,7 +30,7 @@ const teams = [
 				linkedin: 'https://www.linkedin.com/in/azhan-javed-12b32028a/'
 			},
 			{
-				name: 'Prashant Kundal',
+				name: 'Prashant Kaundal',
 				role: 'Chairperson',
 				img: '/images/Our Team/Panel/prashant.webp',
 				linkedin:'https://wa.me/+919317104238'
