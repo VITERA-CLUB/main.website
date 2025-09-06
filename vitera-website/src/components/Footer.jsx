@@ -39,8 +39,8 @@ const Footer = () => (
         <div className="footer-column">
           <h4>Social</h4>
           <ul>
-            <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">Linkedin</a></li>
-            <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://www.linkedin.com/company/vitera-club-vit-bhopal-university/" target="_blank" rel="noopener noreferrer">Linkedin</a></li>
+            <li><a href="https://www.instagram.com/vitera_vitb?igsh=MWgyd3ZmMXJsajRhNQ==" target="_blank" rel="noopener noreferrer">Instagram</a></li>
           </ul>
         </div>
         <div className="footer-column">
@@ -68,7 +68,9 @@ const Footer = () => (
     </div>
     <div className="footer-bottom">
       <span>© 2025 Vitera Club. All rights reserved.</span>
+      <div className="footer-credit">Created and developed by Technical Team @viteraclub</div>
     </div>
   </footer>
 );
+
 export default Footer;
