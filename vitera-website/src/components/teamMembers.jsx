@@ -121,7 +121,13 @@ const teams = [
 			role: 'Core Member',
 			img: '/images/Our Team/PR & Outreach Team/trisha.jpg',
 			linkedin: 'https://www.linkedin.com/in/navya-trisha-singh-23a77a32a'
-		}
+		},
+		{
+			name: 'Aarya Kishor Jadhav',
+			role: 'Core Member',
+			img: '/images/Our Team/PR & Outreach Team/navya.jpg',
+			linkedin: 'https://www.linkedin.com/in/aarya-jadhav-8089b434a',
+		},
 		],
 	},
 	{
