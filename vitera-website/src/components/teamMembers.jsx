@@ -30,7 +30,7 @@ const teams = [
 				linkedin: 'https://www.linkedin.com/in/azhan-javed-12b32028a/'
 			},
 			{
-				name: 'Prashant Kundal',
+				name: 'Prashant Kaundal',
 				role: 'Chairperson',
 				img: '/images/Our Team/Panel/prashant.webp',
 				linkedin:'https://wa.me/+919317104238'
@@ -58,7 +58,7 @@ const teams = [
 		{ 
 			name: 'Shravan Jain',
 			role: 'Technical Co-Lead',
-			img: '/images/Our Team/Tech Team/shravan.webp',
+			img: '/images/Our Team/Tech Team/shravan.jpg',
 			linkedin: 'https://www.linkedin.com/in/shravan-jain-630009280/'
 		},
 		{ 
