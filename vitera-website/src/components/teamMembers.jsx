@@ -14,32 +14,26 @@ const teams = [
 			{ 
 				name: 'Spandan Agrawal', 
 				role: 'Founder & Vice-President', 
-				img: '/images/Our Team/Panel/spandan.webp', 
+				img: '/images/Our Team/Panel/spandan.jpg', 
 				linkedin: 'https://www.linkedin.com/in/s-74917028a/' 
 			},
 			{ 
-				name: 'Parthib Datta Muhuri', 
+				name: 'Anoushka Bakshi ', 
 				role: 'General Secretary', 
-				img: '/images/Our Team/Panel/parthib.webp', 
-				linkedin: 'https://www.instagram.com/parthib_d_muhuri/profilecard/?igsh=aWRzNXp0ZWhpZGRm' 
+				img: 'images/Our Team/Content Team/anoushka.jpg', 
+				linkedin: '#' 
 			},
 			{
-				name: 'Azhan Javed',
+				name: 'Amishi Arora',
 				role: 'Joint Secretary',
-				img: '/images/Our Team/Panel/azhan.webp',
-				linkedin: 'https://www.linkedin.com/in/azhan-javed-12b32028a/'
+				img: '/images/Our Team/Panel/amishi.jpg',
+				linkedin: 'https://www.instagram.com/amishi_._?igsh=aGZia2M4eG1rY3Fy'
 			},
 			{
 				name: 'Prashant Kaundal',
 				role: 'Chairperson',
 				img: '/images/Our Team/Panel/prashant.webp',
 				linkedin:'https://wa.me/+919317104238'
-			},
-			{
-				name: 'Udit Gupta',
-				role: 'Financial Head',
-				img: '/images/Our Team/Panel/udit.webp',
-				linkedin:'https://www.linkedin.com/in/udit-gupta-aa89732b8'
 			}
 		],
 	},
@@ -315,12 +309,12 @@ const teams = [
 			id: 'content-team',
 			title: 'Content Team',
 			members: [
-				{ 
+				/*{ 
 					name: 'Anoushka Bakshi ', 
 					role: 'Lead', 
 					img: 'images/Our Team/Content Team/anoushka.jpg', 
 					linkedin: '#' 
-				},
+				},*/
 				{ 
 					name: 'Yashika Agrawal ', 
 					role: 'Co-Lead', 
