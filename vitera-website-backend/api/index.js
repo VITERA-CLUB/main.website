@@ -19,59 +19,72 @@ app.use(express.json());
 const PORTNO = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
 
-// Enhanced MongoDB connection with auto-reconnect
+// Enhanced MongoDB connection options
 const mongoOptions = {
-  serverSelectionTimeoutMS: 5000,
+  serverSelectionTimeoutMS: 10000, // Increased from 5000
   socketTimeoutMS: 45000,
   maxPoolSize: 10,
-  minPoolSize: 2,
+  minPoolSize: 1,
+  retryWrites: true,
+  retryReads: true,
 };
 
-// Connect to MongoDB
+let isConnecting = false;
+let connectionPromise = null;
+
+// Connect to MongoDB with promise caching
 async function connectDB() {
-  try {
-    await mongoose.connect(MONGO_URL, mongoOptions);
-    console.log("✅ MongoDB Connected Successfully");
-    logConnectionStatus();
-  } catch (err) {
-    console.error("❌ MongoDB connection error:", err);
-    // Retry connection after 5 seconds
-    setTimeout(connectDB, 5000);
+  // If already connected, return immediately
+  if (mongoose.connection.readyState === 1) {
+    console.log("✅ Already connected to MongoDB");
+    return;
   }
+
+  // If connection is in progress, wait for it
+  if (isConnecting && connectionPromise) {
+    console.log("⏳ Connection in progress, waiting...");
+    return connectionPromise;
+  }
+
+  isConnecting = true;
+  connectionPromise = (async () => {
+    try {
+      await mongoose.connect(MONGO_URL, mongoOptions);
+      console.log("✅ MongoDB Connected Successfully");
+      logConnectionStatus();
+    } catch (err) {
+      console.error("❌ MongoDB connection error:", err.message);
+      // Don't retry immediately to avoid infinite loops
+      setTimeout(() => {
+        isConnecting = false;
+        connectionPromise = null;
+      }, 5000);
+      throw err;
+    } finally {
+      isConnecting = false;
+    }
+  })();
+
+  return connectionPromise;
 }
 
-connectDB();
+// Initial connection attempt
+connectDB().catch(err => console.error("Initial connection failed:", err.message));
 
 // Handle MongoDB connection events
 mongoose.connection.on('disconnected', () => {
-  console.log('⚠️  MongoDB disconnected. Attempting to reconnect...');
-  connectDB();
+  console.log('⚠️  MongoDB disconnected');
+  isConnecting = false;
+  connectionPromise = null;
 });
 
 mongoose.connection.on('error', (err) => {
-  console.error('❌ MongoDB error:', err);
+  console.error('❌ MongoDB error:', err.message);
 });
 
 mongoose.connection.on('reconnected', () => {
   console.log('✅ MongoDB reconnected');
 });
-
-// Keep-alive ping function
-async function keepAlive() {
-  if (mongoose.connection.readyState === 1) {
-    try {
-      await mongoose.connection.db.admin().ping();
-      console.log('💓 MongoDB keep-alive ping successful');
-    } catch (error) {
-      console.error('❌ Keep-alive ping failed:', error);
-    }
-  } else {
-    console.log('⚠️  MongoDB not connected, skipping ping');
-  }
-}
-
-// Run keep-alive every 5 minutes (300000 ms)
-setInterval(keepAlive, 300000);
 
 // Optional function to log current connection status
 function logConnectionStatus() {
@@ -79,8 +92,26 @@ function logConnectionStatus() {
   console.log('📊 MongoDB connection state:', states[mongoose.connection.readyState]);
 }
 
+// Middleware to ensure DB connection before handling requests
+async function ensureDBConnection(req, res, next) {
+  if (mongoose.connection.readyState === 1) {
+    return next();
+  }
+
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error("Failed to connect to DB:", error.message);
+    res.status(503).json({ 
+      message: "Database connection unavailable", 
+      error: "Please try again in a few seconds" 
+    });
+  }
+}
+
 // Feedback routes
-app.post("/api/feedback", async (req, res) => {
+app.post("/api/feedback", ensureDBConnection, async (req, res) => {
   try {
     const { name, email, feedback } = req.body;
     const newFeedback = new Feedback({ name, email, feedback });
@@ -107,33 +138,52 @@ app.get("/api/feedback", async (req, res) => {
   }
 });
 
-// Health check endpoint (also acts as keep-alive when called)
+// Improved health check endpoint
 app.get("/api/health", async (req, res) => {
   const dbState = ['disconnected', 'connected', 'connecting', 'disconnecting'][mongoose.connection.readyState];
   
-  // Perform a quick DB ping
+  // If not connected, try to connect
+  if (mongoose.connection.readyState !== 1) {
+    try {
+      await connectDB();
+    } catch (error) {
+      console.error("Health check connection attempt failed:", error.message);
+    }
+  }
+
+  // Perform a quick DB ping only if connected
   let dbPing = false;
   if (mongoose.connection.readyState === 1) {
     try {
       await mongoose.connection.db.admin().ping();
       dbPing = true;
+      console.log('💓 MongoDB keep-alive ping successful');
     } catch (error) {
-      console.error("Health check ping failed:", error);
+      console.error("Health check ping failed:", error.message);
     }
   }
 
-  res.json({ 
+  const response = { 
     status: "ok", 
     database: dbState,
     dbPing: dbPing,
     timestamp: new Date().toISOString()
-  });
+  };
+
+  // Return 200 even if DB is connecting (not an error state)
+  res.status(200).json(response);
 });
 
 // Graceful shutdown
 process.on('SIGINT', async () => {
   await mongoose.connection.close();
   console.log('MongoDB connection closed through app termination');
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  await mongoose.connection.close();
+  console.log('MongoDB connection closed on SIGTERM');
   process.exit(0);
 });
 
