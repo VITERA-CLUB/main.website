@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { X } from 'lucide-react';
 import './App.css';
 import MessageSection from './MessageSection';
 import Footer from './Footer';
@@ -9,17 +10,37 @@ import GallerySection from './GallerySection';
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [glowEffect, setGlowEffect] = useState(false);
+  const [showEventPopup, setShowEventPopup] = useState(false);
   
+  // Event data for the popup
+  const upcomingEvent = {
+    name: "Design for Good – Vitera Edition",
+    description: "Join us for a FREE online creative contest that encourages students to use design and storytelling to highlight social issues and inspire positive change. Create powerful posters based on social issues, real-life stories, or impactful statistics.",
+    posterImage: "/images/Events_Pics/DesignForGood/poster.jpg",
+    date: "January 2, 2026",
+    time: "11:59 PM",
+    registrationLink: "https://forms.gle/wBne8LZgBbKq31Aj8",
+    deadline: "2nd January 2026, 11:59 PM"
+  };
+
   useEffect(() => {
     const glowTimer = setTimeout(() => {
       setGlowEffect(true);
       setTimeout(() => {
         setIsLoading(false);
+        // Show popup after loading animation completes
+        setTimeout(() => {
+          setShowEventPopup(true);
+        }, 500);
       }, 1000);
     }, 1500);
 
     return () => clearTimeout(glowTimer);
   }, []);
+
+  const closePopup = () => {
+    setShowEventPopup(false);
+  };
 
   if (isLoading) {
     return (
@@ -35,6 +56,54 @@ function Home() {
 
   return (
     <div className={`body main-content show`}>
+      {/* Event Popup Modal */}
+      {showEventPopup && (
+        <div className="event-popup-overlay" onClick={closePopup}>
+          <div className="event-popup-container" onClick={(e) => e.stopPropagation()}>
+            <button className="popup-close-btn" onClick={closePopup}>
+              <X size={24} />
+            </button>
+            
+            <div className="popup-content">
+              <div className="popup-poster">
+                <img src={upcomingEvent.posterImage} alt={upcomingEvent.name} />
+              </div>
+              
+              <div className="popup-details">
+                <h2 className="popup-event-name">{upcomingEvent.name}</h2>
+                
+                <div className="popup-event-meta">
+                  <div className="meta-item">
+                    <span className="meta-label">Date:</span>
+                    <span className="meta-value">{upcomingEvent.date}</span>
+                  </div>
+                  <div className="meta-item">
+                    <span className="meta-label">Deadline:</span>
+                    <span className="meta-value">{upcomingEvent.deadline}</span>
+                  </div>
+                </div>
+                
+                <p className="popup-event-description">{upcomingEvent.description}</p>
+                
+                <div className="popup-actions">
+                  <a 
+                    href={upcomingEvent.registrationLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="popup-register-btn"
+                  >
+                    Register Now
+                  </a>
+                  <button className="popup-close-text-btn" onClick={closePopup}>
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section className="hero-section">
         <div className="container hero-container">

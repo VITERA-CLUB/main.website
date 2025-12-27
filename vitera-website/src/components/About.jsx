@@ -5,7 +5,6 @@ import './About.css';
 
 const faculty = [
   { name: 'Dr. Santosh Kumar Bhal', role: 'Faculty Coordinator', img: '/images/faculty/santosh.webp' },
-  { name: 'Dr. Sonjoy Pan', role: 'Faculty Coordinator', img: '/images/faculty/sonjoy.webp' },
   // ...add more faculty if needed
 ];
 
@@ -74,7 +73,7 @@ const About = () => {
           </div>
 
           <div className="lead-card">
-            <img src="/images/Our Team/Panel/spandan.webp" alt="Vice President" className="lead-img" />
+            <img src="/images/Our Team/Panel/spandan.jpg" alt="Vice President" className="lead-img" />
             <div className="lead-body">
               <h3>Spandan Agrawal</h3>
               <div className="lead-role">Founder & Vice President</div>

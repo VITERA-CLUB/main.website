@@ -46,18 +46,33 @@ const EventsSection = () => {
   const sectionRef = useRef(null);
   const navigate = useNavigate();
 
-  // Replace eventOBJ with three cards: left TBA, center Trailblazers, right TBA
+  // Replace eventOBJ with updated data including registration links
   const eventOBJ = [
     {
       id: 1,
-      name: "To Be Announced",
-      description: "Details coming soon. Stay tuned for upcoming events from VITERA.",
-      bannerPath: "/images/coming.jpg",
-      keyWords: ["TBA"],
-      date: "TBA",
-      imagesStrip1: [],
-      imagesStrip2: [],
-      featured: false
+      name: "Design For Good",
+      description: `Design for Good – Vitera Edition is a FREE online creative contest that encourages students to use design and storytelling to highlight social issues and inspire positive change. This event invites participants to create powerful posters based on social issues, real-life stories, or impactful statistics.
+
+Open to all students, this contest offers an exciting opportunity to showcase creative skills while making a meaningful impact. Participants can win creator perks including guided Canva Pro access, portfolio features, and premium design resources — all at zero cost. E-Certificates will be awarded to all participants, and the best entries will be featured as Vitera Impact Stories on the official website with creator credits.
+
+The contest is conducted entirely online, making it accessible to students from anywhere. Registration and submission are completely free, with the deadline set for 2nd January 2026, 11:59 PM. Winners and shortlisted entries will be officially announced on Vitera Club's Instagram, LinkedIn, and official website.
+
+Design for Good represents Vitera's commitment to empowering students to become voices for change, using creativity as a tool for social awareness and positive transformation.`,
+      bannerPath: "/images/Events_Pics/DesignForGood/poster.jpg",
+      keyWords: ["Design", "Creativity"],
+      date: "January 2, 2026",
+      imagesStrip1: [
+        "/images/Events_Pics/DesignForGood/poster.jpg",
+        "/images/Events_Pics/DesignForGood/poster.jpg",
+        "/images/Events_Pics/DesignForGood/poster.jpg",
+      ],
+      imagesStrip2: [
+        "/images/Events_Pics/DesignForGood/poster.jpg",
+        "/images/Events_Pics/DesignForGood/poster.jpg",
+      ],
+      featured: true,
+      registrationLink: "https://forms.gle/wBne8LZgBbKq31Aj8", // Add actual link
+      isOngoing: true
     },
     {
       id: 2,
@@ -71,16 +86,16 @@ A jamming session followed, transforming the hall into a lively concert space wh
 TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and thought-provoking, reinforcing VITERA’s mission of making responsibility an everyday habit.`,
       bannerPath: "/images/Events_Pics/Trailblazers/1.webp",
       keyWords: ["Impact", "Community"],
-      date: "August 22, 2025",
+      date: "February 21, 2025",
       imagesStrip1: [
-        "/images/Events_Pics/Trailblazers/6.webp",
-        "/images/Events_Pics/Trailblazers/7.webp",
-        "/images/Events_Pics/Trailblazers/8.webp"
+        "/images/Events_Pics/Trailblazers/6.jpeg",
+        "/images/Events_Pics/Trailblazers/7.jpeg",
+        "/images/Events_Pics/Trailblazers/8.jpeg"
       ],
       imagesStrip2: [
-        "/images/Events_Pics/Trailblazers/5.webp",
-        "/images/Events_Pics/Trailblazers/4.webp",
-        "/images/Events_Pics/Trailblazers/3.webp"
+        "/images/Events_Pics/Trailblazers/5.jpeg",
+        "/images/Events_Pics/Trailblazers/4.jpeg",
+        "/images/Events_Pics/Trailblazers/3.jpeg"
       ],
       featured: false
     },
@@ -141,6 +156,8 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
         description: event.description,
         imagesStrip1: event.imagesStrip1,
         imagesStrip2: event.imagesStrip2,
+        registrationLink: event.registrationLink,
+        isOngoing: event.isOngoing,
       }
     })};
 
@@ -265,7 +282,7 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
 
         .event-card {
           width: 300px;
-          height: 350px;
+          height: 350px; /* Increased height to accommodate both buttons */
           position: relative;
           cursor: pointer;
           transform-style: preserve-3d;
@@ -313,7 +330,7 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
 
         .card-image {
           width: 100%;
-          height: 50%;
+          height: 45%; /* Reduced from 50% to give more space for content */
           position: relative;
           overflow: hidden;
         }
@@ -359,8 +376,8 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
         }
 
         .card-content {
-          padding: 1.2rem;
-          height: 40%;
+          padding: 1rem;
+          height: 55%; /* Increased from 50% to accommodate buttons */
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -368,17 +385,17 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
 
         .event-keywords {
           display: flex;
-          gap: 0.4rem;
-          margin-bottom: 0.8rem;
+          gap: 0.3rem;
+          margin-bottom: 0.6rem;
           flex-wrap: wrap;
         }
 
         .keyword {
           background: linear-gradient(135deg, #ff6b35, #f7931e);
           color: white;
-          padding: 0.3rem 0.7rem;
-          border-radius: 12px;
-          font-size: 0.75rem;
+          padding: 0.25rem 0.6rem;
+          border-radius: 10px;
+          font-size: 0.7rem;
           font-weight: 600;
           position: relative;
           overflow: hidden;
@@ -400,32 +417,46 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
         }
 
         .event-name {
-          font-size: 1.1rem;
+          font-size: 1rem;
           font-weight: 700;
           color: white;
-          margin-bottom: 0.5rem;
-          line-height: 1.3;
+          margin-bottom: 0.4rem;
+          line-height: 1.2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
 
         .event-description {
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           color: rgba(255, 255, 255, 0.7);
-          margin-bottom: 1rem;
-          line-height: 1.4;
+          margin-bottom: 0.8rem;
+          line-height: 1.3;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
 
-        .view-event-btn {
+        .event-actions {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+          justify-content: flex-start;
+          flex-wrap: nowrap; /* Prevent wrapping */
+        }
+
+        .view-event-btn,
+        .register-event-btn {
           background: linear-gradient(135deg, #ff6b35, #f7931e);
           color: white;
           border: none;
-          padding: 0.6rem 1.2rem;
-          border-radius: 15px;
+          padding: 0.5rem 0.8rem;
+          border-radius: 12px;
           font-weight: 600;
-          font-size: 0.8rem;
+          font-size: 0.75rem;
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
@@ -433,11 +464,18 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.4rem;
-          align-self: flex-start;
+          gap: 0.3rem;
+          text-decoration: none;
+          white-space: nowrap;
+          flex: 1; /* Make buttons share space equally */
         }
 
-        .view-event-btn::before {
+        .register-event-btn {
+          background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .view-event-btn::before,
+        .register-event-btn::before {
           content: '';
           position: absolute;
           top: 0;
@@ -448,21 +486,19 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
           transition: left 0.5s;
         }
 
-        .view-event-btn:hover::before {
+        .view-event-btn:hover::before,
+        .register-event-btn:hover::before {
           left: 100%;
         }
 
-        .view-event-btn:hover {
+        .view-event-btn:hover,
+        .register-event-btn:hover {
           transform: translateY(-2px);
           box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
         }
 
-        .btn-icon {
-          transition: transform 0.3s ease;
-        }
-
-        .view-event-btn:hover .btn-icon {
-          transform: translateX(2px);
+        .register-event-btn:hover {
+          box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
         }
 
         @keyframes titleGlow {
@@ -507,8 +543,8 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
           }
 
           .event-card {
-            width: 250px;
-            height: 340px;
+            width: 280px;
+            height: 400px;
           }
 
           .event-card:nth-child(1),
@@ -524,6 +560,18 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
             width: 40px;
             height: 40px;
           }
+          
+          .event-actions {
+            flex-wrap: wrap; /* Allow wrapping on mobile */
+            gap: 0.4rem;
+          }
+
+          .view-event-btn,
+          .register-event-btn {
+            flex: 1 1 100%; /* Full width on mobile */
+            font-size: 0.7rem;
+            padding: 0.45rem 0.7rem;
+          }
         }
 
         @media (max-width: 480px) {
@@ -536,8 +584,31 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
           }
 
           .event-card {
-            width: 280px;
-            height: 320px;
+            width: 260px;
+            height: 380px;
+          }
+
+          .card-content {
+            padding: 0.8rem;
+          }
+
+          .event-keywords {
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+          }
+
+          .keyword {
+            padding: 0.2rem 0.5rem;
+            font-size: 0.65rem;
+          }
+
+          .event-name {
+            font-size: 0.95rem;
+          }
+
+          .event-description {
+            font-size: 0.75rem;
+            margin-bottom: 0.6rem;
           }
         }
       `}
@@ -590,13 +661,31 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
                     <p className="event-description">{event.desc}</p>
                   </div>
                   
+                  <div className="event-actions">
                     <button
-    className="view-event-btn"
-    onClick={() => handleViewEvent(event)}
-  >
-    View Event
-    <ArrowRight size={12} className="btn-icon" />
-  </button>
+                      className="view-event-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleViewEvent(event);
+                      }}
+                    >
+                      View Event
+                      <ArrowRight size={12} className="btn-icon" />
+                    </button>
+                    
+                    {event.isOngoing && event.registrationLink && (
+                      <a
+                        href={event.registrationLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="register-event-btn"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Register Now
+                        <ArrowRight size={12} className="btn-icon" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

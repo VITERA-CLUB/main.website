@@ -106,40 +106,50 @@ body {
   opacity: 0.8;
 }
 
-.event-details {
-  margin-top: 12px;
-  animation: expandRight 0.3s;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
 .event-description {
   color: #ffcfa2;
   font-size: 1.09rem;
   margin: 0;
   flex: 1 1 auto;
-  line-height: 1.6;
+  line-height: 1.7;
+  text-align: left;
 }
 
-.view-btn {
-  background: linear-gradient(135deg, #ff5c00 30%, #f19035 100%);
+.event-details {
+  margin-top: 12px;
+  animation: expandRight 0.3s;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.event-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.register-btn {
+  background: linear-gradient(135deg, #28a745 30%, #20c997 100%);
   color: white;
   border: none;
   padding: 0.66em 1.65em;
   font-size: 1rem;
   font-weight: 700;
   border-radius: 20px;
-  margin-left: 15px;
   cursor: pointer;
-  box-shadow: 0 2px 16px rgba(255,92,0,0.18);
+  box-shadow: 0 2px 16px rgba(40, 167, 69, 0.18);
   transition: transform 0.15s, background 0.18s;
   outline: none;
+  text-decoration: none;
+  display: inline-block;
 }
-.view-btn:hover, .view-btn:focus {
-  background: linear-gradient(135deg, #ff9200 20%, #ff5c00 90%);
+
+.register-btn:hover, .register-btn:focus {
+  background: linear-gradient(135deg, #20c997 20%, #28a745 90%);
   transform: translateY(-2px) scale(1.07);
 }
 
@@ -209,13 +219,17 @@ body {
     width: 99%;
     margin-top: 7px;
   }
-  .view-btn {
+  .event-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  .register-btn {
     font-size: 0.94rem;
     padding: 0.4em 1.28em;
     border-radius: 15px;
-    margin-left: 0;
-    margin-top: 4px;
     width: 95%;
+    text-align: center;
   }
 }
 
