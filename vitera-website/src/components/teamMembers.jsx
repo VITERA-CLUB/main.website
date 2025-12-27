@@ -20,7 +20,7 @@ const teams = [
 			{ 
 				name: 'Anoushka Bakshi ', 
 				role: 'General Secretary', 
-				img: 'images/Our Team/Content Team/anoushka.jpg', 
+				img: 'images/Our Team/Panel/anoushka.jpg', 
 				linkedin: '#' 
 			},
 			{
@@ -279,7 +279,7 @@ const teams = [
 			img: '/images/Our Team/Social Media/rishika.jpg', 
 			linkedin: 'https://linkedin.com/in/rishika-snehal' 
 		},
-		{ 
+		/*{ 
 			name: 'Aryan Amar', 
 			role: 'Co-Lead', 
 			img: '/images/Our Team/Social Media/aryan.jpg', 
@@ -290,19 +290,7 @@ const teams = [
 			role: 'Core Member', 
 			img: '/images/Our Team/Social Media/vedanti.JPG', 
 			linkedin: 'https://www.linkedin.com/in/gajbhiyevedanti' 
-		},
-		{ 
-			name: 'Gargee Singh', 
-			role: 'Core Member', 
-			img: '/images/Our Team/Social Media/gargee.jpg', 
-			linkedin: 'https://www.linkedin.com/in/gargee-singh-51184827b' 
-		},
-		{ 
-			name: 'Avni Agrawal', 
-			role: 'Core Member', 
-			img: '/images/Our Team//Social Media/avni.jpeg', 
-			linkedin: 'http://linkedin.com/in/avni-agrawal-abb17b311' 
-		},
+		},*/
 		],
 	},
 	{

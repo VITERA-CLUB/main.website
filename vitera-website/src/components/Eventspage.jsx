@@ -44,16 +44,31 @@ function EventsPage() {
     title = '', 
     description = '', 
     imagesStrip1 = [], 
-    imagesStrip2 = []
+    imagesStrip2 = [],
+    registrationLink = '',
+    isOngoing = false,
   } = state || {};
 
   return (
     <div className="events-page">
       <div className="event-info">
         <h1 className="event-title">{title}</h1>
+        
+        {/* Registration button if event is ongoing */}
+        {isOngoing && registrationLink && (
+          <a 
+            href={registrationLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="event-register-btn"
+          >
+            Register Now
+          </a>
+        )}
+        
         <div className="event-desc">
-          {description.split('\n').map((line, i) => (
-            <p key={i}>{line}</p>
+          {description.split('\n\n').filter(para => para.trim()).map((paragraph, i) => (
+            <p key={i}>{paragraph.trim()}</p>
           ))}
         </div>
       </div>

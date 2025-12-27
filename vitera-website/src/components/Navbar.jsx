@@ -21,7 +21,7 @@ function Navbar() {
       <div className="container navbar-container">
         <div className="logo-container">
           <img src="/vitera_logo.png" alt="VITERA Club Logo" className="logo" />
-          <h2 className="club-name">VITERA Club</h2>
+          <Link to="/"><h2 className="club-name">VITERA Club</h2></Link>
         </div>
 
         <div className="center-nav">

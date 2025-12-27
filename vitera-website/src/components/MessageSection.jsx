@@ -9,20 +9,20 @@ const teamMessages = [
     message: 'Leading Vitera has been a journey of growth and unity. Together, we create impact beyond boundaries.',
   },
   {
-    img: '/images/Our Team/Panel/spandan.webp',
+    img: '/images/Our Team/Panel/spandan.jpg',
     name: 'Spandan Agrawal',
     occupation: 'Vice President',
     message: 'Every event is a new opportunity to inspire and empower. Proud to be part of this vibrant family.',
   },
   {
-    img: '/images/Our Team/Panel/parthib.webp',
-    name: 'Parthib Datta Muhuri',
+    img: '/images/Our Team/Panel/anoushka.jpg',
+    name: 'Anoushka Bakshi',
     occupation: 'General Secretary',
     message: 'Vitera is where ideas turn into action. Let\'s keep making a difference, one step at a time.',
   },
   {
-    img: '/images/Our Team/Panel/azhan.webp',
-    name: 'Azhan Javed',
+    img: '/images/Our Team/Panel/amishi.jpg',
+    name: 'Amishi Arora',
     occupation: 'Joint Secretary',
     message: 'Managing resources for Vitera is a privilege. Our collective effort is our greatest asset.',
   },
@@ -31,12 +31,6 @@ const teamMessages = [
     name: 'Prashant Kaundal',
     occupation: 'Chairperson',
     message: 'Organizing events with this team is always exciting. Here\'s to more memories and milestones!',
-  },
-  {
-    img: '/images/Our Team/Panel/udit.webp',
-    name: 'Udit Gupta',
-    occupation: 'Financial Head',
-    message: 'Connecting with our community is at the heart of Vitera. Thank you for your constant support!',
   },
 ];
 
