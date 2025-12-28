@@ -59,7 +59,7 @@ function Navbar() {
           </div>
           <div className="mobile-nav-links">
             <Link to="/" className="nav-link" onClick={toggleMenu}>Home</Link>
-            <a href="#events" className="nav-link" onClick={toggleMenu}>Events</a>
+            <a href="/events" className="nav-link" onClick={toggleMenu}>Events</a>
             <Link to="/about" className="nav-link" onClick={toggleMenu}>About</Link>
             <a href="/team" className="nav-link" onClick={toggleMenu}>Team</a>
             <Link to="/feedback" className="nav-link" onClick={toggleMenu}>Feedback/Suggestions</Link>
