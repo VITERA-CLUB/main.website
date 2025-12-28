@@ -61,7 +61,6 @@ const teams = [
 			img: '/images/Our Team/Tech Team/avinash.jpg',
 			linkedin: 'http://www.linkedin.com/in/avinashgautam007'
 		},
-
 		{ 
 			name: 'Bhaskar Ojha',
 			role: 'Core Member',
@@ -85,6 +84,24 @@ const teams = [
 			role: 'Core Member',
 			img: '/images/Our Team/Tech Team/kapil.jpg',
 			linkedin: 'https://www.linkedin.com/in/kapil-kumar-arya-b0636528a'
+		},
+		{
+			name: 'Amogh Patel',
+			role: 'Core Member',
+			img: '/images/Our Team/Tech Team/amogh.jpg',
+			linkedin: 'https://www.linkedin.com/in/amogh-patel-42a261307'
+		},
+		{
+			name: 'Aryan Agrawal',
+			role: 'Core Member',
+			img: '/images/Our Team/Tech Team/aryan.jpg',
+			linkedin: 'https://www.linkedin.com/in/agrawalaryan547'
+		},
+		{
+			name: 'Anvesha Srivastava',
+			role: 'Core Member',
+			img: '/images/Our Team/Tech Team/anvesha.jpg',
+			linkedin: 'https://www.linkedin.com/in/anveshasrivastava'
 		},
 		],
 	},
@@ -122,6 +139,37 @@ const teams = [
 			img: '/images/Our Team/PR & Outreach Team/navya.jpg',
 			linkedin: 'https://www.linkedin.com/in/aarya-jadhav-8089b434a',
 		},
+		{
+			name: 'Vethra M',
+			role: 'Core Member',
+			img: '/images/Our Team/PR & Outreach Team/vethra.jpg',
+			linkedin: 'https://www.linkedin.com/in/vethra-m-695514383'
+		},
+		{
+			name: 'GAURI NANDANA M',
+			role: 'Core Member',
+			img: '/images/Our Team/PR & Outreach Team/gauri.png',
+			linkedin: 'https://www.linkedin.com/in/gauri-nandana-m-463b6b378'
+		},
+
+		{
+			name: 'Shreyash Shadhian',
+			role: 'Core Member',
+			img: '/images/Our Team/PR & Outreach Team/shreyash.jpg',
+			linkedin: 'https://www.linkedin.com/in/shreyash-shadhian-09a263328/'
+		},
+		{
+			name: 'Riddhi Garg',
+			role: 'Core Member',
+			img: '/images/Our Team/PR & Outreach Team/riddhi.jpg',
+			linkedin: 'https://www.linkedin.com/in/riddhi-garg-997834257'
+		},
+		{
+			name: 'Muskan Bisen',
+			role: 'Core Member',
+			img: '/images/Our Team/PR & Outreach Team/muskan.jpg',
+			linkedin: 'https://www.linkedin.com/in/muskan-bisen-572b0733a'
+		},
 		],
 	},
 	{
@@ -155,10 +203,27 @@ const teams = [
 		{ 
 			name: 'Sahil Singh ', 
 			role: 'Editor', 
-			img: '/images/Our Team/Editing Team/sahil.jpg', 
+			img: '/images/Our Team/Photography Team/sahil.jpg', 
 			linkedin: '#' 
 		},
-
+		{
+			name: 'Dharini Sharma',
+			role: 'Core Member',
+			img: '/images/Our Team/Photography Team/dharini.jpg',
+			linkedin: 'https://www.linkedin.com/in/dharini-sharma-9a10ba308'
+		},
+		{
+			name: 'Rachit Rushil Paul',
+			role: 'Core Member',
+			img: '/images/Our Team/Photography Team/rachit.jpeg',
+			linkedin: 'https://in.linkedin.com/in/rachit-paul-420723333'
+		},
+		{
+			name: 'Md Jahiruddin Ahmed',
+			role: 'Editor',
+			img: '/images/Our Team/Photography Team/jahiruddin.jpg',
+			linkedin: 'https://www.linkedin.com/in/md-jahiruddin-ahmed-14387b3a1'
+		},
 		],
 	},
 	{
@@ -225,6 +290,49 @@ const teams = [
 			img: 'images/Our Team/Event Mgmt Team/ayushman.jpg',
 			linkedin: 'https://www.linkedin.com/in/ayushman-dwivedi-1b492a260'
 		},
+		// i need to add images here..
+		{
+			name: 'Tanisha Bariar',
+			role: 'Core member',
+			img: 'images/Our Team/Event Mgmt Team/tanisha.jpg',
+			linkedin: '#'
+		},
+		{
+			name: 'Eshant Baranwal',
+			role: 'Core Member',
+			img: 'images/Our Team/Event Mgmt Team/eshant.jpg',
+			linkedin: 'https://www.linkedin.com/in/eshant-baranwal-b7b635281'
+		},
+		{
+			name: 'P Laxmi Srivastava ',
+			role: 'Core Member',
+			img: 'images/Our Team/Event Mgmt Team/laxmi.png',
+			linkedin: 'https://www.linkedin.com/in/plaxmi-srivastava-987704379'
+		},
+		{
+			name: 'SWAGATIKA PRIYADARSHINI SAHOO',
+			role: 'Core Member',
+			img: 'images/Our Team/Event Mgmt Team/swagatika.jpg',
+			linkedin: 'https://www.linkedin.com/in/swagatika-priyadarshini-sahoo-412a1237a'
+		},
+		{
+			name: 'Pranshu Pedgaonkar',
+			role: 'Core Member',
+			img: 'images/Our Team/Event Mgmt Team/pranshu.jpg',
+			linkedin: 'https://www.linkedin.com/in/pranshu-pedgaonkar-55156b37a'
+		},
+		{
+			name: 'AASHUTOSH PARIHAR ',
+			role: 'Core Member',
+			img: 'images/Our Team/Event Mgmt Team/aashutosh.jpg',
+			linkedin: 'https://www.linkedin.com/in/aashutosh-parihar-888a7730a'
+		},
+		{
+			name: 'Adil Sukumar',
+			role: 'Core Member',
+			img: 'images/Our Team/Event Mgmt Team/adil.jpg',
+			linkedin: 'www.linkedin.com/in/adilsukumar'
+		},
 		],
 	},
 	{
@@ -267,6 +375,30 @@ const teams = [
 			img: '/images/Our Team/Design Team/anisha.jpg',
 			linkedin: 'https://www.linkedin.com/in/anisha-garg-b90918349'
 		},
+		{
+			name: 'Punyatirtha Sahoo',
+			role: 'Core Member',
+			img: '/images/Our Team/Design Team/punyatirtha.jpg',
+			linkedin: 'https://www.linkedin.com/in/punyatirtha-sahoo-a72037365/'
+		},
+		{
+			name: 'Bhosale Veerashree Prashantrao ',
+			role: 'Core Member',
+			img: '/images/Our Team/Design Team/bhosale.jpg',
+			linkedin: 'https://www.linkedin.com/in/veerashri-bhosale-34581a324'
+		},
+		{
+			name: 'Knishka Kumari',
+			role: 'Core Member',
+			img: '/images/Our Team/Design Team/knishka.jpg',
+			linkedin: 'www.linkedin.com/in/knishka-kumari-77008b333'
+		},
+		{
+			name: 'Vanya Singhal',
+			role: 'Core Member',
+			img: '/images/Our Team/Design Team/vanya.jpg',
+			linkedin: 'https://www.linkedin.com/in/vanya-singhal-bb43a2331'
+		},
 		],
 	},
 	{
@@ -279,30 +411,30 @@ const teams = [
 			img: '/images/Our Team/Social Media/rishika.jpg', 
 			linkedin: 'https://linkedin.com/in/rishika-snehal' 
 		},
-		/*{ 
-			name: 'Aryan Amar', 
-			role: 'Co-Lead', 
-			img: '/images/Our Team/Social Media/aryan.jpg', 
-			linkedin: 'https://www.linkedin.com/in/aryan-amar-066a42284/' 
-		},
 		{ 
-			name: 'Vedanti Gajbhiye', 
+			name: 'Diksha Agrawal', 
 			role: 'Core Member', 
-			img: '/images/Our Team/Social Media/vedanti.JPG', 
-			linkedin: 'https://www.linkedin.com/in/gajbhiyevedanti' 
-		},*/
+			img: '/images/Our Team/Social Media/diksha.jpg', 
+			linkedin: '#' 
+		},
+		{
+			name: 'Rabhya Grover',
+			role: 'Core Member',
+			img: '/images/Our Team/Social Media/rabhya.jpeg',
+			linkedin: 'https://www.linkedin.com/in/rabhya-grover-9a552833a'
+		},
+		{
+			name: 'Archita Shukla ',
+			role: 'Core Member',
+			img: '/images/Our Team/Social Media/archita.jpg',
+			linkedin: 'https://www.linkedin.com/in/archita-shukla-a6727230a'
+		},
 		],
 	},
 	{
 			id: 'content-team',
 			title: 'Content Team',
 			members: [
-				/*{ 
-					name: 'Anoushka Bakshi ', 
-					role: 'Lead', 
-					img: 'images/Our Team/Content Team/anoushka.jpg', 
-					linkedin: '#' 
-				},*/
 				{ 
 					name: 'Yashika Agrawal ', 
 					role: 'Co-Lead', 
@@ -320,6 +452,48 @@ const teams = [
 					role: 'Core Member', 
 					img: '/images/Our Team/Content Team/rudra.jpg', 
 					linkedin: 'https://www.linkedin.com/in/rudra-narayan-mishra-b9a727327?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' 
+				},
+				// i need to add images here...
+				{
+					name: 'Riya Shukla',
+					role: 'Core Member',
+					img: '/images/Our Team/Content Team/riya.jpg',
+					linkedin: 'https://www.linkedin.com/in/riya-shukla-277495324'
+				},
+				{
+					name: 'Shreya Sahu ',
+					role: 'Core Member',
+					img: '/images/Our Team/Content Team/shreya.jpg',
+					linkedin: 'https://www.linkedin.com/in/shreya-sahu-a247b0395'
+				},
+				{
+					name : 'Shaurya Anurag',
+					role: 'Core Member',
+					img: '/images/Our Team/Content Team/shaurya.jpeg',
+					linkedin: 'www.linkedin.com/in/shauryaanurag'
+				},
+				{
+					name: 'Shilpi Kumari',
+					role: 'Core Member',
+					img: '/images/Our Team/Content Team/shilpi.jpg',
+					linkedin: 'https://www.linkedin.com/in/shilpi-kumari-334a511b8'
+				},
+				{
+					name: 'Soumya Chouhan',
+					role: 'Core Member',
+					img: '/images/Our Team/Content Team/soumya.jpg',
+					linkedin: '#'
+				},
+				{
+					name: 'Tanisha Sharma ',
+					role: 'Core Member',
+					img: '/images/Our Team/Content Team/tanisha.jpg',
+					linkedin: 'https://www.linkedin.com/in/tanisha-sharma-a50989324'
+				},
+				{
+					name: 'Divyanka ',
+					role: 'Core Member',
+					img: '/images/Our Team/Content Team/divyanka.jpg'
 				},
 			],
 	},
