@@ -1,0 +1,261 @@
+/* ============================================================
+   PAGE & LAYOUT
+   ============================================================ */
+:root {
+  --primary: #ff5c00;
+  --gold: #ffd700;
+  --silver: #c0c0c0;
+  --bronze: #cd7f32;
+  --bg-dark: #0a0a0a;
+  --card-bg: rgba(32, 17, 3, 0.8);
+}
+
+.winners-page {
+  background: radial-gradient(circle at top left, #1a1a1a, var(--bg-dark));
+  color: #fff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  padding-bottom: 150px;
+}
+
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(to bottom, rgba(255, 92, 0, 0.1), transparent);
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  color: var(--primary);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ============================================================
+   TIMELINE & DYNAMIC LINE
+   ============================================================ */
+.timeline {
+  position: relative;
+  max-width: 1200px;
+  margin: auto;
+  padding: 50px 0;
+}
+
+.curve-svg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.path-bg {
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 2px;
+  fill: none;
+}
+
+.path-progress {
+  stroke: var(--primary);
+  stroke-width: 3px;
+  fill: none;
+  stroke-linecap: round;
+  pathLength: 1; /* Normalizes the length for React progress */
+  transition: stroke-dashoffset 0.2s ease-out;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ============================================================
+   EVENTS & CARDS
+   ============================================================ */
+.event {
+  position: relative;
+  display: flex;
+  margin: 120px 0;
+  z-index: 2;
+  width: 100%;
+  transition: all 0.8s cubic-bezier(0.17, 0.55, 0.55, 1);
+}
+
+.event.left { justify-content: flex-start; }
+.event.right { justify-content: flex-end; }
+
+.dot {
+  position: absolute;
+  left: 50%;
+  top: 40px;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background: var(--bg-dark);
+  border: 3px solid var(--primary);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--primary);
+  z-index: 10;
+  transition: all 0.5s ease;
+}
+
+.event.active .dot {
+  background: var(--primary);
+  box-shadow: 0 0 25px var(--primary);
+  transform: translateX(-50%) scale(1.3);
+}
+
+.card {
+  width: 450px;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  padding: 35px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 92, 0, 0.15);
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 0.7s ease;
+}
+
+.event.left .card { margin-left: 5%; }
+.event.right .card { margin-right: 5%; }
+
+.event.active .card {
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.date {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   PODIUM SYSTEM
+   ============================================================ */
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 15px;
+  margin-top: 60px; /* Space for images popping out */
+}
+
+.step {
+  flex: 1;
+  background: #111;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.step img {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  object-fit: cover;
+  background: #222;
+}
+
+.step span:not(.crown) {
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.step p {
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gold { 
+  height: 160px; 
+  border: 1px solid var(--gold);
+  background: linear-gradient(to top, #1a1500, #332b00);
+}
+.gold span { color: var(--gold); }
+
+.silver { 
+  height: 130px; 
+  border: 1px solid var(--silver);
+}
+.silver span { color: var(--silver); }
+
+.bronze { 
+  height: 110px; 
+  border: 1px solid var(--bronze);
+}
+.bronze span { color: var(--bronze); }
+
+.crown {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2rem;
+  animation: floatCrown 3s ease-in-out infinite;
+}
+
+@keyframes floatCrown {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -12px); }
+}
+
+/* ============================================================
+   MOBILE OVERRIDES (768px and below)
+   ============================================================ */
+@media (max-width: 768px) {
+  .curve-svg {
+    left: 40px;
+    width: 20px;
+    transform: none;
+  }
+
+  /* Straighten the curve on mobile */
+  .path-bg, .path-progress {
+    d: path("M 10 0 L 10 1000"); 
+  }
+
+  .dot {
+    left: 40px;
+    transform: none;
+  }
+
+  .event {
+    justify-content: flex-start !important;
+    padding: 0 20px 0 80px;
+    margin: 60px 0;
+  }
+
+  .card {
+    width: 100%;
+    margin: 0 !important;
+    padding: 20px;
+  }
+
+  .podium {
+    gap: 10px;
+  }
+
+  .step img {
+    width: 45px;
+    height: 45px;
+    top: -25px;
+  }
+}
