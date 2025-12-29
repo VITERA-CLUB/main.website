@@ -6,6 +6,7 @@ import Events from './components/EventTimeline';
 import Event from './components/Eventspage';
 import TeamMembers from './components/teamMembers';
 import ScrollToTopButton from './components/ScrollToTop';
+import winner from './components/winner';
 import { useState, useEffect } from 'react';
 import About from './components/About';
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/team" element={<TeamPage />} />
+        <Route path="/winner" element={<Winner />} />
         <Route path="/events" element={<Events />} />
         <Route path="/event/:name" element={<Event />} />
       </Routes>
