@@ -411,18 +411,19 @@ const teams = [
 			img: '/images/Our Team/Social Media/rishika.jpg', 
 			linkedin: 'https://linkedin.com/in/rishika-snehal' 
 		},
+		{
+			name: 'Rabhya Grover',
+			role: 'Co-Lead',
+			img: '/images/Our Team/Social Media/rabhya.jpeg',
+			linkedin: 'https://www.linkedin.com/in/rabhya-grover-9a552833a'
+		},
 		{ 
 			name: 'Diksha Agrawal', 
 			role: 'Core Member', 
 			img: '/images/Our Team/Social Media/diksha.jpg', 
 			linkedin: '#' 
 		},
-		{
-			name: 'Rabhya Grover',
-			role: 'Core Member',
-			img: '/images/Our Team/Social Media/rabhya.jpeg',
-			linkedin: 'https://www.linkedin.com/in/rabhya-grover-9a552833a'
-		},
+		
 		{
 			name: 'Archita Shukla ',
 			role: 'Core Member',
