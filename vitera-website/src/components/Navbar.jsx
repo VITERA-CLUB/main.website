@@ -30,6 +30,7 @@ function Navbar() {
             <a href="/events" className="nav-link">Events</a>
             <Link to="/about" className="nav-link">About</Link>
             <a href="/team" className="nav-link">Team</a>
+           <a href="/winner" className="nav-link">Winners</a>
           </div>
         </div>
 
@@ -62,6 +63,7 @@ function Navbar() {
             <a href="/events" className="nav-link" onClick={toggleMenu}>Events</a>
             <Link to="/about" className="nav-link" onClick={toggleMenu}>About</Link>
             <a href="/team" className="nav-link" onClick={toggleMenu}>Team</a>
+            <a href="/winner" className="nav-link" onClick={toggleMenu}>Winners</a>
             <Link to="/feedback" className="nav-link" onClick={toggleMenu}>Feedback/Suggestions</Link>
           </div>
         </div>
