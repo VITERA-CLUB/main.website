@@ -10,15 +10,15 @@ const winnersData = [
     winners: {
       first: {
         name: "VICTORIOUS SECRET",
-        members: ["Amogh Patel", "Rahul Mehta", "Sneha Joshi"]
+        members: ["Siddhi Gupta", "Vriti Yadav", "Drishti Tripathi", "Diya Sharma"]
       },
       second: {
         name: "JUMANJI",
-        members: ["Aarav Shah", "Riya Jain"]
+        members: ["Charu Sinha", "SHAIK MOHAMMAD IRFAN", "Agrima Pandey", "Pasala Charishma"]
       },
       third: {
         name: "DESI KALAKAAR",
-        members: ["Aarav Shah", "Riya Jain"]
+        members: ["MILAN PANWAR", "Tanishka kumari"]
       }
     }
   },
@@ -104,7 +104,6 @@ where every winner leaves a mark that inspires the next.</p>
                   <h3>{item.event}</h3>
                 </div>
 
-                {/* ===== PODIUM LOGIC (MERGED SAFELY) ===== */}
                 {item.type === "upcoming" ? (
                   <div className="podium upcoming-mode">
                     <div className="step silver">
@@ -164,7 +163,6 @@ where every winner leaves a mark that inspires the next.</p>
                     </div>
                   </div>
                 )}
-                {/* ===== END PODIUM LOGIC ===== */}
               </div>
             </div>
           </div>
