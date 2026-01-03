@@ -26,8 +26,21 @@ const winnersData = [
     date: "2 January 2026",
     event: "Design for Good – Vitera Edition",
     eventImg: "/images/Events_Pics/DesignForGood/poster.jpg",
-    type: "upcoming",
-    winners: {}
+    type: "individual",
+    winners: {
+      first: {
+        name: "Kethineni Venkata Avinash",
+        img: "/images/Winner/Kethineni Venkata Avinash-1.png"
+      },
+      second: {
+        name: "Rishi Kumar",
+        img: "/images/Winner/Rishi Kumar 2.png"
+      },
+      third: {
+        name: "Dhruba Samanta",
+        img: "/images/Winner/Dhruba Samanta 3.png"
+      }
+    }
   },
   {
     date: "Coming Soon",
