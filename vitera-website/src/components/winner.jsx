@@ -51,7 +51,7 @@ const winnersData = [
   }
 ];
 
-export default function WinnersPage() {
+export default function Winner() {
   const [lineHeight, setLineHeight] = useState(0);
   const containerRef = useRef(null);
   const cardRefs = useRef([]);
