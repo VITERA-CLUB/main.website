@@ -6,7 +6,7 @@ import Events from './components/EventTimeline';
 import Event from './components/Eventspage';
 import TeamMembers from './components/teamMembers';
 import ScrollToTopButton from './components/ScrollToTop';
-import winner from './components/winner';
+import Winner from './components/winner';
 import { useState, useEffect } from 'react';
 import About from './components/About';
 
