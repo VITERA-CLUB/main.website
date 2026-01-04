@@ -28,10 +28,10 @@ function Home() {
       setGlowEffect(true);
       setTimeout(() => {
         setIsLoading(false);
-        // Show popup after loading animation completes
-        setTimeout(() => {
-          setShowEventPopup(true);
-        }, 500);
+        // Popup disabled - comment out the line below to re-enable
+        // setTimeout(() => {
+        //   setShowEventPopup(true);
+        // }, 500);
       }, 1000);
     }, 1500);
 

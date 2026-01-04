@@ -333,43 +333,137 @@
 }
 
 /* =============================== */
-/* MOBILE: SINGLE COLUMN (LEFT) 
+/* MOBILE: CENTERED SINGLE COLUMN 
 /* =============================== */
 
 @media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
 
+  .hero p {
+    font-size: 0.95rem;
+    padding: 0 10px;
+  }
+
+  /* Center the timeline line */
   .center-line {
-    left: 65%;
+    left: 50%;
     transform: translateX(-50%);
   }
 
+  /* Center the timeline dot */
   .timeline-dot {
-    left: 65%;
-    transform: translate(-50%, -50%);
+    left: 50%;
+    transform: translate(-50%, 300%);
   }
 
+  /* Make event rows full width and centered */
   .event-row {
-    justify-content: flex-start;
+    justify-content: center;
+    margin-bottom: 60px;
   }
 
+  /* Full width content box, centered */
   .content-box {
-    width: 60%;
-    justify-content: flex-end;
-    padding-right: 20px;
-    padding-left: 0;
+    width: 100%;
+    justify-content: center;
+    padding: 0 15px;
   }
 
+  /* Override left/right alignment for mobile - all centered */
   .left-align .content-box,
   .right-align .content-box {
-    justify-content: flex-end;
-    padding-right: 20px;
-    padding-left: 30px;
+    justify-content: center;
+    padding: 0 15px;
+  }
+
+  /* Adjust card sizing for mobile */
+  .card {
+    max-width: 100%;
+    width: 100%;
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .card-header {
+    gap: 12px;
+    margin: 10px 0;
+  }
+
+  .card-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .event-logo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .date {
+    font-size: 0.85rem;
+  }
+
+  /* Adjust podium for mobile */
+  .podium {
+    margin-top: 50px;
+    gap: 8px;
+  }
+
+  .gold {
+    height: 200px;
+  }
+
+  .silver {
+    height: 150px;
+  }
+
+  .bronze {
+    height: 100px;
+  }
+
+  .crown {
+    font-size: 1.5rem;
+    top: -60px;
+  }
+
+  .rank {
+    font-size: 1.3rem;
+    top: -30px;
+  }
+
+  .name {
+    font-size: 0.85rem;
+    padding: 0 5px;
+  }
+
+  /* Modal adjustments for mobile */
+  .winner-modal-content {
+    max-width: 95%;
+    padding: 20px;
+  }
+
+  .modal-name {
+    font-size: 1.1rem;
+  }
+
+  .modal-members {
+    font-size: 0.95rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
   }
 
   .card {
     padding: 15px;
-    border-radius: 18px;
-    font-size: 0.5rem;
   }
 
   .card-header h3 {
@@ -381,7 +475,23 @@
     height: 30px;
   }
 
-  .hero h1 {
-    font-size: 2.2rem;
+  .podium {
+    gap: 6px;
+  }
+
+  .gold {
+    height: 180px;
+  }
+
+  .silver {
+    height: 130px;
+  }
+
+  .bronze {
+    height: 90px;
+  }
+
+  .name {
+    font-size: 0.8rem;
   }
 }

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import './EventsPage.css';
 
 // add a small inline SmartImage here as well
@@ -47,45 +48,86 @@ function EventsPage() {
     imagesStrip2 = [],
     registrationLink = '',
     isOngoing = false,
+    submissions = [],
   } = state || {};
 
+  const [selectedSubmission, setSelectedSubmission] = useState(null);
+
   return (
-    <div className="events-page">
-      <div className="event-info">
-        <h1 className="event-title">{title}</h1>
+    <>
+      {/* Original layout: description on left, images on right */}
+      <div className="events-page">
+        <div className="event-info">
+          <h1 className="event-title">{title}</h1>
+          
+          {isOngoing && registrationLink && (
+            <a 
+              href={registrationLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="event-register-btn"
+            >
+              Register Now
+            </a>
+          )}
+          
+          <div className="event-desc">
+            {description.split('\n\n').filter(para => para.trim()).map((paragraph, i) => (
+              <p key={i}>{paragraph.trim()}</p>
+            ))}
+          </div>
+        </div>
         
-        {/* Registration button if event is ongoing */}
-        {isOngoing && registrationLink && (
-          <a 
-            href={registrationLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="event-register-btn"
-          >
-            Register Now
-          </a>
-        )}
-        
-        <div className="event-desc">
-          {description.split('\n\n').filter(para => para.trim()).map((paragraph, i) => (
-            <p key={i}>{paragraph.trim()}</p>
-          ))}
+        <div className="event-images">
+          <div className="scroll-strip scroll-strip-1">
+            {imagesStrip1.map((img, idx) => (
+              <SmartImage key={idx} src={img} alt={`Event img ${idx + 1}`} />
+            ))}
+          </div>
+          <div className="scroll-strip scroll-strip-2">
+            {imagesStrip2.map((img, idx) => (
+              <SmartImage key={idx} src={img} alt={`Event img ${idx + 1}`} />
+            ))}
+          </div>
         </div>
       </div>
-      
-      <div className="event-images">
-        <div className="scroll-strip scroll-strip-1">
-          {imagesStrip1.map((img, idx) => (
-            <SmartImage key={idx} src={img} alt={`Event img ${idx + 1}`} />
-          ))}
+
+      {/* Submissions Showcase - completely separate section below */}
+      {submissions && submissions.length > 0 && (
+        <div className="submissions-section-wrapper">
+          <h2 className="submissions-title">Submissions Showcase</h2>
+          <p className="submissions-subtitle">Top {submissions.length} entries from our talented participants</p>
+          
+          <div className="submissions-grid">
+            {submissions.map((img, idx) => (
+              <div 
+                key={idx} 
+                className="submission-item"
+                onClick={() => setSelectedSubmission(img)}
+              >
+                <SmartImage src={img} alt={`Submission ${idx + 1}`} />
+                <div className="submission-overlay">
+                  <span>View</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="scroll-strip scroll-strip-2">
-          {imagesStrip2.map((img, idx) => (
-            <SmartImage key={idx} src={img} alt={`Event img ${idx + 1}`} />
-          ))}
-        </div>
-      </div>
-    </div>
+      )}
+
+      {/* Lightbox for Submissions */}
+      {selectedSubmission && createPortal(
+        <div className="submission-lightbox" onClick={() => setSelectedSubmission(null)}>
+          <div className="lightbox-content">
+            <img src={selectedSubmission} alt="Selected submission" />
+            <button className="lightbox-close" onClick={() => setSelectedSubmission(null)}>
+              ×
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
 

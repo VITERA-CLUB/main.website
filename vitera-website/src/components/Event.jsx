@@ -63,16 +63,36 @@ Design for Good represents Vitera's commitment to empowering students to become 
       date: "January 2, 2026",
       imagesStrip1: [
         "/images/Events_Pics/DesignForGood/poster.jpg",
-        "/images/Events_Pics/DesignForGood/poster.jpg",
-        "/images/Events_Pics/DesignForGood/poster.jpg",
+        "/images/Winner/winners/1.jpeg",
+        "/images/Winner/winners/2.jpeg",
+        "/images/Winner/winners/3.jpeg",
       ],
       imagesStrip2: [
-        "/images/Events_Pics/DesignForGood/poster.jpg",
+        "/images/Winner/winners/4.jpeg",
+        "/images/Winner/winners/5.jpeg",
         "/images/Events_Pics/DesignForGood/poster.jpg",
       ],
-      featured: true,
+      submissions: [
+        "/images/Winner/winners/1.jpeg",
+        "/images/Winner/winners/2.jpeg",
+        "/images/Winner/winners/3.jpeg",
+        "/images/Winner/winners/4.jpeg",
+        "/images/Winner/winners/5.jpeg",
+        "/images/Winner/winners/6.jpeg",
+        "/images/Winner/winners/7.jpeg",
+        "/images/Winner/winners/8.jpeg",
+        "/images/Winner/winners/9.jpeg",
+        "/images/Winner/winners/10.jpeg",
+        "/images/Winner/winners/11.jpeg",
+        "/images/Winner/winners/12.jpeg",
+        "/images/Winner/winners/13.jpeg",
+        "/images/Winner/winners/14.jpeg",
+        "/images/Winner/winners/15.jpeg",
+        "/images/Winner/winners/16.jpeg",
+      ],
+      featured: false,
       registrationLink: "https://forms.gle/wBne8LZgBbKq31Aj8", // Add actual link
-      isOngoing: true
+      isOngoing: false
     },
     {
       id: 2,
@@ -158,6 +178,7 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
         imagesStrip2: event.imagesStrip2,
         registrationLink: event.registrationLink,
         isOngoing: event.isOngoing,
+        submissions: event.submissions, // Add submissions
       }
     })};
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./styles.css";
+import "./winner.css";
 
 const winnersData = [
   {
@@ -38,7 +38,7 @@ const winnersData = [
       },
       third: {
         name: "Dhruba Samanta",
-        img: "/images/Winner/Dhruba Samanta 3.png"
+        img: "/images/Winner/Dhruba Samanta  3.png"
       }
     }
   },
