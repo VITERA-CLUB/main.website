@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./winner.css";
+import "./styles.css";
 
 const winnersData = [
   {
@@ -53,8 +53,12 @@ const winnersData = [
 
 export default function Winner() {
   const [lineHeight, setLineHeight] = useState(0);
+  const [modalData, setModalData] = useState(null);
   const containerRef = useRef(null);
   const cardRefs = useRef([]);
+
+  const openModal = (data) => setModalData(data);
+  const closeModal = () => setModalData(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,8 +95,10 @@ export default function Winner() {
     <section className="winners-page" ref={containerRef}>
       <header className="hero">
         <h1>Hall of Champions</h1>
-        <p>A timeline of talent, teamwork, and triumph —
-where every winner leaves a mark that inspires the next.</p>
+        <p>
+          A timeline of talent, teamwork, and triumph —
+          where every winner leaves a mark that inspires the next.
+        </p>
       </header>
 
       <div className="timeline-wrapper">
@@ -119,61 +125,44 @@ where every winner leaves a mark that inspires the next.</p>
 
                 {item.type === "upcoming" ? (
                   <div className="podium upcoming-mode">
-                    <div className="step silver">
-                      <span className="label">🥈 Your Name Here</span>
-                    </div>
-                    <div className="step gold">
-                      <span className="label">🥇 Waiting for a Champion</span>
-                    </div>
-                    <div className="step bronze">
-                      <span className="label">🥉 Next Legend</span>
-                    </div>
+                    <div className="step silver"><span className="label">🥈 Your Name Here</span></div>
+                    <div className="step gold"><span className="label">🥇 Waiting for a Champion</span></div>
+                    <div className="step bronze"><span className="label">🥉 Next Legend</span></div>
                   </div>
                 ) : (
-                  <div
-                    className={`podium ${
-                      item.type === "team" ? "team-mode" : "individual-mode"
-                    }`}
-                  >
-                    <div className="step silver">
-                      {item.type === "individual" && (
-                        <img src={item.winners.second.img} alt="" />
-                      )}
-                      <span className="rank">2</span>
-                      <p className="name">{item.winners.second.name}</p>
-                      {item.type === "team" && (
-                        <div className="team-members">
-                          {item.winners.second.members.join(", ")}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="step gold">
-                      <span className="crown">👑</span>
-                      {item.type === "individual" && (
-                        <img src={item.winners.first.img} alt="" />
-                      )}
-                      <span className="rank">1</span>
-                      <p className="name">{item.winners.first.name}</p>
-                      {item.type === "team" && (
-                        <div className="team-members">
-                          {item.winners.first.members.join(", ")}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="step bronze">
-                      {item.type === "individual" && (
-                        <img src={item.winners.third.img} alt="" />
-                      )}
-                      <span className="rank">3</span>
-                      <p className="name">{item.winners.third.name}</p>
-                      {item.type === "team" && (
-                        <div className="team-members">
-                          {item.winners.third.members.join(", ")}
-                        </div>
-                      )}
-                    </div>
+                  <div className="podium team-mode">
+                    {["second", "first", "third"].map((pos) => (
+                      <div
+                        key={pos}
+                        className={`step ${
+                          pos === "first"
+                            ? "gold"
+                            : pos === "second"
+                            ? "silver"
+                            : "bronze"
+                        } clickable`}
+                        onClick={() =>
+                          openModal({
+                            type: item.type,
+                            rank:
+                              pos === "first"
+                                ? "🥇 First Place"
+                                : pos === "second"
+                                ? "🥈 Second Place"
+                                : "🥉 Third Place",
+                            name: item.winners[pos].name,
+                            img: item.winners[pos].img,
+                            members: item.winners[pos].members
+                          })
+                        }
+                      >
+                        {pos === "first" && <span className="crown">👑</span>}
+                        <span className="rank">
+                          {pos === "first" ? 1 : pos === "second" ? 2 : 3}
+                        </span>
+                        <p className="name">{item.winners[pos].name}</p>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
@@ -181,6 +170,35 @@ where every winner leaves a mark that inspires the next.</p>
           </div>
         ))}
       </div>
+
+      {/* MODAL */}
+      {modalData && (
+        <div className="winner-modal" onClick={closeModal}>
+          <div
+            className="winner-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="close-btn" onClick={closeModal}>✕</button>
+
+            <div className="modal-header">
+              <span className="modal-rank">{modalData.rank}</span>
+              <h3 className="modal-name">{modalData.name}</h3>
+            </div>
+
+            {modalData.type === "individual" && modalData.img && (
+              <img src={modalData.img} alt={modalData.name} />
+            )}
+
+            {modalData.type === "team" && modalData.members && (
+              <ul className="modal-members">
+                {modalData.members.map((m, i) => (
+                  <li key={i}>{m}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
