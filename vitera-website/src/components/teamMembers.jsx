@@ -437,6 +437,12 @@ const teams = [
 			title: 'Content Team',
 			members: [
 				{ 
+					name: 'Rudra Narayan Mishra ', 
+					role: 'Lead', 
+					img: '/images/Our Team/Content Team/rudra.jpg', 
+					linkedin: 'https://www.linkedin.com/in/rudra-narayan-mishra-b9a727327?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' 
+				},
+				{ 
 					name: 'Yashika Agrawal ', 
 					role: 'Co-Lead', 
 					img: '/images/Our Team/Content Team/yashika.jpg', 
@@ -447,12 +453,6 @@ const teams = [
 					role: 'Core Member', 
 					img: '/images/Our Team/Content Team/navya.jpg', 
 					linkedin: 'https://www.linkedin.com/in/navya-srivastava-53350528a' 
-				},
-				{ 
-					name: 'Rudra Narayan Mishra ', 
-					role: 'Core Member', 
-					img: '/images/Our Team/Content Team/rudra.jpg', 
-					linkedin: 'https://www.linkedin.com/in/rudra-narayan-mishra-b9a727327?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' 
 				},
 				// i need to add images here...
 				{
