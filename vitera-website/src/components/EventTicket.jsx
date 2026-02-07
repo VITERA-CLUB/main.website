@@ -31,7 +31,7 @@ const EventTicket = () => {
         eventName: 'The House of Royals',
         date: '27/02/2026',
         time: '10:00 AM - 3:00 PM',
-        venue: 'AB - 325',
+        venue: 'AR - 202',
         passType: 'Group Pass',
         generatedAt: new Date().toISOString(),
       };
@@ -100,7 +100,7 @@ const EventTicket = () => {
                 </div>
                 <div className="detail-item">
                   <span className="icon">📍</span>
-                  <span>AB - 325</span>
+                  <span>AR - 202</span>
                 </div>
               </div>
               <p className="pass-type-info">👥 Generate a group pass for your entire team</p>
@@ -212,7 +212,7 @@ const EventTicket = () => {
                     <span className="detail-icon">📍</span>
                     <div>
                       <p className="detail-label">Venue</p>
-                      <p className="detail-value">AB - 325</p>
+                      <p className="detail-value">AR - 202</p>
                     </div>
                   </div>
                 </div>
