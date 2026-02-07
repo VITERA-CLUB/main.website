@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './TeamMembers.css';
 
 const teams = [
 	{
@@ -20,7 +21,7 @@ const teams = [
 			{ 
 				name: 'Anoushka Bakshi ', 
 				role: 'General Secretary', 
-				img: 'images/Our Team/Panel/anoushka.jpg', 
+				img: '/images/Our Team/Panel/anoushka.jpg', 
 				linkedin: '#' 
 			},
 			{
@@ -90,12 +91,6 @@ const teams = [
 			role: 'Core Member',
 			img: '/images/Our Team/Tech Team/amogh.jpg',
 			linkedin: 'https://www.linkedin.com/in/amogh-patel-42a261307'
-		},
-		{
-			name: 'Aryan Agrawal',
-			role: 'Core Member',
-			img: '/images/Our Team/Tech Team/aryan.jpg',
-			linkedin: 'https://www.linkedin.com/in/agrawalaryan547'
 		},
 		{
 			name: 'Anvesha Srivastava',
@@ -194,24 +189,6 @@ const teams = [
 			img: '/images/Our Team/Photography Team/shamim.jpeg', 
 			linkedin: 'https://www.linkedin.com/in/shamim-uz-zaman-88788531a' 
 		},
-		{ 
-			name: 'Pradeep Vishnoi', 
-			role: 'Editor', 
-			img: '/images/Our Team/Photography Team/pradeep.jpg', 
-			linkedin: 'https://www.linkedin.com/in/pradeep-vishnoi-04169a342' 
-		},
-		{ 
-			name: 'Sahil Singh ', 
-			role: 'Editor', 
-			img: '/images/Our Team/Photography Team/sahil.jpg', 
-			linkedin: '#' 
-		},
-		{
-			name: 'Dharini Sharma',
-			role: 'Core Member',
-			img: '/images/Our Team/Photography Team/dharini.jpg',
-			linkedin: 'https://www.linkedin.com/in/dharini-sharma-9a10ba308'
-		},
 		{
 			name: 'Rachit Rushil Paul',
 			role: 'Core Member',
@@ -251,86 +228,74 @@ const teams = [
 		{ 
 			name: 'Shrishty Priya ', 
 			role: 'Core Member', 
-			img: 'images/Our Team/Event Mgmt Team/shristhy.jpg', 
+			img: '/images/Our Team/Event Mgmt Team/shristhy.jpg', 
 			linkedin: 'https://www.linkedin.com/in/shrishty-priya-86943b369/' 
 		},
 		{ 
 			name: 'Vanshika Solanki', 
 			role: 'Core Member', 
-			img: 'images/Our Team/Event Mgmt Team/vanshika.jpg', 
+			img: '/images/Our Team/Event Mgmt Team/vanshika.jpg', 
 			linkedin: 'https://www.linkedin.com/in/vanshika-solanki-318592336' 
-		},
-		{ 
-			name: 'Anjistha sharma ', 
-			role: 'Core Member', 
-			img: 'images/Our Team/Event Mgmt Team/anjistha.jpg', 
-			linkedin: 'https://www.linkedin.com/in/anjistha-sharma-887930328' 
-		},
-		{
-			name: 'Aryaman Ghoshal',
-			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/aryaman.jpg',
-			linkedin: 'https://linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=aryaman-undefined-46b30132a'
 		},
 		{
 			name: 'Mekhla Singh',
 			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/mekhla.jpg',
+			img: '/images/Our Team/Event Mgmt Team/mekhla.jpg',
 			linkedin: 'https://www.linkedin.com/in/mekhla-singh-621426277/'
 		},
 		{
 			name: 'Satyam Kumar Jha',
 			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/satyam.png',
+			img: '/images/Our Team/Event Mgmt Team/satyam.png',
 			linkedin: 'https://www.linkedin.com/in/satyamkumarjha21'
 		},
 		{
 			name: 'Ayushman Dwivedi',
 			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/ayushman.jpg',
+			img: '/images/Our Team/Event Mgmt Team/ayushman.jpg',
 			linkedin: 'https://www.linkedin.com/in/ayushman-dwivedi-1b492a260'
 		},
 		// i need to add images here..
 		{
 			name: 'Tanisha Bariar',
 			role: 'Core member',
-			img: 'images/Our Team/Event Mgmt Team/tanisha.jpg',
+			img: '/images/Our Team/Event Mgmt Team/tanisha.jpg',
 			linkedin: '#'
 		},
 		{
 			name: 'Eshant Baranwal',
 			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/eshant.jpg',
+			img: '/images/Our Team/Event Mgmt Team/eshant.jpg',
 			linkedin: 'https://www.linkedin.com/in/eshant-baranwal-b7b635281'
 		},
 		{
 			name: 'P Laxmi Srivastava ',
 			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/laxmi.png',
+			img: '/images/Our Team/Event Mgmt Team/laxmi.png',
 			linkedin: 'https://www.linkedin.com/in/plaxmi-srivastava-987704379'
 		},
 		{
 			name: 'SWAGATIKA PRIYADARSHINI SAHOO',
 			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/swagatika.jpg',
+			img: '/images/Our Team/Event Mgmt Team/swagatika.jpg',
 			linkedin: 'https://www.linkedin.com/in/swagatika-priyadarshini-sahoo-412a1237a'
 		},
 		{
 			name: 'Pranshu Pedgaonkar',
 			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/pranshu.jpg',
+			img: '/images/Our Team/Event Mgmt Team/pranshu.jpg',
 			linkedin: 'https://www.linkedin.com/in/pranshu-pedgaonkar-55156b37a'
 		},
 		{
 			name: 'AASHUTOSH PARIHAR ',
 			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/aashutosh.jpg',
+			img: '/images/Our Team/Event Mgmt Team/aashutosh.jpg',
 			linkedin: 'https://www.linkedin.com/in/aashutosh-parihar-888a7730a'
 		},
 		{
 			name: 'Adil Sukumar',
 			role: 'Core Member',
-			img: 'images/Our Team/Event Mgmt Team/adil.jpg',
+			img: '/images/Our Team/Event Mgmt Team/adil.jpg',
 			linkedin: 'www.linkedin.com/in/adilsukumar'
 		},
 		],
@@ -494,7 +459,8 @@ const teams = [
 				{
 					name: 'Divyanka ',
 					role: 'Core Member',
-					img: '/images/Our Team/Content Team/divyanka.jpg'
+					img: '/images/Our Team/Content Team/divyanka.jpg',
+					linkedin: '#'
 				},
 			],
 	},
@@ -504,7 +470,7 @@ const TeamMembers = () => {
   const [selectedTeam, setSelectedTeam] = useState('panel-team');
 
   return (
-    <section id="team" className="py-16 scroll-mt-[90px]">
+    <section id="team" className="team-members-section py-16 scroll-mt-[90px]">
       <div className="max-w-[1200px] mx-auto px-4">
         <h2 className="text-center text-[3rem] font-extrabold mb-8 text-white">Our Teams</h2>
         <p className="text-center text-[color:var(--text-secondary)] mb-12 max-w-[700px] mx-auto">
@@ -536,12 +502,17 @@ const TeamMembers = () => {
                   <a
                     key={idx}
                     href={member.linkedin || '#'}
-                    target={member.linkedin ? '_blank' : undefined}
-                    rel={member.linkedin ? 'noopener noreferrer' : undefined}
+                    target={member.linkedin && member.linkedin !== '#' ? '_blank' : undefined}
+                    rel={member.linkedin && member.linkedin !== '#' ? 'noopener noreferrer' : undefined}
                     className="member-card"
                   >
                     <div className="member-image-wrapper">
-                      <img src={member.img} alt={member.name} className="member-image" />
+                      <img 
+                        src={member.img} 
+                        alt={member.name} 
+                        className="member-image"
+                        loading="lazy"
+                      />
                       <div className="member-overlay">
                         <span className="view-profile">View Profile</span>
                       </div>
@@ -557,153 +528,6 @@ const TeamMembers = () => {
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        .team-nav {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 1rem;
-          justify-content: center;
-          margin-bottom: 3rem;
-        }
-
-        .team-nav-btn {
-          padding: 0.7rem 1.5rem;
-          border-radius: 30px;
-          font-weight: 600;
-          background: rgba(255,255,255,0.05);
-          color: #fff;
-          border: 1px solid rgba(255,255,255,0.1);
-          transition: all 0.3s ease;
-        }
-
-        .team-nav-btn:hover {
-          background: rgba(255,92,0,0.15);
-          border-color: var(--primary);
-        }
-
-        .team-nav-btn.active {
-          background: var(--primary);
-          border-color: var(--primary);
-        }
-
-        .team-section {
-          display: none;
-          animation: fadeIn 0.5s ease;
-        }
-
-        .team-section.active {
-          display: block;
-        }
-
-        .members-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 2rem;
-          padding: 1rem;
-        }
-
-        .member-card {
-          background: rgba(255,255,255,0.03);
-          border-radius: 16px;
-          overflow: hidden;
-          transition: all 0.3s ease;
-          border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .member-card:hover {
-          transform: translateY(-5px);
-          background: rgba(255,255,255,0.05);
-          border-color: var(--primary);
-        }
-
-        .member-image-wrapper {
-          position: relative;
-          padding-top: 100%;
-          overflow: hidden;
-        }
-
-        .member-image {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.5s ease;
-        }
-
-        .member-card:hover .member-image {
-          transform: scale(1.1);
-        }
-
-        .member-overlay {
-          position: absolute;
-          inset: 0;
-          background: rgba(0,0,0,0.4);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .member-card:hover .member-overlay {
-          opacity: 1;
-        }
-
-        .view-profile {
-          color: #fff;
-          font-weight: 600;
-          padding: 0.5rem 1rem;
-          border-radius: 20px;
-          background: var(--primary);
-          transform: translateY(20px);
-          transition: transform 0.3s ease;
-        }
-
-        .member-card:hover .view-profile {
-          transform: translateY(0);
-        }
-
-        .member-info {
-          padding: 1.2rem;
-        }
-
-        .member-name {
-          font-size: 1.1rem;
-          font-weight: 700;
-          color: #fff;
-          margin-bottom: 0.3rem;
-        }
-
-        .member-role {
-          color: var(--primary);
-          font-size: 0.9rem;
-          font-weight: 500;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: none; }
-        }
-
-        @media (max-width: 768px) {
-          .members-grid {
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
-          }
-          
-          .team-nav {
-            gap: 0.7rem;
-          }
-          
-          .team-nav-btn {
-            padding: 0.6rem 1.2rem;
-            font-size: 0.9rem;
-          }
-        }
-      `}</style>
     </section>
   );
 };
