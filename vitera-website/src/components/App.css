@@ -95,6 +95,36 @@
   width: 100%;
 }
 
+/* Event Pass Link - Highlighted */
+.event-pass-link {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  padding: 0.6rem 1.2rem !important;
+  border-radius: 8px;
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.event-pass-link::after {
+  display: none; /* Remove underline for this special link */
+}
+
+.event-pass-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 69, 0, 0.5);
+  color: white !important;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(255, 69, 0, 0.6);
+  }
+}
+
 /* Right navigation */
 .right-nav {
   display: flex;

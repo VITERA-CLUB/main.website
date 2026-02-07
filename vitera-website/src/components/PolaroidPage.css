@@ -1,0 +1,317 @@
+.polaroid-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, #191919 40%, #111 100%);
+  padding: 2rem 1rem;
+  padding-top: 100px;
+}
+
+.polaroid-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.polaroid-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.polaroid-title .highlight {
+  color: var(--primary);
+}
+
+.polaroid-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.scanner-section {
+  margin: 2rem 0;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 1rem;
+  border: 4px solid rgba(255, 69, 0, 0.2);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.alert {
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  text-align: center;
+  animation: slideIn 0.3s ease;
+  font-size: 1.1rem;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-error {
+  background: rgba(220, 38, 38, 0.15);
+  border: 2px solid #dc2626;
+  color: #fca5a5;
+}
+
+.alert p {
+  margin: 0;
+}
+
+.polaroid-details {
+  margin-top: 2rem;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pass-card {
+  background: linear-gradient(135deg, rgba(255, 69, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%);
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(255, 69, 0, 0.2);
+}
+
+.pass-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.pass-card h2 {
+  color: var(--text);
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.pass-type-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 30px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.team-info {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.team-id,
+.team-members {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+.team-id {
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.pass-instructions {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.pass-instructions h3 {
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.pass-instructions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pass-instructions li {
+  color: var(--text);
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.complete-btn {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 1.25rem 2rem;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.complete-btn:hover {
+  background: var(--secondary);
+  transform: scale(1.02);
+  box-shadow: 0 5px 20px rgba(255, 69, 0, 0.4);
+}
+
+.complete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.completion-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%);
+  border: 2px solid #22c55e;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.success-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  animation: bounce 1s ease;
+}
+
+.completion-card h2 {
+  color: #86efac;
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.completion-card p {
+  color: var(--text);
+  font-size: 1.1rem;
+  margin: 0.75rem 0;
+}
+
+.completion-time {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-top: 1.5rem;
+}
+
+.reset-btn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  text-transform: uppercase;
+}
+
+.reset-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .polaroid-page {
+    padding: 1rem 0.5rem;
+    padding-top: 80px;
+  }
+
+  .polaroid-title {
+    font-size: 2rem;
+  }
+
+  .pass-card {
+    padding: 2rem 1rem;
+  }
+
+  .pass-icon {
+    font-size: 3rem;
+  }
+
+  .pass-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .pass-type-badge {
+    font-size: 1.1rem;
+    padding: 0.6rem 1.5rem;
+  }
+
+  .team-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pass-instructions h3 {
+    font-size: 1.1rem;
+  }
+
+  .pass-instructions li {
+    font-size: 1rem;
+  }
+
+  .complete-btn {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+  }
+}

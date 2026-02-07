@@ -3,6 +3,9 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Feedback from './components/Feedback';
 import Events from './components/EventTimeline';
+import EntryPage from './components/EntryPage';
+import PolaroidPage from './components/PolaroidPage';
+import EventTicket from './components/EventTicket';
 import Event from './components/Eventspage';
 import TeamMembers from './components/teamMembers';
 import ScrollToTopButton from './components/ScrollToTop';
@@ -38,6 +41,9 @@ function App() {
         <Route path="/winner" element={<Winner />} />
         <Route path="/events" element={<Events />} />
         <Route path="/event/:name" element={<Event />} />
+        <Route path="/entry" element={<EntryPage />} />
+        <Route path="/polaroid" element={<PolaroidPage />} />
+        <Route path="/event-pass" element={<EventTicket />} />
       </Routes>
 
      {/* Global scroll-to-top button */}

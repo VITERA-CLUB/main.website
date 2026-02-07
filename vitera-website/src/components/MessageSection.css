@@ -103,30 +103,37 @@
   object-fit: cover;
 }
 
-.member-info {
+.message-section .member-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  width: 100%;
 }
 
-.member-name {
+.message-section .member-name {
   font-size: 1.25rem;
   font-weight: 700;
   color: #fff;
   margin: 0.2rem 0 0.1rem 0;
+  text-align: center;
 }
 
-.member-occupation {
+.message-section .member-occupation {
   font-size: 1rem;
   color: var(--secondary);
   font-weight: 500;
   margin-bottom: 0.7rem;
+  text-align: center;
 }
 
-.member-message {
+.message-section .member-message {
   font-size: 1.05rem;
   color: var(--text-secondary);
   margin: 0;
   font-style: italic;
   line-height: 1.6;
+  text-align: center;
 }
 
 /* Message Navigation Buttons */
@@ -236,4 +243,10 @@
     width: 90%;
     padding: 1.5rem 1.2rem;
   }
+}
+.logo-image {
+  width: -webkit-fill-available;
+  height: 100px;
+  object-fit: contain;
+  align-items:center ;
 }

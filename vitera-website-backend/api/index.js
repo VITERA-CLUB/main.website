@@ -16,6 +16,10 @@ app.use(cors({
 
 app.use(express.json());
 
+// Import QR System routes
+import qrRoutes from './qr-routes.js';
+import qrMockRoutes from './qr-mock-routes.js';
+
 const PORTNO = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -109,6 +113,12 @@ async function ensureDBConnection(req, res, next) {
     });
   }
 }
+
+// QR System routes
+app.use("/api/qr", qrRoutes);
+
+// QR Mock routes (for testing without Google Sheets)
+app.use("/api/qr-mock", qrMockRoutes);
 
 // Feedback routes
 app.post("/api/feedback", ensureDBConnection, async (req, res) => {
