@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Test Codes - VITERA</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #111;
+      color: #f5f5f5;
+      padding: 2rem;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #ff4500;
+    }
+    
+    .subtitle {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 3rem;
+    }
+    
+    .instructions {
+      background: rgba(255, 140, 0, 0.1);
+      border: 2px solid #ff8c00;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .instructions h3 {
+      color: #ff4500;
+      margin-bottom: 1rem;
+    }
+    
+    .instructions ol {
+      margin-left: 1.5rem;
+      line-height: 1.8;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .qr-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    
+    .qr-card:hover {
+      transform: translateY(-5px);
+      border-color: #ff4500;
+    }
+    
+    .qr-code {
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      display: inline-block;
+      margin: 1rem 0;
+    }
+    
+    .team-info {
+      margin-top: 1rem;
+    }
+    
+    .team-info h3 {
+      color: #ff4500;
+      margin-bottom: 0.5rem;
+    }
+    
+    .team-info p {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin: 0.25rem 0;
+    }
+    
+    .badge {
+      display: inline-block;
+      background: #ff4500;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    
+    .badge.polaroid {
+      background: #22c55e;
+    }
+    
+    .badge.no-polaroid {
+      background: #dc2626;
+    }
+    
+    code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: monospace;
+      color: #ff8c00;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎫 QR Test Codes</h1>
+  <p class="subtitle">Scan these codes to test the Entry and Polaroid systems</p>
+  
+  <div class="instructions">
+    <h3>📱 How to Test:</h3>
+    <ol>
+      <li>Make sure the backend server is running at <code>http://localhost:5000</code></li>
+      <li>Open <code>http://localhost:5173/entry</code> on your phone or in another browser tab</li>
+      <li>Allow camera access when prompted</li>
+      <li>Point your camera at one of the QR codes below</li>
+      <li>The system will fetch the team data and show members</li>
+      <li>Try marking members as entered and testing polaroid access at <code>/polaroid</code></li>
+    </ol>
+  </div>
+  
+  <div class="grid">
+    <!-- Team 1 -->
+    <div class="qr-card">
+      <div id="qr1" class="qr-code"></div>
+      <div class="team-info">
+        <h3>Team #1</h3>
+        <p><strong>Members:</strong> 3</p>
+        <p>Rahul, Ankit, Suresh</p>
+        <p><code>CS23B1021</code></p>
+        <span class="badge polaroid">✓ Polaroid Applied</span>
+        <span class="badge">Group Pass</span>
+      </div>
+    </div>
+    
+    <!-- Team 2 -->
+    <div class="qr-card">
+      <div id="qr2" class="qr-code"></div>
+      <div class="team-info">
+        <h3>Team #2</h3>
+        <p><strong>Members:</strong> 2</p>
+        <p>Priya, Anjali</p>
+        <p><code>CS23B2031</code></p>
+        <span class="badge polaroid">✓ Polaroid Applied</span>
+        <span class="badge">Duo Pass</span>
+      </div>
+    </div>
+    
+    <!-- Team 3 -->
+    <div class="qr-card">
+      <div id="qr3" class="qr-code"></div>
+      <div class="team-info">
+        <h3>Team #3</h3>
+        <p><strong>Members:</strong> 1</p>
+        <p>Vikram</p>
+        <p><code>CS23B3041</code></p>
+        <span class="badge polaroid">✓ Polaroid Applied</span>
+        <span class="badge">Single Pass</span>
+      </div>
+    </div>
+    
+    <!-- Team 4 -->
+    <div class="qr-card">
+      <div id="qr4" class="qr-code"></div>
+      <div class="team-info">
+        <h3>Team #4</h3>
+        <p><strong>Members:</strong> 2</p>
+        <p>Amit, Rohit</p>
+        <p><code>CS23B4051</code></p>
+        <span class="badge no-polaroid">✗ No Polaroid</span>
+      </div>
+    </div>
+    
+    <!-- Team 5 -->
+    <div class="qr-card">
+      <div id="qr5" class="qr-code"></div>
+      <div class="team-info">
+        <h3>Team #5</h3>
+        <p><strong>Members:</strong> 4</p>
+        <p>Arjun, Kavya, Neha, Rajesh</p>
+        <p><code>CS23B5061</code></p>
+        <span class="badge polaroid">✓ Polaroid Applied</span>
+        <span class="badge">Group Pass</span>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Generate QR codes on page load
+    window.onload = function() {
+      const teams = [
+        { id: 'qr1', regNo: 'CS23B1021' },
+        { id: 'qr2', regNo: 'CS23B2031' },
+        { id: 'qr3', regNo: 'CS23B3041' },
+        { id: 'qr4', regNo: 'CS23B4051' },
+        { id: 'qr5', regNo: 'CS23B5061' }
+      ];
+      
+      teams.forEach(team => {
+        new QRCode(document.getElementById(team.id), {
+          text: `REG_NO=${team.regNo}`,
+          width: 200,
+          height: 200,
+          colorDark: '#000000',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      });
+    };
+  </script>
+</body>
+</html>
