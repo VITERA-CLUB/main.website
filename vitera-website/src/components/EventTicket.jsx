@@ -108,14 +108,14 @@ const EventTicket = () => {
 
             <form onSubmit={generateTicket} className="ticket-form">
               <div className="form-group">
-                <label htmlFor="regNo">Registration Number *</label>
+                <label htmlFor="regNo">Registration Number :</label>
                 <input
                   type="text"
                   id="regNo"
                   name="regNo"
                   value={formData.regNo}
                   onChange={handleInputChange}
-                  placeholder="e.g., CS23B1021"
+                  placeholder="e.g., 23BEY10012"
                   required
                 />
                 <p className="input-hint">Enter any team member's registration number</p>
