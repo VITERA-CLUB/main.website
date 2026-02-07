@@ -4,7 +4,7 @@ import './PolaroidPage.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 // Use mock API for testing (change to /api/qr when Google Sheets is configured)
-const USE_MOCK = true;
+const USE_MOCK = false;
 const API_ENDPOINT = USE_MOCK ? '/api/qr-mock' : '/api/qr';
 
 const PolaroidPage = () => {
