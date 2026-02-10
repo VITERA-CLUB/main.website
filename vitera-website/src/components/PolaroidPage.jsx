@@ -14,6 +14,7 @@ const PolaroidPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [completed, setCompleted] = useState(false);
+  const [usageInfo, setUsageInfo] = useState(null);
 
   const handleScan = async (regNo) => {
     setScanning(false);
@@ -33,9 +34,14 @@ const PolaroidPage = () => {
       if (data.eligible) {
         setEligible(true);
         setTeam(data.team);
+        setUsageInfo({
+          used: data.team.usedCount || 0,
+          remaining: data.team.remainingCount || 0,
+          total: parseInt(data.team.passTypeRaw) || 0,
+        });
       } else {
         setEligible(false);
-        setError(getErrorMessage(data.reason, data.usedTime));
+        setError(getErrorMessage(data.reason, data.usedTime, data.usedCount, data.maxCount));
         setTimeout(() => {
           resetScanner();
         }, 4000);
@@ -51,7 +57,7 @@ const PolaroidPage = () => {
     }
   };
 
-  const getErrorMessage = (reason, usedTime) => {
+  const getErrorMessage = (reason, usedTime, usedCount, maxCount) => {
     switch (reason) {
       case 'Team not found':
         return '❌ Team not found in registration database';
@@ -59,6 +65,8 @@ const PolaroidPage = () => {
         return '❌ This team has not applied for Polaroid';
       case 'Polaroid already used':
         return `❌ Polaroid already used on ${new Date(usedTime).toLocaleString()}`;
+      case 'Polaroid pass limit reached':
+        return `❌ Polaroid pass limit reached (${usedCount}/${maxCount} uses completed)`;
       default:
         return `❌ ${reason}`;
     }
@@ -83,6 +91,11 @@ const PolaroidPage = () => {
       if (data.success) {
         setCompleted(true);
         setError('');
+        setUsageInfo({
+          used: data.usedCount || 0,
+          remaining: data.remainingCount || 0,
+          total: usageInfo ? usageInfo.total : 0,
+        });
       } else {
         setError(data.message || 'Failed to complete Polaroid');
       }
@@ -104,6 +117,7 @@ const PolaroidPage = () => {
     setScanning(true);
     setError('');
     setCompleted(false);
+    setUsageInfo(null);
   };
 
   const getPassTypeIcon = (passType) => {
@@ -179,6 +193,25 @@ const PolaroidPage = () => {
                 <p className="team-id">Team #{team.teamRowID}</p>
                 <p className="team-members">{team.teamSize} Member{team.teamSize > 1 ? 's' : ''}</p>
               </div>
+              
+              {usageInfo && (
+                <div className="usage-info" style={{
+                  background: 'rgba(255, 140, 0, 0.1)',
+                  border: '2px solid var(--secondary)',
+                  borderRadius: '10px',
+                  padding: '15px',
+                  margin: '15px 0',
+                  textAlign: 'center'
+                }}>
+                  <h3 style={{ margin: '0 0 10px 0', color: 'var(--secondary)' }}>Pass Usage</h3>
+                  <p style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: '5px 0' }}>
+                    {usageInfo.used} / {usageInfo.total} Used
+                  </p>
+                  <p style={{ color: '#4CAF50', fontSize: '1.1rem', fontWeight: '600' }}>
+                    ✓ {usageInfo.remaining} Remaining
+                  </p>
+                </div>
+              )}
 
               <div className="pass-instructions">
                 <h3>Pass Type: {team.passType}</h3>
@@ -217,6 +250,22 @@ const PolaroidPage = () => {
             <div className="success-icon">🎉</div>
             <h2>Polaroid Completed!</h2>
             <p>Team #{team?.teamRowID} has successfully used their Polaroid pass</p>
+            {usageInfo && (
+              <div style={{ margin: '15px 0', padding: '15px', background: 'rgba(255, 140, 0, 0.1)', borderRadius: '10px' }}>
+                <p style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--secondary)' }}>
+                  Uses: {usageInfo.used} / {usageInfo.total}
+                </p>
+                {usageInfo.remaining > 0 ? (
+                  <p style={{ color: '#4CAF50', fontSize: '1rem' }}>
+                    ✓ {usageInfo.remaining} pass{usageInfo.remaining > 1 ? 'es' : ''} remaining
+                  </p>
+                ) : (
+                  <p style={{ color: '#FF6B6B', fontSize: '1rem' }}>
+                    ⚠️ All passes used
+                  </p>
+                )}
+              </div>
+            )}
             <p className="completion-time">
               Completed at {new Date().toLocaleTimeString()}
             </p>

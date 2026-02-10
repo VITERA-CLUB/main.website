@@ -24,6 +24,7 @@ const mockTeams = [
     polaroidPassType: '3',
     polaroidUsed: false,
     polaroidUsedTime: '',
+    polaroidPassUsed: 0,
   },
   {
     rowIndex: 3,
@@ -45,6 +46,7 @@ const mockTeams = [
     polaroidPassType: '2',
     polaroidUsed: false,
     polaroidUsedTime: '',
+    polaroidPassUsed: 1,
   },
   {
     rowIndex: 4,
@@ -66,6 +68,7 @@ const mockTeams = [
     polaroidPassType: '1',
     polaroidUsed: false,
     polaroidUsedTime: '',
+    polaroidPassUsed: 0,
   },
   {
     rowIndex: 5,
@@ -87,6 +90,7 @@ const mockTeams = [
     polaroidPassType: '',
     polaroidUsed: false,
     polaroidUsedTime: '',
+    polaroidPassUsed: 0,
   },
   {
     rowIndex: 6,
@@ -108,13 +112,19 @@ const mockTeams = [
     polaroidPassType: '4',
     polaroidUsed: false,
     polaroidUsedTime: '',
+    polaroidPassUsed: 3,
   },
 ];
 
 function findTeamByRegNo(regNo) {
+  // Convert input to uppercase for case-insensitive matching
+  const regNoUpper = regNo.toUpperCase();
+  
   for (const team of mockTeams) {
-    if (team.reg1 === regNo || team.reg2 === regNo || 
-        team.reg3 === regNo || team.reg4 === regNo) {
+    if (team.reg1.toUpperCase() === regNoUpper || 
+        team.reg2.toUpperCase() === regNoUpper || 
+        team.reg3.toUpperCase() === regNoUpper || 
+        team.reg4.toUpperCase() === regNoUpper) {
       return team;
     }
   }
@@ -272,18 +282,24 @@ router.post('/polaroid/check', async (req, res) => {
       });
     }
 
-    if (team.polaroidUsed) {
+    // Check if usage count has reached the limit
+    const passTypeLimit = parseInt(team.polaroidPassType) || 0;
+    const currentUsage = team.polaroidPassUsed || 0;
+    
+    if (currentUsage >= passTypeLimit) {
       return res.json({ 
         success: false,
         eligible: false, 
-        reason: 'Polaroid already used', 
+        reason: 'Polaroid pass limit reached', 
         team: {
           teamRowID: team.teamRowID,
           teamSize: team.teamSize,
           polaroidApplied: team.polaroidApplied,
           polaroidUsed: team.polaroidUsed,
         },
-        usedTime: team.polaroidUsedTime 
+        usedTime: team.polaroidUsedTime,
+        usedCount: currentUsage,
+        maxCount: passTypeLimit
       });
     }
 
@@ -297,6 +313,8 @@ router.post('/polaroid/check', async (req, res) => {
         teamSize: team.teamSize,
         passType: passTypeName,
         passTypeRaw: team.polaroidPassType,
+        usedCount: currentUsage,
+        remainingCount: passTypeLimit - currentUsage,
       },
     });
   } catch (error) {
@@ -338,21 +356,31 @@ router.post('/polaroid/complete', async (req, res) => {
       });
     }
 
-    if (team.polaroidUsed) {
+    // Check if usage limit has been reached
+    const passTypeLimit = parseInt(team.polaroidPassType) || 0;
+    const currentUsage = team.polaroidPassUsed || 0;
+    
+    if (currentUsage >= passTypeLimit) {
       return res.status(400).json({
         success: false,
-        message: 'Polaroid already used',
+        message: 'Polaroid pass limit already reached',
       });
     }
 
     const now = new Date().toISOString();
-    team.polaroidUsed = true;
+    const newUsageCount = currentUsage + 1;
+    const isFullyUsed = newUsageCount >= passTypeLimit;
+    
+    team.polaroidUsed = isFullyUsed;
     team.polaroidUsedTime = now;
+    team.polaroidPassUsed = newUsageCount;
 
     res.json({
       success: true,
       message: 'Polaroid marked as used',
       timestamp: now,
+      usedCount: newUsageCount,
+      remainingCount: passTypeLimit - newUsageCount,
     });
   } catch (error) {
     console.error('Error completing polaroid:', error);
