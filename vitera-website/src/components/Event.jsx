@@ -50,6 +50,17 @@ const EventsSection = () => {
   const eventOBJ = [
     {
       id: 1,
+      name: "The House of Royals",
+      description: 'The House of Royals is where competition meets celebration Step into an action-packed arena featuring exciting games like Stack-E-Cups, Match the Cups, Musical Chairs, Balloon Flip, and the thrilling Break the Tower Challenge, where speed, focus, and fun earn you royal stamps.As the games conclude, Hour 3 kicks off with an energetic DJ session that keeps the vibe alive.The spotlight then shifts to a confident and stylish Ramp Walk, where participants own the stage.Capture the moments at the Polaroid Photo Booth and take home instant royal memories.The event wraps up with a grand Crowning Ceremony, celebrating creativity, style, and true royal spirit ✨',
+      bannerPath: "/images/Events_Pics/TheHouseOfRoyals/poster.jpg",
+      keyWords: ["TBA"],
+      date: "February 27, 2026",
+      imagesStrip1: [],
+      imagesStrip2: [],
+      featured: false
+    },
+    {
+      id: 2,
       name: "Design For Good",
       description: `Design for Good – Vitera Edition is a FREE online creative contest that encourages students to use design and storytelling to highlight social issues and inspire positive change. This event invites participants to create powerful posters based on social issues, real-life stories, or impactful statistics.
 
@@ -95,7 +106,7 @@ Design for Good represents Vitera's commitment to empowering students to become 
       isOngoing: false
     },
     {
-      id: 2,
+      id: 3,
       name: "TRAILBLAZERS QUESTS",
       description: `On February 21, 2025, VITERA organized its flagship event TRAILBLAZERS QUESTS at VIT Bhopal University. The event brought together 95 students in AB-420, creating an atmosphere filled with excitement, curiosity, and energy. Guided by the mentorship of Dr. Santosh K. Bhal and Dr. Sonjoy Pan, the day was designed to blend fun with learning and to remind everyone that social responsibility is a way of life.
       
@@ -120,7 +131,7 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
       featured: false
     },
     {
-      id: 3,
+      id: 4,
       name: "To Be Announced",
       description: "Details coming soon. Stay tuned for upcoming events from VITERA.",
       bannerPath: "/images/coming.jpg",
