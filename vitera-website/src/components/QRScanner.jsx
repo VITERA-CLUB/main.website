@@ -192,7 +192,7 @@ const QRScanner = ({ onScan, onError, isActive = true }) => {
                 type="text"
                 value={manualRegNo}
                 onChange={(e) => setManualRegNo(e.target.value.toUpperCase())}
-                placeholder="e.g., CS23B1021"
+                placeholder="e.g., 23BEY10012"
                 className="manual-input-field"
                 autoFocus
                 pattern="[A-Z0-9]+"

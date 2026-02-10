@@ -47,6 +47,7 @@ async function getAllTeams() {
       polaroidPassType: row[15] || '',
       polaroidUsed: row[16] === 'TRUE',
       polaroidUsedTime: row[17] || '',
+      polaroidPassUsed: parseInt(row[18]) || 0, // Column S - tracks usage count
     }));
   } catch (error) {
     console.error('Error fetching teams:', error);
@@ -57,13 +58,19 @@ async function getAllTeams() {
 /**
  * Find team by Registration Number
  * Searches across Reg1, Reg2, Reg3, Reg4
+ * Case-insensitive matching
  */
 async function findTeamByRegNo(regNo) {
   const teams = await getAllTeams();
   
+  // Convert input to uppercase for case-insensitive matching
+  const regNoUpper = regNo.toUpperCase();
+  
   for (const team of teams) {
-    if (team.reg1 === regNo || team.reg2 === regNo || 
-        team.reg3 === regNo || team.reg4 === regNo) {
+    if (team.reg1.toUpperCase() === regNoUpper || 
+        team.reg2.toUpperCase() === regNoUpper || 
+        team.reg3.toUpperCase() === regNoUpper || 
+        team.reg4.toUpperCase() === regNoUpper) {
       return team;
     }
   }
@@ -136,19 +143,27 @@ async function checkPolaroidEligibility(regNo) {
     return { eligible: false, reason: 'Polaroid not applied', team };
   }
 
-  if (team.polaroidUsed) {
+  // Check if usage count has reached the limit
+  const passTypeLimit = parseInt(team.polaroidPassType) || 0;
+  const currentUsage = team.polaroidPassUsed || 0;
+  
+  if (currentUsage >= passTypeLimit) {
     return { 
       eligible: false, 
-      reason: 'Polaroid already used', 
+      reason: 'Polaroid pass limit reached', 
       team,
-      usedTime: team.polaroidUsedTime 
+      usedTime: team.polaroidUsedTime,
+      usedCount: currentUsage,
+      maxCount: passTypeLimit
     };
   }
 
   return { 
     eligible: true, 
     team,
-    passType: team.polaroidPassType 
+    passType: team.polaroidPassType,
+    usedCount: currentUsage,
+    remainingCount: passTypeLimit - currentUsage
   };
 }
 
@@ -168,23 +183,35 @@ async function markPolaroidUsed(teamRowID) {
       throw new Error('Polaroid not applied for this team');
     }
 
-    if (team.polaroidUsed) {
-      throw new Error('Polaroid already used');
+    // Check if usage limit has been reached
+    const passTypeLimit = parseInt(team.polaroidPassType) || 0;
+    const currentUsage = team.polaroidPassUsed || 0;
+    
+    if (currentUsage >= passTypeLimit) {
+      throw new Error('Polaroid pass limit already reached');
     }
 
     const now = new Date().toISOString();
+    const newUsageCount = currentUsage + 1;
+    const isFullyUsed = newUsageCount >= passTypeLimit;
     
-    // Update PolaroidUsed (column Q) and PolaroidUsedTime (column R)
+    // Update PolaroidUsed (column Q), PolaroidUsedTime (column R), and PolaroidPassUsed (column S)
     await sheets.spreadsheets.values.update({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!Q${team.rowIndex}:R${team.rowIndex}`,
+      range: `${SHEET_NAME}!Q${team.rowIndex}:S${team.rowIndex}`,
       valueInputOption: 'RAW',
       requestBody: {
-        values: [['TRUE', now]],
+        values: [[isFullyUsed ? 'TRUE' : 'FALSE', now, newUsageCount]],
       },
     });
 
-    return { success: true, message: 'Polaroid marked as used', timestamp: now };
+    return { 
+      success: true, 
+      message: 'Polaroid marked as used', 
+      timestamp: now,
+      usedCount: newUsageCount,
+      remainingCount: passTypeLimit - newUsageCount
+    };
   } catch (error) {
     console.error('Error marking polaroid:', error);
     throw error;

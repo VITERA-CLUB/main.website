@@ -121,6 +121,8 @@ router.post('/polaroid/check', async (req, res) => {
         eligible: false,
         reason: result.reason,
         usedTime: result.usedTime,
+        usedCount: result.usedCount,
+        maxCount: result.maxCount,
         team: result.team ? {
           teamRowID: result.team.teamRowID,
           teamSize: result.team.teamSize,
@@ -141,6 +143,8 @@ router.post('/polaroid/check', async (req, res) => {
         teamSize: result.team.teamSize,
         passType: passTypeName,
         passTypeRaw: result.passType,
+        usedCount: result.usedCount || 0,
+        remainingCount: result.remainingCount || 0,
       },
     });
   } catch (error) {
@@ -173,6 +177,8 @@ router.post('/polaroid/complete', async (req, res) => {
       success: true,
       message: 'Polaroid marked as used',
       timestamp: result.timestamp,
+      usedCount: result.usedCount,
+      remainingCount: result.remainingCount,
     });
   } catch (error) {
     console.error('Error completing polaroid:', error);
