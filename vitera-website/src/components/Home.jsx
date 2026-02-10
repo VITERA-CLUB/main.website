@@ -16,7 +16,7 @@ function Home() {
   const upcomingEvent = {
     name: "The House of Royals",
     description: 'The House of Royals is where competition meets celebration Step into an action-packed arena featuring exciting games like Stack-E-Cups, Match the Cups, Musical Chairs, Balloon Flip, and the thrilling Break the Tower Challenge, where speed, focus, and fun earn you royal stamps.As the games conclude, Hour 3 kicks off with an energetic DJ session that keeps the vibe alive.The spotlight then shifts to a confident and stylish Ramp Walk, where participants own the stage.Capture the moments at the Polaroid Photo Booth and take home instant royal memories.The event wraps up with a grand Crowning Ceremony, celebrating creativity, style, and true royal spirit ✨',
-    posterImage: "/images/Events_Pics/TheHouseOfRoyals/poster.jpg",
+    posterImage: "/images/Events_Pics/The-House-of-Royals/poster.jpeg",
     date: "February 27, 2026",
     time: "10:00 AM",
     registrationLink: "https://forms.gle/5RuRtvWPANtHfcQj9",
