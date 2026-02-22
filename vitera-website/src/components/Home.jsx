@@ -30,7 +30,7 @@ function Home() {
         setIsLoading(false);
         // Popup disabled - comment out the line below to re-enable
          setTimeout(() => {
-           setShowEventPopup(true);
+         //  setShowEventPopup(true);
          }, 500);
       }, 1000);
     }, 1500);

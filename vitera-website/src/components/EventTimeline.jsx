@@ -90,7 +90,7 @@ Design for Good represents Vitera's commitment to empowering students to become 
     imagesStrip2: [],
     featured: true,
     registrationLink: "https://forms.gle/5RuRtvWPANtHfcQj9", // Add actual link
-    isOngoing: true
+    isOngoing: false
   },
   {
     id: 4,
