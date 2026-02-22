@@ -382,13 +382,6 @@ const teams = [
 			img: '/images/Our Team/Social Media/rabhya.jpeg',
 			linkedin: 'https://www.linkedin.com/in/rabhya-grover-9a552833a'
 		},
-		{ 
-			name: 'Diksha Agrawal', 
-			role: 'Core Member', 
-			img: '/images/Our Team/Social Media/diksha.jpg', 
-			linkedin: '#' 
-		},
-		
 		{
 			name: 'Archita Shukla ',
 			role: 'Core Member',
