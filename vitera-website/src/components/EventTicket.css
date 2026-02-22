@@ -4,11 +4,15 @@
   background: radial-gradient(circle at top center, #1a1a1a 0%, #0a0a0a 100%);
   padding: 2rem 1rem;
   padding-top: 100px;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ticket-container {
   max-width: 900px;
   margin: 0 auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Form Section */
@@ -111,7 +115,7 @@
   border-radius: 10px;
   color: var(--text);
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-group input:focus {
@@ -142,17 +146,18 @@
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
   margin-top: 2rem;
   box-shadow: 0 5px 20px rgba(255, 69, 0, 0.3);
+  will-change: transform;
 }
 
 .generate-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
+  transform: translateY(-2px) translateZ(0);
   box-shadow: 0 8px 30px rgba(255, 69, 0, 0.5);
 }
 
@@ -173,6 +178,10 @@
 /* Ticket Display Section */
 .ticket-display-section {
   animation: fadeIn 0.5s ease;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .ticket-actions-top {
@@ -200,18 +209,26 @@
 .ticket-wrapper {
   perspective: 1000px;
   margin-bottom: 2rem;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .ticket-card {
   position: relative;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  border: 3px solid var(--primary);
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  border: 4px solid var(--primary);
   border-radius: 24px;
   padding: 3rem 2.5rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
-              0 0 40px rgba(255, 69, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
+              0 0 60px rgba(255, 69, 0, 0.4);
   overflow: hidden;
   animation: ticketAppear 0.8s ease;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  min-height: 1000px;
+  contain: layout style;
+  transform: translateZ(0);
+  will-change: auto;
 }
 
 @keyframes ticketAppear {
@@ -232,15 +249,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(255, 69, 0, 0.03) 10px,
-      rgba(255, 69, 0, 0.03) 20px
-    );
+  background: rgba(255, 69, 0, 0.02);
   pointer-events: none;
+  opacity: 0.5;
 }
 
 .ticket-corner {
@@ -285,44 +296,52 @@
 /* Header */
 .ticket-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   position: relative;
   z-index: 1;
+  padding: 1rem 0;
 }
 
 .club-logo {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .logo-circle {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: bold;
   color: white;
-  box-shadow: 0 5px 20px rgba(255, 69, 0, 0.4);
+  box-shadow: 0 8px 30px rgba(255, 69, 0, 0.4);
+  border: 4px solid rgba(255, 255, 255, 0.1);
 }
 
 .club-name {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 900;
   color: var(--text);
-  margin: 0.5rem 0;
-  letter-spacing: 3px;
+  margin: 1rem 0;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(255, 69, 0, 0.3);
 }
 
 .ticket-label {
   color: var(--primary);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 2px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   margin: 0;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Event Name */
@@ -349,54 +368,52 @@
 .crown-decoration {
   font-size: 3rem;
   margin-top: 0.5rem;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
 }
 
 /* QR Section */
 .ticket-qr-section {
   text-align: center;
-  margin: 2rem 0;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
+  margin: 2.5rem 0;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(255, 69, 0, 0.08), rgba(255, 140, 0, 0.05));
+  border-radius: 20px;
+  border: 2px solid rgba(255, 69, 0, 0.2);
 }
 
 .qr-code-wrapper {
-  background: white;
-  padding: 1rem;
-  border-radius: 12px;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 16px;
   display: inline-block;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  border: 3px solid var(--primary);
 }
 
 .qr-code-img {
   display: block;
-  width: 200px;
-  height: 200px;
+  width: 260px;
+  height: 260px;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .qr-label {
-  color: var(--text);
-  font-size: 1rem;
-  margin-top: 1rem;
+  color: var(--primary);
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
 .ticket-id {
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  font-family: monospace;
+  color: var(--text);
+  font-size: 1rem;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
   margin: 0;
+  letter-spacing: 1px;
 }
 
 /* Info Section */
@@ -435,36 +452,47 @@
 /* Details Section */
 .ticket-details {
   display: grid;
-  gap: 1rem;
-  margin: 2rem 0;
+  gap: 1.25rem;
+  margin: 2.5rem 0;
 }
 
 .detail-row {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 2px solid rgba(255, 69, 0, 0.15);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.detail-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 69, 0, 0.3);
 }
 
 .detail-icon {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   flex-shrink: 0;
+  color: var(--primary);
 }
 
 .detail-label {
   color: var(--text-secondary);
-  font-size: 0.85rem;
-  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+  margin: 0 0 0.4rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 .detail-value {
   color: var(--text);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 700;
   margin: 0;
+  line-height: 1.4;
 }
 
 /* Welcome Message */
@@ -531,20 +559,25 @@
 /* Footer */
 .ticket-footer {
   text-align: center;
-  padding-top: 2rem;
-  border-top: 2px dashed rgba(255, 255, 255, 0.2);
-  margin-top: 2rem;
+  padding: 2.5rem 1.5rem 1rem;
+  border-top: 3px dashed rgba(255, 69, 0, 0.3);
+  margin-top: 3rem;
+  background: linear-gradient(180deg, transparent, rgba(255, 69, 0, 0.05));
+  border-radius: 0 0 20px 20px;
 }
 
 .ticket-footer p {
   color: var(--text-secondary);
-  font-size: 0.85rem;
-  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  margin: 0.75rem 0;
+  line-height: 1.6;
 }
 
 .footer-tagline {
   color: var(--primary);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
 }
 
 /* Action Buttons */
@@ -561,22 +594,25 @@
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   border: none;
+  will-change: transform;
 }
 
 .download-btn {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
-  box-shadow: 0 5px 20px rgba(255, 69, 0, 0.3);
+  box-shadow: 0 6px 25px rgba(255, 69, 0, 0.4);
+  font-weight: 700;
+  font-size: 1.05rem;
 }
 
 .download-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(255, 69, 0, 0.5);
+  transform: translateY(-3px) translateZ(0);
+  box-shadow: 0 10px 35px rgba(255, 69, 0, 0.6);
 }
 
 .print-btn {
@@ -609,6 +645,212 @@
 .success-subtitle {
   color: var(--text-secondary);
   font-size: 0.9rem;
+}
+
+/* Error Message */
+.error-message {
+  background: rgba(220, 38, 38, 0.1);
+  border: 2px solid #dc2626;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.error-message p {
+  color: #fca5a5;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Team Section */
+.ticket-team-section {
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(255, 69, 0, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.merge-badge-ticket {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.merge-icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.merge-text {
+  flex: 1;
+}
+
+.merge-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+.merge-id {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.merge-description {
+  color: var(--text);
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
+}
+
+.team-header-single {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(255, 69, 0, 0.2);
+}
+
+.team-header-single h3 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.team-size-badge {
+  background: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.teams-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.team-group {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 69, 0, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+.team-group:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 16px rgba(255, 69, 0, 0.2);
+  transform: translateY(-2px) translateZ(0);
+}
+
+.team-group-header {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(255, 69, 0, 0.2);
+}
+
+.team-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.team-number {
+  color: var(--primary);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.team-size {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.team-total-count {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 16px rgba(255, 69, 0, 0.3);
+}
+
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  will-change: transform;
+}
+
+.member-item:hover {
+  background: rgba(255, 69, 0, 0.15);
+  border-color: var(--primary);
+  transform: translateX(4px) translateZ(0);
+}
+
+.member-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.member-details-ticket {
+  flex: 1;
+  min-width: 0;
+}
+
+.member-name {
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: 0.3px;
+}
+
+.member-reg {
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 /* Print Styles */
@@ -673,5 +915,15 @@
 
   .action-btn {
     width: 100%;
+  }
+
+  .members-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-header-single {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 }
