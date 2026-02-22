@@ -5,6 +5,7 @@ import {
   checkPolaroidEligibility,
   markPolaroidUsed,
   getPassTypeName,
+  getMergedTeamInfo,
 } from '../QRSystem.js';
 
 const router = express.Router();
@@ -50,8 +51,14 @@ router.post('/entry/fetch', async (req, res) => {
       }
     }
 
+    // Check if team is merged and get merge info
+    const mergeInfo = await getMergedTeamInfo(team.teamRowID);
+    const isMerged = team.teamRowID !== team.mergedTeamID;
+
     res.json({
       success: true,
+      merged: isMerged,
+      mergeInfo: mergeInfo,
       team: {
         teamRowID: team.teamRowID,
         teamSize: team.teamSize,
@@ -123,6 +130,8 @@ router.post('/polaroid/check', async (req, res) => {
         usedTime: result.usedTime,
         usedCount: result.usedCount,
         maxCount: result.maxCount,
+        merged: result.merged || false,
+        mergeInfo: result.mergeInfo || null,
         team: result.team ? {
           teamRowID: result.team.teamRowID,
           teamSize: result.team.teamSize,
@@ -132,15 +141,18 @@ router.post('/polaroid/check', async (req, res) => {
       });
     }
 
-    // Convert pass type number to name
     const passTypeName = getPassTypeName(result.passType);
 
     res.json({
       success: true,
       eligible: true,
+      merged: result.merged || false,
+      mergeInfo: result.mergeInfo || null,
       team: {
         teamRowID: result.team.teamRowID,
         teamSize: result.team.teamSize,
+        polaroidApplied: result.team.polaroidApplied,
+        polaroidUsed: result.team.polaroidUsed,
         passType: passTypeName,
         passTypeRaw: result.passType,
         usedCount: result.usedCount || 0,
@@ -199,6 +211,72 @@ router.get('/health', (req, res) => {
     message: 'QR System API is running',
     timestamp: new Date().toISOString(),
   });
+});
+
+/**
+ * POST /api/qr/ticket/generate
+ * Generate event ticket by validating registration number
+ */
+router.post('/ticket/generate', async (req, res) => {
+  try {
+    const { regNo } = req.body;
+
+    if (!regNo) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Registration number is required' 
+      });
+    }
+
+    const team = await findTeamByRegNo(regNo);
+
+    if (!team) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Registration number not found. Only registered teams can generate tickets.' 
+      });
+    }
+
+    // Format team data
+    const members = [];
+    for (let i = 1; i <= team.teamSize; i++) {
+      const nameKey = `member${i}Name`;
+      const regKey = `reg${i}`;
+      
+      if (team[regKey]) {
+        members.push({
+          name: team[nameKey],
+          regNo: team[regKey],
+        });
+      }
+    }
+
+    // Check if merged team
+    const isMerged = team.teamRowID !== team.mergedTeamID;
+    let mergeInfo = null;
+
+    if (isMerged) {
+      mergeInfo = await getMergedTeamInfo(team.teamRowID);
+    }
+
+    res.json({
+      success: true,
+      team: {
+        teamRowID: team.teamRowID,
+        teamSize: team.teamSize,
+        mergedTeamID: team.mergedTeamID,
+        members: members,
+      },
+      merged: isMerged,
+      mergeInfo: mergeInfo,
+    });
+  } catch (error) {
+    console.error('Error generating ticket:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to generate ticket. Please try again.' 
+    });
+  }
 });
 
 export default router;

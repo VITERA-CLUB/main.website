@@ -22,7 +22,7 @@ async function getAllTeams() {
   try {
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A2:S`, // Adjust range as needed
+      range: `${SHEET_NAME}!A2:T`, // A-T: 20 columns including PolaroidPassUsed
     });
 
     const rows = response.data.values || [];
@@ -31,23 +31,24 @@ async function getAllTeams() {
       rowIndex: index + 2, // +2 because row 1 is header, arrays start at 0
       teamRowID: row[0],
       teamSize: parseInt(row[1]) || 0,
-      member1Name: row[2] || '',
-      reg1: row[3] || '',
-      entered1: row[4] === 'TRUE',
-      member2Name: row[5] || '',
-      reg2: row[6] || '',
-      entered2: row[7] === 'TRUE',
-      member3Name: row[8] || '',
-      reg3: row[9] || '',
-      entered3: row[10] === 'TRUE',
-      member4Name: row[11] || '',
-      reg4: row[12] || '',
-      entered4: row[13] === 'TRUE',
-      polaroidApplied: row[14] === 'YES',
-      polaroidPassType: row[15] || '',
-      polaroidUsed: row[16] === 'TRUE',
-      polaroidUsedTime: row[17] || '',
-      polaroidPassUsed: parseInt(row[18]) || 0, // Column S - tracks usage count
+      mergedTeamID: row[2] || row[0], // Column C - Merged_TeamID, defaults to TeamRowID if not set
+      member1Name: row[3] || '',
+      reg1: row[4] || '',
+      entered1: row[5] === 'TRUE',
+      member2Name: row[6] || '',
+      reg2: row[7] || '',
+      entered2: row[8] === 'TRUE',
+      member3Name: row[9] || '',
+      reg3: row[10] || '',
+      entered3: row[11] === 'TRUE',
+      member4Name: row[12] || '',
+      reg4: row[13] || '',
+      entered4: row[14] === 'TRUE',
+      polaroidApplied: row[15] === 'YES',
+      polaroidPassType: row[16] || '',
+      polaroidUsed: row[17] === 'TRUE',
+      polaroidUsedTime: row[18] || '',
+      polaroidPassUsed: parseInt(row[19]) || 0,
     }));
   } catch (error) {
     console.error('Error fetching teams:', error);
@@ -107,9 +108,9 @@ async function markMemberEntry(teamRowID, memberIndex) {
       throw new Error('Member already entered');
     }
 
-    // Calculate column index (Entered1 is column E = index 5)
-    // Entered1: E(5), Entered2: H(8), Entered3: K(11), Entered4: N(14)
-    const columnIndex = 5 + ((memberIndex - 1) * 3);
+    // Calculate column index (Entered1 is column F = index 6)
+    // Entered1: F(6), Entered2: I(9), Entered3: L(12), Entered4: O(15)
+    const columnIndex = 6 + ((memberIndex - 1) * 3);
     const columnLetter = String.fromCharCode(64 + columnIndex);
     
     // Update the sheet
@@ -131,44 +132,119 @@ async function markMemberEntry(teamRowID, memberIndex) {
 
 /**
  * Check Polaroid eligibility
+ * Handles merged team logic
  */
 async function checkPolaroidEligibility(regNo) {
-  const team = await findTeamByRegNo(regNo);
+  const teams = await getAllTeams();
   
-  if (!team) {
+  // STEP 1: Find original team by regNo
+  const originalTeam = await findTeamByRegNo(regNo);
+  
+  if (!originalTeam) {
     return { eligible: false, reason: 'Team not found' };
   }
 
-  if (!team.polaroidApplied) {
-    return { eligible: false, reason: 'Polaroid not applied', team };
-  }
-
-  // Check if usage count has reached the limit
-  const passTypeLimit = parseInt(team.polaroidPassType) || 0;
-  const currentUsage = team.polaroidPassUsed || 0;
+  // STEP 2: Check if this is a merged team
+  const isMerged = originalTeam.teamRowID !== originalTeam.mergedTeamID;
   
-  if (currentUsage >= passTypeLimit) {
+  if (!isMerged) {
+    // Normal team - simple logic
+    if (!originalTeam.polaroidApplied) {
+      return { eligible: false, reason: 'Polaroid not applied', team: originalTeam };
+    }
+
+    const passTypeLimit = parseInt(originalTeam.polaroidPassType) || 0;
+    const currentUsage = originalTeam.polaroidPassUsed || 0;
+    
+    if (currentUsage >= passTypeLimit) {
+      return { 
+        eligible: false, 
+        reason: 'Polaroid pass limit reached', 
+        team: originalTeam,
+        usedTime: originalTeam.polaroidUsedTime,
+        usedCount: currentUsage,
+        maxCount: passTypeLimit
+      };
+    }
+
+    return { 
+      eligible: true, 
+      team: originalTeam,
+      passType: originalTeam.polaroidPassType,
+      usedCount: currentUsage,
+      remainingCount: passTypeLimit - currentUsage,
+      merged: false
+    };
+  }
+  
+  // STEP 3: Merged team - fetch all teams in merge group
+  const mergedTeamID = originalTeam.mergedTeamID;
+  const mergeGroupTeams = teams.filter(t => 
+    t.mergedTeamID === mergedTeamID && t.teamRowID !== mergedTeamID
+  );
+  
+  // Build merge info with FRESH data
+  const mergeInfo = {
+    mergedTeamID: mergedTeamID,
+    originalTeamRowID: originalTeam.teamRowID,
+    teams: mergeGroupTeams.map(t => {
+      const passTypeLimit = parseInt(t.polaroidPassType) || 0;
+      const currentUsage = t.polaroidPassUsed || 0;
+      return {
+        teamRowID: t.teamRowID,
+        teamSize: t.teamSize,
+        polaroidApplied: t.polaroidApplied,
+        polaroidPassType: t.polaroidPassType,
+        polaroidUsed: currentUsage >= passTypeLimit, // Calculate based on current data
+        polaroidPassUsed: currentUsage,
+        usedTime: t.polaroidUsedTime,
+        members: [
+          t.reg1 ? { name: t.member1Name, regNo: t.reg1 } : null,
+          t.reg2 ? { name: t.member2Name, regNo: t.reg2 } : null,
+          t.reg3 ? { name: t.member3Name, regNo: t.reg3 } : null,
+          t.reg4 ? { name: t.member4Name, regNo: t.reg4 } : null,
+        ].filter(Boolean)
+      };
+    })
+  };
+  
+  // Check if ANY team in merge group has available passes
+  const hasAnyEligibleTeam = mergeInfo.teams.some(t => {
+    if (!t.polaroidApplied) return false;
+    const passLimit = parseInt(t.polaroidPassType) || 0;
+    const used = t.polaroidPassUsed || 0;
+    return used < passLimit;
+  });
+  
+  if (!hasAnyEligibleTeam) {
+    // No team in the merge has available passes
     return { 
       eligible: false, 
-      reason: 'Polaroid pass limit reached', 
-      team,
-      usedTime: team.polaroidUsedTime,
-      usedCount: currentUsage,
-      maxCount: passTypeLimit
+      reason: 'No available passes in merged team', 
+      team: originalTeam,
+      merged: true,
+      mergeInfo 
     };
   }
 
+  // At least one team has passes available
+  const passTypeLimit = parseInt(originalTeam.polaroidPassType) || 0;
+  const currentUsage = originalTeam.polaroidPassUsed || 0;
+  
   return { 
     eligible: true, 
-    team,
-    passType: team.polaroidPassType,
+    team: originalTeam,
+    passType: originalTeam.polaroidPassType,
     usedCount: currentUsage,
-    remainingCount: passTypeLimit - currentUsage
+    remainingCount: passTypeLimit - currentUsage,
+    merged: true,
+    mergeInfo
   };
 }
 
 /**
  * Mark Polaroid as used
+ * Only updates ORIGINAL team row, never merged identity row
  */
 async function markPolaroidUsed(teamRowID) {
   try {
@@ -195,10 +271,10 @@ async function markPolaroidUsed(teamRowID) {
     const newUsageCount = currentUsage + 1;
     const isFullyUsed = newUsageCount >= passTypeLimit;
     
-    // Update PolaroidUsed (column Q), PolaroidUsedTime (column R), and PolaroidPassUsed (column S)
+    // Update PolaroidUsed (column R), PolaroidUsedTime (column S), and PolaroidPassUsed (column T)
     await sheets.spreadsheets.values.update({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!Q${team.rowIndex}:S${team.rowIndex}`,
+      range: `${SHEET_NAME}!R${team.rowIndex}:T${team.rowIndex}`,
       valueInputOption: 'RAW',
       requestBody: {
         values: [[isFullyUsed ? 'TRUE' : 'FALSE', now, newUsageCount]],
@@ -233,6 +309,45 @@ function getPassTypeName(typeNumber) {
 }
 
 /**
+ * Get merged team info for entry display
+ */
+async function getMergedTeamInfo(teamRowID) {
+  const teams = await getAllTeams();
+  const team = teams.find(t => t.teamRowID === teamRowID);
+  
+  if (!team) {
+    return null;
+  }
+  
+  const isMerged = team.teamRowID !== team.mergedTeamID;
+  
+  if (!isMerged) {
+    return null;
+  }
+  
+  // Get all teams in merge group
+  const mergedTeamID = team.mergedTeamID;
+  const mergeGroupTeams = teams.filter(t => 
+    t.mergedTeamID === mergedTeamID && t.teamRowID !== mergedTeamID
+  );
+  
+  return {
+    mergedTeamID,
+    originalTeamRowID: team.teamRowID,
+    teams: mergeGroupTeams.map(t => ({
+      teamRowID: t.teamRowID,
+      teamSize: t.teamSize,
+      members: [
+        t.reg1 ? { name: t.member1Name, regNo: t.reg1, entered: t.entered1 } : null,
+        t.reg2 ? { name: t.member2Name, regNo: t.reg2, entered: t.entered2 } : null,
+        t.reg3 ? { name: t.member3Name, regNo: t.reg3, entered: t.entered3 } : null,
+        t.reg4 ? { name: t.member4Name, regNo: t.reg4, entered: t.entered4 } : null,
+      ].filter(Boolean)
+    }))
+  };
+}
+
+/**
  * Get all registrations (for QR generation)
  */
 async function getAllRegistrations() {
@@ -259,4 +374,5 @@ export {
   markPolaroidUsed,
   getPassTypeName,
   getAllRegistrations,
+  getMergedTeamInfo,
 };
