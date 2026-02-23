@@ -29,6 +29,7 @@ function Navbar() {
             <Link to="/" className="nav-link">Home</Link>
             <a href="/events" className="nav-link">Events</a>
             <Link to="/about" className="nav-link">About</Link>
+            <Link to="/alumni" className="nav-link">Alumni</Link>
             <a href="/team" className="nav-link">Team</a>
             <a href="/winner" className="nav-link">Winners</a>
             <Link to="/event-pass" className="nav-link event-pass-link">
@@ -66,6 +67,7 @@ function Navbar() {
             <a href="/events" className="nav-link" onClick={toggleMenu}>Events</a>
             <Link to="/about" className="nav-link" onClick={toggleMenu}>About</Link>
             <a href="/team" className="nav-link" onClick={toggleMenu}>Team</a>
+            <Link to="/alumni" className="nav-link" onClick={toggleMenu}>Alumni</Link>
             <a href="/winner" className="nav-link" onClick={toggleMenu}>Winners</a>
             <Link to="/event-pass" className="nav-link event-pass-link" onClick={toggleMenu}>
               ✨ Event Pass
