@@ -44,6 +44,7 @@ function App() {
         <Route path="/entry" element={<EntryPage />} />
         <Route path="/polaroid" element={<PolaroidPage />} />
         <Route path="/event-pass" element={<EventTicket />} />
+        <Route path="/alumni" element={<Alumni />} />
       </Routes>
 
      {/* Global scroll-to-top button */}
