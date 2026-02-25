@@ -7,38 +7,38 @@ const Alumni = () => {
     {
       name: "Lakshya Pandey",
       role: "Founder & Ex-President",
-      exRole: "Panel",
-      icon: "fa-user-circle"
+      exRole: "Founder",
+      image: "/images/alumni/lakshya.webp"
     },
     {
       name: "Spandan Agrawal",
       role: "Founder & Ex-Vice President",
-      exRole: "Panel",
-      icon: "fa-user-circle"
+      exRole: "Co-Founder",
+      image: "/images/alumni/spandan.jpg"
     },
     {
       name: "Rishika Snehal",
       role: "Ex-Social Media Lead",
-      exRole: "Technical",
-      icon: "fa-user-circle"
+      exRole: "Social Media Team",
+      image: "/images/alumni/rishika.jpg"
     },
     {
       name: "Bidhi Sarma",
       role: "Ex-Event Lead",
-      exRole: "Events",
-      icon: "fa-user-circle"
+      exRole: "Event Management Team",
+      image: "/images/alumni/bidhi.jpg"
     },
     {
       name: "Mahijith Choudhary",
       role: "Ex-Event Co-Lead",
-      exRole: "Events",
-      icon: "fa-user-circle"
+      exRole: "Event Management Team",
+      image: "/images/alumni/mahijith.jpg"
     },
     {
       name: "Bhaskar Ojha",
-      role: "Ex-Tech Member",
-      exRole: "Technical",
-      icon: "fa-user-circle"
+      role: "Ex-Technical Member",
+      exRole: "Technical Team",
+      image: "/images/alumni/bhaskar.jpg"
     }
   ];
 
@@ -56,11 +56,20 @@ const Alumni = () => {
         {alumniData.map((alumni, index) => (
           <div className="alumni-card" key={index}>
             <div className="alumni-image-wrapper">
-              <div className="alumni-image placeholder">
-                <i className={`fas ${alumni.icon}`}></i>
+              <img 
+                src={alumni.image} 
+                alt={alumni.name}
+                className="alumni-image"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              <div className="alumni-image placeholder" style={{ display: 'none' }}>
+                <i className="fas fa-user-circle"></i>
               </div>
               <div className="alumni-overlay">
-                <span className="view-profile"><i className="fas fa-leaf"></i> VITERA</span>
+                <span className="view-profile"><i className="fas fa-leaf"></i> Our Alumini's</span>
               </div>
             </div>
             <div className="alumni-info">
@@ -83,7 +92,7 @@ const Alumni = () => {
         borderTop: '1px solid rgba(255,255,255,0.05)', 
         paddingTop: '1.5rem' 
       }}>
-        <i className="fas fa-heart" style={{ color: 'var(--primary)' }}></i> past leaders who shaped VITERA
+        <i className="fas fa-heart" style={{ color: 'var(--primary)' }}></i> Past Leaders who shaped VITERA...
       </div>
     </div>
   );
