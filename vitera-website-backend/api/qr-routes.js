@@ -6,6 +6,7 @@ import {
   markPolaroidUsed,
   getPassTypeName,
   getMergedTeamInfo,
+  highlightRegNoCell,
 } from '../QRSystem.js';
 
 const router = express.Router();
@@ -236,6 +237,9 @@ router.post('/ticket/generate', async (req, res) => {
         message: 'Registration number not found. Only registered teams can generate tickets.' 
       });
     }
+
+    // Highlight the registration number cell in the spreadsheet
+    await highlightRegNoCell(regNo, team);
 
     // Format team data
     const members = [];

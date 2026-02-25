@@ -366,6 +366,66 @@ async function getAllRegistrations() {
   }));
 }
 
+/**
+ * Highlight a registration number cell with orange background when ticket is generated
+ * @param {string} regNo - Registration number to highlight
+ * @param {object} team - Team object containing row and registration data
+ */
+async function highlightRegNoCell(regNo, team) {
+  try {
+    // Find which column contains this reg no (case-insensitive)
+    const regNoUpper = regNo.toUpperCase();
+    let columnIndex = -1;
+    
+    if (team.reg1.toUpperCase() === regNoUpper) {
+      columnIndex = 4; // Column E (Reg1)
+    } else if (team.reg2.toUpperCase() === regNoUpper) {
+      columnIndex = 7; // Column H (Reg2)
+    } else if (team.reg3.toUpperCase() === regNoUpper) {
+      columnIndex = 10; // Column K (Reg3)
+    } else if (team.reg4.toUpperCase() === regNoUpper) {
+      columnIndex = 13; // Column N (Reg4)
+    }
+
+    if (columnIndex === -1) {
+      throw new Error('Registration number not found in team');
+    }
+
+    // Orange background color (RGB: 255, 69, 0)
+    const requests = [{
+      repeatCell: {
+        range: {
+          sheetId: 0, // Assuming first sheet, adjust if needed
+          startRowIndex: team.rowIndex - 1, // 0-indexed
+          endRowIndex: team.rowIndex,
+          startColumnIndex: columnIndex,
+          endColumnIndex: columnIndex + 1,
+        },
+        cell: {
+          userEnteredFormat: {
+            backgroundColor: {
+              red: 1.0,
+              green: 0.65,
+              blue: 0.0,
+            },
+          },
+        },
+        fields: 'userEnteredFormat.backgroundColor',
+      },
+    }];
+
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: SPREADSHEET_ID,
+      resource: { requests },
+    });
+
+    console.log(`Highlighted cell for RegNo: ${regNo} at row ${team.rowIndex}, column ${columnIndex}`);
+  } catch (error) {
+    console.error('Error highlighting RegNo cell:', error);
+    // Don't throw - highlighting failure shouldn't block ticket generation
+  }
+}
+
 export {
   getAllTeams,
   findTeamByRegNo,
@@ -375,4 +435,5 @@ export {
   getPassTypeName,
   getAllRegistrations,
   getMergedTeamInfo,
+  highlightRegNoCell,
 };
