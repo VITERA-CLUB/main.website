@@ -494,7 +494,6 @@ const EventTicket = () => {
                     <li>Valid for all team members listed above</li>
                     <li>Please arrive 15 minutes before the event</li>
                     <li>Keep this QR code for entry & polaroid verification</li>
-                    <li>Dress code: Formal/Semi-formal attire</li>
                   </ul>
                 </div>
 
