@@ -29,7 +29,8 @@ function Navbar() {
             <Link to="/" className="nav-link">Home</Link>
             <a href="/events" className="nav-link">Events</a>
             <Link to="/about" className="nav-link">About</Link>
-            <Link to="/alumni" className="nav-link">Alumni</Link>
+            
+            {/*<Link to="/alumni" className="nav-link">Alumni</Link>*/}
             <a href="/team" className="nav-link">Team</a>
             <a href="/winner" className="nav-link">Winners</a>
             <Link to="/event-pass" className="nav-link event-pass-link">

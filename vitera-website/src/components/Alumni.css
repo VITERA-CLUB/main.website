@@ -12,22 +12,14 @@
   --border-light: rgba(255,255,255,0.05);
 }
 
-body {
-  background: var(--bg-dark);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  color: #fff;
-  line-height: 1.5;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
+
 
 /* Alumni section styled exactly like reference code */
 .alumni-wrapper {
   max-width: 1200px;
   width: 100%;
+  margin: 0 auto;
+  padding: 3rem 2rem;
 }
 
 /* navigation style from .team-nav */

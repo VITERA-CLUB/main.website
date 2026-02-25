@@ -12,6 +12,7 @@ import ScrollToTopButton from './components/ScrollToTop';
 import Winner from './components/winner';
 import { useState, useEffect } from 'react';
 import About from './components/About';
+import Alumni from './components/Alumni';
 
 function TeamPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
