@@ -15,6 +15,37 @@ const auth = new google.auth.GoogleAuth({
 
 const sheets = google.sheets({ version: 'v4', auth });
 
+// Cache for sheet IDs to avoid repeated metadata fetches
+let sheetIdCache = null;
+
+/**
+ * Get sheet IDs with caching
+ */
+async function getSheetIds() {
+  if (sheetIdCache) {
+    return sheetIdCache;
+  }
+
+  const sheetMetadata = await sheets.spreadsheets.get({
+    spreadsheetId: SPREADSHEET_ID,
+    fields: 'sheets.properties',
+  });
+
+  const mainSheet = sheetMetadata.data.sheets.find(
+    s => s.properties.title === SHEET_NAME
+  );
+  const teamStatusSheet = sheetMetadata.data.sheets.find(
+    s => s.properties.title === 'team-status'
+  );
+
+  sheetIdCache = {
+    main: mainSheet ? mainSheet.properties.sheetId : 0,
+    teamStatus: teamStatusSheet ? teamStatusSheet.properties.sheetId : null,
+  };
+
+  return sheetIdCache;
+}
+
 /**
  * Fetch all team data from Google Sheet
  */
@@ -80,6 +111,148 @@ async function findTeamByRegNo(regNo) {
 }
 
 /**
+ * Update team-status sheet when member entry is marked
+ * Optimized version that batches all updates together
+ */
+async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
+  try {
+    const TEAM_STATUS_SHEET = 'team-status';
+    
+    // Get sheet IDs from cache and team-status data in parallel
+    const [sheetIds, teamStatusResponse] = await Promise.all([
+      getSheetIds(),
+      sheets.spreadsheets.values.get({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${TEAM_STATUS_SHEET}!A2:A`,
+      }),
+    ]);
+
+    if (!sheetIds.teamStatus) {
+      console.error('team-status sheet not found');
+      return;
+    }
+
+    const rows = teamStatusResponse.data.values || [];
+    let teamRow = -1;
+
+    // Find the row with matching Team ID
+    for (let i = 0; i < rows.length; i++) {
+      if (rows[i][0] === teamRowID) {
+        teamRow = i + 2;
+        break;
+      }
+    }
+
+    if (teamRow === -1) {
+      console.error(`Team ID ${teamRowID} not found in team-status sheet`);
+      return;
+    }
+
+    // Calculate column indices
+    const nameColumn = (memberIndex - 1) * 3 + 2;
+    const regColumn = (memberIndex - 1) * 3 + 3;
+    const statusColumn = (memberIndex - 1) * 3 + 4;
+
+    // Calculate main sheet column index
+    const mainColumnIndex = 6 + ((memberIndex - 1) * 3);
+
+    // Batch ALL updates together - main sheet + team-status sheet
+    const requests = [
+      // Update main sheet entry to TRUE
+      {
+        updateCells: {
+          range: {
+            sheetId: sheetIds.main,
+            startRowIndex: team.rowIndex - 1,
+            endRowIndex: team.rowIndex,
+            startColumnIndex: mainColumnIndex - 1,
+            endColumnIndex: mainColumnIndex,
+          },
+          rows: [{
+            values: [{
+              userEnteredValue: { boolValue: true },
+            }],
+          }],
+          fields: 'userEnteredValue',
+        },
+      },
+      // Update team-status status to "Present"
+      {
+        updateCells: {
+          range: {
+            sheetId: sheetIds.teamStatus,
+            startRowIndex: teamRow - 1,
+            endRowIndex: teamRow,
+            startColumnIndex: statusColumn,
+            endColumnIndex: statusColumn + 1,
+          },
+          rows: [{
+            values: [{
+              userEnteredValue: { stringValue: 'Present' },
+            }],
+          }],
+          fields: 'userEnteredValue',
+        },
+      },
+      // Highlight member name
+      {
+        repeatCell: {
+          range: {
+            sheetId: sheetIds.teamStatus,
+            startRowIndex: teamRow - 1,
+            endRowIndex: teamRow,
+            startColumnIndex: nameColumn,
+            endColumnIndex: nameColumn + 1,
+          },
+          cell: {
+            userEnteredFormat: {
+              backgroundColor: {
+                red: 1.0,
+                green: 0.647,
+                blue: 0.0,
+              },
+            },
+          },
+          fields: 'userEnteredFormat.backgroundColor',
+        },
+      },
+      // Highlight reg number
+      {
+        repeatCell: {
+          range: {
+            sheetId: sheetIds.teamStatus,
+            startRowIndex: teamRow - 1,
+            endRowIndex: teamRow,
+            startColumnIndex: regColumn,
+            endColumnIndex: regColumn + 1,
+          },
+          cell: {
+            userEnteredFormat: {
+              backgroundColor: {
+                red: 1.0,
+                green: 0.647,
+                blue: 0.0,
+              },
+            },
+          },
+          fields: 'userEnteredFormat.backgroundColor',
+        },
+      },
+    ];
+
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: SPREADSHEET_ID,
+      resource: { requests },
+    });
+
+    console.log(`Updated entry and team-status for Team ${teamRowID}, Member ${memberIndex}`);
+  } catch (error) {
+    console.error('Error updating team-status sheet:', error);
+    throw error;
+  }
+}
+
+/**
  * Mark a specific member as entered
  */
 async function markMemberEntry(teamRowID, memberIndex) {
@@ -108,20 +281,8 @@ async function markMemberEntry(teamRowID, memberIndex) {
       throw new Error('Member already entered');
     }
 
-    // Calculate column index (Entered1 is column F = index 6)
-    // Entered1: F(6), Entered2: I(9), Entered3: L(12), Entered4: O(15)
-    const columnIndex = 6 + ((memberIndex - 1) * 3);
-    const columnLetter = String.fromCharCode(64 + columnIndex);
-    
-    // Update the sheet
-    await sheets.spreadsheets.values.update({
-      spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!${columnLetter}${team.rowIndex}`,
-      valueInputOption: 'RAW',
-      requestBody: {
-        values: [['TRUE']],
-      },
-    });
+    // Update both main sheet and team-status sheet in a single batched operation
+    await updateTeamStatusSheet(teamRowID, memberIndex, team);
 
     return { success: true, message: 'Entry marked successfully' };
   } catch (error) {
