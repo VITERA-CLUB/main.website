@@ -118,12 +118,21 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
   try {
     const TEAM_STATUS_SHEET = 'team-status';
     
+    // Get the registration number of the member being marked
+    const regKey = `reg${memberIndex}`;
+    const memberRegNo = team[regKey];
+    
+    if (!memberRegNo) {
+      console.error('Member registration number not found');
+      return;
+    }
+    
     // Get sheet IDs from cache and team-status data in parallel
     const [sheetIds, teamStatusResponse] = await Promise.all([
       getSheetIds(),
       sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        range: `${TEAM_STATUS_SHEET}!A2:A`,
+        range: `${TEAM_STATUS_SHEET}!A2:M`, // Get Team ID and all 4 members (reg numbers in columns D, G, J, M)
       }),
     ]);
 
@@ -134,39 +143,64 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
 
     const rows = teamStatusResponse.data.values || [];
     let teamRow = -1;
+    let memberPosition = -1; // Position in team-status (1-4)
 
-    // Find the row with matching Team ID
+    // Find the row with matching Merged Team ID and the member's position
     for (let i = 0; i < rows.length; i++) {
-      if (rows[i][0] === teamRowID) {
-        teamRow = i + 2;
+      const row = rows[i];
+      const teamId = row[0];
+      
+      // Check if this is the merged team
+      if (teamId === team.mergedTeamID) {
+        teamRow = i + 2; // +2 for header and 0-indexing
+        
+        // Find which member position by matching reg number (columns D=3, G=6, J=9, M=12)
+        const reg1 = (row[3] || '').toUpperCase();
+        const reg2 = (row[6] || '').toUpperCase();
+        const reg3 = (row[9] || '').toUpperCase();
+        const reg4 = (row[12] || '').toUpperCase();
+        const memberRegUpper = memberRegNo.toUpperCase();
+        
+        if (reg1 === memberRegUpper) memberPosition = 1;
+        else if (reg2 === memberRegUpper) memberPosition = 2;
+        else if (reg3 === memberRegUpper) memberPosition = 3;
+        else if (reg4 === memberRegUpper) memberPosition = 4;
+        
         break;
       }
     }
 
     if (teamRow === -1) {
-      console.error(`Team ID ${teamRowID} not found in team-status sheet`);
+      console.error(`Merged Team ID ${team.mergedTeamID} not found in team-status sheet`);
+      return;
+    }
+    
+    if (memberPosition === -1) {
+      console.error(`Member RegNo ${memberRegNo} not found in team-status team ${team.mergedTeamID}`);
       return;
     }
 
-    // Calculate column indices
-    const nameColumn = (memberIndex - 1) * 3 + 2;
-    const regColumn = (memberIndex - 1) * 3 + 3;
-    const statusColumn = (memberIndex - 1) * 3 + 4;
+    // Calculate column indices for team-status sheet (using memberPosition from merged team)
+    // Team-status columns: A=TeamID(0), B=Size(1), C=Name1(2), D=Reg1(3), E=Status1(4), F=Name2(5)...
+    const nameColumn = (memberPosition - 1) * 3 + 2;
+    const regColumn = (memberPosition - 1) * 3 + 3;
+    const statusColumn = (memberPosition - 1) * 3 + 4;
 
-    // Calculate main sheet column index
-    const mainColumnIndex = 6 + ((memberIndex - 1) * 3);
+    // Calculate main sheet column index (using memberIndex from original team)
+    // Main sheet columns: A-E are other data, F=Entered1(5), G=Member2(6), H=Reg2(7), I=Entered2(8)...
+    const mainEnteredColumnIndex = 5 + ((memberIndex - 1) * 3); // Column F=5, I=8, L=11, O=14
 
     // Batch ALL updates together - main sheet + team-status sheet
     const requests = [
-      // Update main sheet entry to TRUE
+      // Update main sheet Entered column to TRUE
       {
         updateCells: {
           range: {
             sheetId: sheetIds.main,
             startRowIndex: team.rowIndex - 1,
             endRowIndex: team.rowIndex,
-            startColumnIndex: mainColumnIndex - 1,
-            endColumnIndex: mainColumnIndex,
+            startColumnIndex: mainEnteredColumnIndex,
+            endColumnIndex: mainEnteredColumnIndex + 1,
           },
           rows: [{
             values: [{
@@ -176,7 +210,7 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
           fields: 'userEnteredValue',
         },
       },
-      // Update team-status status to "Present"
+      // Update team-status Status to "Present"
       {
         updateCells: {
           range: {
@@ -194,7 +228,7 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
           fields: 'userEnteredValue',
         },
       },
-      // Highlight member name
+      // Highlight member name in team-status with orange
       {
         repeatCell: {
           range: {
@@ -208,7 +242,7 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
             userEnteredFormat: {
               backgroundColor: {
                 red: 1.0,
-                green: 0.647,
+                green: 0.65,
                 blue: 0.0,
               },
             },
@@ -216,7 +250,7 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
           fields: 'userEnteredFormat.backgroundColor',
         },
       },
-      // Highlight reg number
+      // Highlight reg number in team-status with orange
       {
         repeatCell: {
           range: {
@@ -230,7 +264,7 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
             userEnteredFormat: {
               backgroundColor: {
                 red: 1.0,
-                green: 0.647,
+                green: 0.65,
                 blue: 0.0,
               },
             },
@@ -245,9 +279,9 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
       resource: { requests },
     });
 
-    console.log(`Updated entry and team-status for Team ${teamRowID}, Member ${memberIndex}`);
+    console.log(`✓ Updated entry for Team ${teamRowID} Member ${memberIndex} → Team-status ${team.mergedTeamID} Position ${memberPosition}`);
   } catch (error) {
-    console.error('Error updating team-status sheet:', error);
+    console.error('✗ Error updating team-status sheet:', error);
     throw error;
   }
 }
@@ -552,11 +586,14 @@ async function highlightRegNoCell(regNo, team) {
       throw new Error('Registration number not found in team');
     }
 
+    // Get the correct sheet ID
+    const sheetIds = await getSheetIds();
+
     // Orange background color (RGB: 255, 69, 0)
     const requests = [{
       repeatCell: {
         range: {
-          sheetId: 0, // Assuming first sheet, adjust if needed
+          sheetId: sheetIds.main,
           startRowIndex: team.rowIndex - 1, // 0-indexed
           endRowIndex: team.rowIndex,
           startColumnIndex: columnIndex,
@@ -580,9 +617,9 @@ async function highlightRegNoCell(regNo, team) {
       resource: { requests },
     });
 
-    console.log(`Highlighted cell for RegNo: ${regNo} at row ${team.rowIndex}, column ${columnIndex}`);
+    console.log(`✓ Highlighted RegNo: ${regNo} at row ${team.rowIndex}, column ${String.fromCharCode(65 + columnIndex)}`);
   } catch (error) {
-    console.error('Error highlighting RegNo cell:', error);
+    console.error('✗ Error highlighting RegNo cell:', error.message);
     // Don't throw - highlighting failure shouldn't block ticket generation
   }
 }
