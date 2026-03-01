@@ -35,10 +35,70 @@ const Alumni = () => {
       image: "/images/alumni/mahijith.jpg"
     },
     {
+      name: "Taneesh Patel",
+      role: "Ex-Technical Lead",
+      exRole: "Technical Team",
+      image: "/images/Our Team/Tech Team/taneesh.jpeg"
+    }
+    {
+      name: "Shravan Jain",
+      role: "Ex-Technical Co-Lead",
+      exRole: "Technical Team",
+      image: "/images/Our Team/Tech Team/shravan.jpg"
+    }
+  {
       name: "Bhaskar Ojha",
       role: "Ex-Technical Member",
       exRole: "Technical Team",
       image: "/images/alumni/bhaskar.jpg"
+    }
+  {
+      name: "Avinash Kumar",
+      role: "Ex-Technical Member",
+      exRole: "Technical Team",
+      image: "/images/Our Team/Tech Team/avinash.jpg"
+    }
+  {
+      name: "Akshay Kumar Mishra",
+      role: "Ex-Technical Member",
+      exRole: "Technical Team",
+      image: "/images/Our Team/Tech Team/akshay.jpg"
+    }
+  {
+      name: "Kapil Kumar Arya",
+      role: "Ex-Technical Member",
+      exRole: "Technical Team",
+      image: "/images/Our Team/Tech Team/kapil.jpg"
+    }
+  {
+      name: "Arya Sharma",
+      role: "Ex-PR & Outreach Team Lead",
+      exRole: "PR & Outreach Team",
+      image: "/images/Our Team/PR & Outreach Team/arya sharma.jpg"
+    }
+  {
+      name: "Mohd Hammad",
+      role: "Ex-Photography Team Lead",
+      exRole: "Technical Team",
+      image: "/images/Our Team/Photography Team/hammad.jpg"
+    }
+  {
+      name: "Saurav Pandey",
+      role: "Ex-Design Team Lead",
+      exRole: "Design Team",
+      image: "/images/Our Team/Design Team/saurav.jpeg"
+    }
+  {
+      name: "Aribah Amin",
+      role: "Ex-Design Team Co-Lead",
+      exRole: "Design Team",
+      image: "/images/Our Team/Design Team/aribah.jpg"
+    }
+    {
+      name: "Navya Srivastava",
+      role: "Ex-Content Team Co-Lead",
+      exRole: "Content Team",
+      image: "/images/Our Team/Content Team/navya.jpg"
     }
   ];
 
