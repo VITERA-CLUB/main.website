@@ -79,7 +79,7 @@ const Alumni = () => {
   {
       name: "Mohd Hammad",
       role: "Ex-Photography Team Lead",
-      exRole: "Technical Team",
+      exRole: "Photography Team",
       image: "/images/Our Team/Photography Team/hammad.jpg"
     },
   {
@@ -96,7 +96,7 @@ const Alumni = () => {
     },
     {
       name: "Navya Srivastava",
-      role: "Ex-Content Team Co-Lead",
+      role: "Ex-Content Team Member",
       exRole: "Content Team",
       image: "/images/Our Team/Content Team/navya.jpg"
     },
