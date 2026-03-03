@@ -86,8 +86,17 @@ Design for Good represents Vitera's commitment to empowering students to become 
     bannerPath: "/images/Events_Pics/The-House-of-Royals/poster.jpeg", // replace with an actual placeholder image in public/images
     keyWords: ["FashionShow", "DJ-Party"],
     date: "February 27, 2026",
-    imagesStrip1: [],
-    imagesStrip2: [],
+    imagesStrip1: [
+      "/images/Events_Pics/The-House-of-Royals/poster.jpeg",
+      "/images/Events_Pics/The-House-of-Royals/v1.jpeg",
+      "/images/Events_Pics/The-House-of-Royals/v2.jpeg",
+      "/images/Events_Pics/The-House-of-Royals/v3.jpeg",
+    ],
+    imagesStrip2: [
+      "/images/Events_Pics/The-House-of-Royals/v4.jpeg",
+      "/images/Events_Pics/The-House-of-Royals/v5.jpeg",  
+      "/images/Events_Pics/The-House-of-Royals/v6.jpeg",
+    ],
     featured: true,
     registrationLink: "https://forms.gle/5RuRtvWPANtHfcQj9", // Add actual link
     isOngoing: false
