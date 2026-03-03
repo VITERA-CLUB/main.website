@@ -14,11 +14,11 @@ const winnersData = [
       },
       second: {
         name: "JUMANJI",
-        members: ["Charu Sinha", "SHAIK MOHAMMAD IRFAN", "Agrima Pandey", "Pasala Charishma"]
+        members: ["Charu Sinha", "Shaik Mohammad Irfan", "Agrima Pandey", "Pasala Charishma"]
       },
       third: {
         name: "DESI KALAKAAR",
-        members: ["MILAN PANWAR", "Tanishka kumari"]
+        members: ["Milan Panwar", "Tanishka kumari"]
       }
     }
   },
@@ -45,34 +45,34 @@ const winnersData = [
   {
   date: "27 February 2026",
   event: "The House of Royals",
-  eventImg: "/images/Events_Pics/The-House-of-Royals",
+  eventImg: "/images/Events_Pics/The-House-of-Royals/poster.jpeg",
   type: "team",
   winners: {
     first: {
       name: "Team 19",
       members: [
-        "Shreya Tiwari (25MIP10077)",
-        "Naincy (25MIP10047)",
-        "Shubham Patel (25BCE10763)",
-        "Aishwarya Srivastava (25BCE10306)"
+        "Shreya Tiwari",
+        "Naincy",
+        "Shubham Patel",
+        "Aishwarya Shrivastava"
       ]
     },
     second: {
       name: "Team 27",
       members: [
-        "Varun (24MIM10210)",
-        "Shailja Choudhary (24MIM10166)",
-        "Amulya Mehta (25BCE10013)",
-        "Shalini Pal (25BHI10018)"
+        "Varun",
+        "Shailja Choudhary",
+        "Amulya Mehta",
+        "Shalini Pal"
       ]
     },
     third: {
       name: "Team 41",
       members: [
-        "Akshat Mujmer (25MIP10029)",
-        "Anvesha Agrawal (25MIP10003)",
-        "Tejal Sharma (25MIP10009)",
-        "Shashi Kant (25MIM10103)"
+        "Akshat Mujmer",
+        "Anvesha Agrawal",
+        "Tejal Sharma",
+        "Shashi Kant"
       ]
     }
   }
