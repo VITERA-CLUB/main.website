@@ -43,6 +43,41 @@ const winnersData = [
     }
   },
   {
+  date: "27 February 2026",
+  event: "The House of Royals",
+  eventImg: "/images/Events_Pics/The-House-of-Royals",
+  type: "team",
+  winners: {
+    first: {
+      name: "Team 19",
+      members: [
+        "Shreya Tiwari (25MIP10077)",
+        "Naincy (25MIP10047)",
+        "Shubham Patel (25BCE10763)",
+        "Aishwarya Srivastava (25BCE10306)"
+      ]
+    },
+    second: {
+      name: "Team 27",
+      members: [
+        "Varun (24MIM10210)",
+        "Shailja Choudhary (24MIM10166)",
+        "Amulya Mehta (25BCE10013)",
+        "Shalini Pal (25BHI10018)"
+      ]
+    },
+    third: {
+      name: "Team 41",
+      members: [
+        "Akshat Mujmer (25MIP10029)",
+        "Anvesha Agrawal (25MIP10003)",
+        "Tejal Sharma (25MIP10009)",
+        "Shashi Kant (25MIM10103)"
+      ]
+    }
+  }
+}
+  {
     date: "Coming Soon",
     event: "Next Big Event",
     eventImg: "https://cdn-icons-png.flaticon.com/512/833/833472.png",
