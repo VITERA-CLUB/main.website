@@ -76,7 +76,7 @@ const winnersData = [
       ]
     }
   }
-}
+},
   {
     date: "Coming Soon",
     event: "Next Big Event",
