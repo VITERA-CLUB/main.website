@@ -14,16 +14,16 @@ const GallerySection = () => {
   // Gallery images array
   const galleryImages = [
     { src: '/images/Events_Pics/The-House-of-Royals/v8.jpg', size: 'large' },
-    { src: '/images/Events_Pics/The-House-of-Royals/v9.jpg', size: 'tall' },
+    { src: '/images/Events_Pics/The-House-of-Royals/v16.jpeg', size: 'tall' },
     { src: '/images/Events_Pics/The-House-of-Royals/v1.jpeg', size: 'small' },
-    { src: '/images/Events_Pics/The-House-of-Royals/v10.jpg', size: 'small' },
-    { src: '/images/Events_Pics/The-House-of-Royals/v15.jpg', size: 'tall' },
+    { src: '/images/gallery/ 15.jpeg', size: 'small' },
+    { src: '/images/gallery/5.webp', size: 'tall' },
     { src: '/images/Events_Pics/The-House-of-Royals/v13.jpg', size: 'large' },
     { src: '/images/Events_Pics/The-House-of-Royals/v6.jpeg', size: 'small' },
-    { src: '/images/Events_Pics/The-House-of-Royals/v14.jpg', size: 'small' },
-    { src: '/images/Events_Pics/The-House-of-Royals/v11.jpg', size: 'small' },
+    { src: '/images/gallery/14.jpeg', size: 'small' },
+    { src: '/images/Events_Pics/The-House-of-Royals/v17.jpeg', size: 'small' },
     { src: '/images/Events_Pics/The-House-of-Royals/v12.jpg', size: 'small' },
-    { src: '/images/Events_Pics/The-House-of-Royals/v7.jpg', size: 'wide' },
+    { src: '/images/gallery/12.jpeg', size: 'wide' },
 
 
     // Add more images as needed

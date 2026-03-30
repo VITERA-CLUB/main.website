@@ -19,6 +19,12 @@ const teams = [
 				linkedin: '#' 
 			},
 			{
+				name: 'Amishi Arora',
+				role: 'Chairperson',
+				img: '/images/Our Team/Panel/amishi.jpg',
+				linkedin:'https://www.instagram.com/amishi_._?igsh=aGZia2M4eG1rY3Fy'
+			},
+			{
 			name: 'Deeksha Bhojwani',
 			role: 'General Secretary',
 			img: '/images/Our Team/Panel/deeksha.jpg',
@@ -36,12 +42,7 @@ const teams = [
 			img: '/images/Our Team/Panel/vanshika.jpg', 
 			linkedin: 'https://www.linkedin.com/in/vanshika-solanki-318592336' 
 		  },
-			{
-				name: 'Amishi Arora',
-				role: 'Chairperson',
-				img: '/images/Our Team/Panel/amishi.jpg',
-				linkedin:'https://www.instagram.com/amishi_._?igsh=aGZia2M4eG1rY3Fy'
-			}
+			
 		],
 	},
 	

@@ -3,34 +3,52 @@ import './MessageSection.css';
 
 const teamMessages = [
   {
-    img: '/images/Our Team/Panel/lakshya.webp',
+    img: '/images/alumni/lakshya.webp',
     name: 'Lakshya Pandey',
-    occupation: 'President',
-    message: 'Leading Vitera has been a journey of growth and unity. Together, we create impact beyond boundaries.',
+    occupation: 'Founder',
+    message: 'Vitera was built with a vision to turn empathy into action and create meaningful social impact through student-driven initiatives.',
   },
   {
-    img: '/images/Our Team/Panel/spandan.jpg',
+    img: '/images/alumni/spandan.jpg',
     name: 'Spandan Agrawal',
-    occupation: 'Vice President',
-    message: 'Every event is a new opportunity to inspire and empower. Proud to be part of this vibrant family.',
-  },
-  {
-    img: '/images/Our Team/Panel/anoushka.jpg',
-    name: 'Anoushka Bakshi',
-    occupation: 'General Secretary',
-    message: 'Vitera is where ideas turn into action. Let\'s keep making a difference, one step at a time.',
-  },
-  {
-    img: '/images/Our Team/Panel/amishi.jpg',
-    name: 'Amishi Arora',
-    occupation: 'Joint Secretary',
-    message: 'Managing resources for Vitera is a privilege. Our collective effort is our greatest asset.',
+    occupation: 'Co-Founder',
+    message: 'Together, we shaped Vitera into a platform where collaboration and purpose empower students to contribute towards real change.',
   },
   {
     img: '/images/Our Team/Panel/prashant.webp',
     name: 'Prashant Kaundal',
+    occupation: 'President',
+    message: 'My goal is to lead Vitera with clarity and teamwork, creating opportunities for students to grow while serving society.',
+  },
+  {
+    img: '/images/Our Team/Panel/anoushka.jpg',
+    name: 'Anoushka Bakshi',
+    occupation: 'Vice President',
+    message: 'I focus on strengthening coordination and participation so that every initiative creates lasting impact and engagement.',
+  },
+  {
+    img: '/images/Our Team/Panel/amishi.jpg',
+    name: 'Amishi Arora',
     occupation: 'Chairperson',
-    message: 'Organizing events with this team is always exciting. Here\'s to more memories and milestones!',
+    message: 'I aim to guide Vitera’s journey with purpose and values, ensuring our initiatives continue to inspire responsibility and service.',
+  },
+  {
+    img: '/images/Our Team/Panel/deeksha.jpg',
+    name: 'Deeksha Bhojwani',
+    occupation: 'General Secretary',
+    message: 'I ensure smooth planning and communication so that every Vitera initiative is structured, impactful, and well-executed.',
+  },
+  {
+    img: '/images/Our Team/Panel/shamim.jpeg',
+    name: 'Shamim Uz Zaman',
+    occupation: 'Joint Secretary',
+    message: 'My role is to support coordination across teams and ensure our initiatives run efficiently and successfully.',
+  },
+  {
+    img: '/images/Our Team/Panel/vanshika.jpg',
+    name: 'Vanshika Solanki',
+    occupation: 'Finance Head',
+    message: 'I ensure transparent and responsible management of resources to support impactful and sustainable initiatives at Vitera.',
   },
 ];
 

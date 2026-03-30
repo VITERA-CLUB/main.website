@@ -50,7 +50,7 @@ const About = () => {
         <h2 className="leadership-title">Leadership</h2>
         <div className="leadership-grid">
           <div className="lead-card">
-            <img src="/images/Our Team/Panel/lakshya.webp" alt="President" className="lead-img" />
+            <img src="/images/alumni/lakshya.webp" alt="President" className="lead-img" />
             <div className="lead-body">
               <h3>Lakshya Pandey</h3>
               <div className="lead-role">Founder & President</div>
@@ -73,7 +73,7 @@ const About = () => {
           </div>
 
           <div className="lead-card">
-            <img src="/images/Our Team/Panel/spandan.jpg" alt="Vice President" className="lead-img" />
+            <img src="/images/alumni/spandan.jpg" alt="Vice President" className="lead-img" />
             <div className="lead-body">
               <h3>Spandan Agrawal</h3>
               <div className="lead-role">Founder & Vice President</div>
