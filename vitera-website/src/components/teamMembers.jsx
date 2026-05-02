@@ -69,6 +69,12 @@ const teams = [
 			img: '/images/Our Team/Tech Team/anvesha.jpg',
 			linkedin: 'https://www.linkedin.com/in/anveshasrivastava'
 		},
+		{
+			name: 'Anindita Pattanayak',
+			role: 'Core Member',
+			img: '/images/Our Team/Tech Team/Anindita.jpg',
+			linkedin: 'https://www.linkedin.com/in/anindita-pattanayak-204987382/'
+		},
 		],
 	},
 	{
@@ -123,11 +129,11 @@ const teams = [
 		id: 'photography-team',
 		title: 'Photography Team',
 		members: [
-		{ 
-			name: 'Mohd Hammad', 
-			role: 'Lead', 
-			img: '/images/Our Team/Photography Team/hammad.jpg', 
-			linkedin: 'https://www.linkedin.com/in/hammad-khan-47864a28a' 
+		{
+			name: 'Harsh puri goswami',
+			role: 'Lead',
+			img: '/images/Our Team/Photography Team/Harsh.jpg',
+			linkedin: 'https://www.linkedin.com/in/harsh-puri-goswami-5a654b334?utm_source=share_via&utm_content=profile&utm_medium=member_android'
 		},
 		{ 
 			name: 'Janhavi Vinaykumar Raut ', 
@@ -148,6 +154,12 @@ const teams = [
 			img: '/images/Our Team/Photography Team/jahiruddin.jpg',
 			linkedin: 'https://www.linkedin.com/in/md-jahiruddin-ahmed-14387b3a1'
 		},
+		{
+			name: 'Atreyi Barma Majumder',
+			role: 'Core Member',
+			img: '/images/Our Team/Photography Team/Atreyi.jpeg',
+			linkedin: 'https://www.linkedin.com/in/atreyi-b-majumder-100458318?utm_source=share_via&utm_content=profile&utm_medium=member_ios'
+		}
 		],
 	},
 	{
@@ -244,6 +256,18 @@ const teams = [
 			img: '/images/Our Team/Design Team/vanya.jpg',
 			linkedin: 'https://www.linkedin.com/in/vanya-singhal-bb43a2331'
 		},
+		{
+			name: 'Kethineni Venkata Avinash',
+			role: 'Core Member',
+			img: '/images/Our Team/Design Team/Kethineni.jpg',
+			linkedin: 'https://www.linkedin.com/in/kethinenivenkataavinash/'
+		},
+		{
+			name: 'Tanishqa Sanjay Dange',
+			role: 'Core Member',
+			img: '/images/Our Team/Design Team/Tanishqa.jpg',
+			linkedin: 'https://www.linkedin.com/in/tanishqa-dange-2498b1368?utm_source=share_via&utm_content=profile&utm_medium=member_android'
+		},
 		],
 	},
 	{
@@ -261,6 +285,30 @@ const teams = [
 			role: 'Core Member',
 			img: '/images/Our Team/Social Media/archita.jpg',
 			linkedin: 'https://www.linkedin.com/in/archita-shukla-a6727230a'
+		},
+		{
+			name: 'Sanskriti Tyagi ',
+			role: 'Core Member',
+			img: '/images/Our Team/Social Media/Sanskriti.jpg',
+			linkedin: 'https://www.linkedin.com/in/sanskriti-tyagi-0a452537b?utm_source=share_via&utm_content=profile&utm_medium=member_android'
+		},
+		{
+			name: 'Kritika Aryan',
+			role: 'Core Member',
+			img: '/images/Our Team/Social Media/Kritika.jpg',
+			linkedin: 'https://www.linkedin.com/in/kritika-aryan-a65b203ba'
+		},
+		{
+			name: 'Rishabh Nambiar',
+			role: 'Core Member',
+			img: '/images/Our Team/Social Media/Rishabh.jpeg',
+			linkedin: 'https://www.linkedin.com/in/rishabh-nambiar-59484b383?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app'
+		},
+		{
+			name: 'Manya Gupta ',
+			role: 'Core Member',
+			img: '/images/Our Team/Social Media/Manya.webp',
+			linkedin: 'https://www.linkedin.com/in/manya-gupta-367745407'
 		},
 		],
 	},
