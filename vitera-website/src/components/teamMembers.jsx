@@ -36,12 +36,6 @@ const teams = [
 			img: '/images/Our Team/Panel/shamim.jpeg', 
 			linkedin: 'https://www.linkedin.com/in/shamim-uz-zaman-88788531a' 
 		  },
-      { 
-			name: 'Vanshika Solanki', 
-			role: 'Finance Head', 
-			img: '/images/Our Team/Panel/vanshika.jpg', 
-			linkedin: 'https://www.linkedin.com/in/vanshika-solanki-318592336' 
-		  },
 			
 		],
 	},
@@ -209,12 +203,6 @@ const teams = [
 			linkedin: 'https://www.linkedin.com/in/pranshu-pedgaonkar-55156b37a'
 		},
 		{
-			name: 'AASHUTOSH PARIHAR ',
-			role: 'Core Member',
-			img: '/images/Our Team/Event Mgmt Team/aashutosh.jpg',
-			linkedin: 'https://www.linkedin.com/in/aashutosh-parihar-888a7730a'
-		},
-		{
 			name: 'Adil Sukumar',
 			role: 'Core Member',
 			img: '/images/Our Team/Event Mgmt Team/adil.jpg',
@@ -358,12 +346,6 @@ const teams = [
 					role: 'Core Member',
 					img: '/images/Our Team/Content Team/tanisha.jpg',
 					linkedin: 'https://www.linkedin.com/in/tanisha-sharma-a50989324'
-				},
-				{
-					name: 'Divyanka ',
-					role: 'Core Member',
-					img: '/images/Our Team/Content Team/divyanka.jpg',
-					linkedin: '#'
 				},
 			],
 	},
