@@ -135,16 +135,10 @@ const teams = [
 			img: '/images/Our Team/Photography Team/Harsh.jpg',
 			linkedin: 'https://www.linkedin.com/in/harsh-puri-goswami-5a654b334?utm_source=share_via&utm_content=profile&utm_medium=member_android'
 		},
-		{ 
-			name: 'Janhavi Vinaykumar Raut ', 
-			role: 'Co-Lead', 
-			img: '/images/Our Team/Photography Team/janhvi.jpg', 
-			linkedin: 'https://www.linkedin.com/in/janhavi-raut-1a3859340' 
-		},
 		
 		{
 			name: 'Rachit Rushil Paul',
-			role: 'Core Member',
+			role: 'Co-Lead',
 			img: '/images/Our Team/Photography Team/rachit.jpeg',
 			linkedin: 'https://in.linkedin.com/in/rachit-paul-420723333'
 		},
