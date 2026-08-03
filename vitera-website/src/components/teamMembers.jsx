@@ -75,7 +75,13 @@ const teams = [
 		id: 'pr-outreach-team',
 		title: 'PR & Outreach Team',
 		members: [
-    {
+		{
+			name: 'Sanjam Lakhani',
+			role: 'Lead',
+			img: '/images/Our Team/PR & Outreach Team/Sanjam.jpeg',
+			linkedin: 'https://www.linkedin.com/in/sanjam-lakhani-87ab39354?utm_source=share_via&utm_content=profile&utm_medium=member_ios'
+		},
+        {
 			name: 'Shreyash Shadhian',
 			role: 'Co-Lead',
 			img: '/images/Our Team/PR & Outreach Team/shreyash.jpg',
@@ -207,7 +213,13 @@ const teams = [
 			role: 'Core Member',
 			img: '/images/Our Team/Event Mgmt Team/adil.jpg',
 			linkedin: 'www.linkedin.com/in/adilsukumar'
-		}
+		},
+		{
+			name: 'Aditya Agrawal',
+			role: 'Core Member',
+			img: '/images/Our Team/Event Mgmt Team/Aditya.jpeg',
+			linkedin: 'https://www.linkedin.com/in/aditya-agrawal-7a91a237a?utm_source=share_via&utm_content=profile&utm_medium=member_ios'
+		},
 		],
 	},
 	{
