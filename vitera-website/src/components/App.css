@@ -50,10 +50,11 @@
 
 .club-name {
   font-size: 1.8rem; /* Increased font size */
-  font-weight: 700;
+  font-weight: 500;
   color: #ffffff; /* Changed to solid white */
   margin: 0;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 /* Center navigation */
