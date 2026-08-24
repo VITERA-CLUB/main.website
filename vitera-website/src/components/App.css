@@ -4,12 +4,18 @@
   box-sizing: border-box;
 }
 
-.navbar,
 .navbar-container {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
 }
+
+.navbar {
+  width: 100%;
+  max-width: 100%;
+  /* no overflow-x here — .navbar should never be its own scroll container */
+}
+
 #root {
   width: 100%;
   min-height: 100vh;
@@ -19,19 +25,21 @@
     rgba(20, 20, 20, 0.90) 60%,
     rgba(255, 87, 34, 0.08) 100%
   );
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px); /* For Safari */
+  /* backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);  */
+  /* For Safari */
   background-blend-mode: overlay;
 }
-
 
 /* Navigation styles */
 .navbar {
   display: flex;
   align-items: center;
   padding: 0.7rem 1.5rem;
-  position: sticky;
-  top: 0;
+  position: static;
+  /* top: 0;
+  left: 0;
+  right: 0; */
   z-index: 1000;
   border-bottom: 1px solid rgba(255, 69, 0, 0.2);
   min-height: 70px;
@@ -85,7 +93,9 @@
   letter-spacing: 0.5px;
   line-height: 1;
   white-space: nowrap;
-  overflow: visible;
+  overflow: visible;         /* CHANGED from hidden */
+  -webkit-tap-highlight-color: transparent; /* NEW — kills the tap flash */
+  outline: none;  
 }
 
 .club-name:hover {
@@ -95,57 +105,55 @@
 /* Laptop / desktop */
 @media (min-width: 900px) {
   .navbar {
-  padding-top: 0.7rem;
-  padding-right: 8rem;
-  padding-bottom: 0.7rem;
-  padding-left: 8rem;
+    padding-top: 0.7rem;
+    padding-right: 6rem;   /* was 8rem — slightly tighter so it scales better */
+    padding-bottom: 0.7rem;
+    padding-left: 6rem;    /* was 8rem */
     box-sizing: border-box;
   }
   .navbar-container {
-    gap: 1rem; /* tighter gap so logo+name moves closer to nav */
-    padding: 0;                    /* remove extra padding */
+    display: flex;
+    justify-content: space-between; /* NEW — guarantees the 3-way split */
+    align-items: center;
+    gap: 1rem;
+    padding: 0;
     max-width: 1400px;
     width: 100%;
     box-sizing: border-box;
   }
 
   .logo-container {
-    /* slight shift toward nav items */
     margin-left: 0rem;
   }
   .club-name {
     font-size: 1.6rem;
   }
-  
+
   .mobile-menu-toggle {
     display: none !important;
   }
-  
+
   .center-nav {
-    /* flex: 1;
-    justify-content: center; */
     margin: 0 0.8rem;
-    display: flex !important; 
+    display: flex !important;
+    justify-content: center;
+    flex: 1; /* NEW — keeps nav links centered in the middle third */
   }
-  
+
   .nav-links {
-    gap: 1.5rem;                 /* slightly tighter between nav items */
+    gap: 1.5rem;
   }
-  
+
   .right-nav {
     display: flex !important;
-    /* margin-left: 0; */
     margin-right: 0rem;
   }
-  
-  .mobile-nav-menu {
-    display: none !important;
-  }
-  
-  .mobile-nav-overlay {
+
+  .mobile-nav-menu, .mobile-nav-overlay {
     display: none !important;
   }
 }
+
 
 /* Tablet */
 @media (min-width: 769px) and (max-width: 899px) {
@@ -183,54 +191,125 @@
   }
 }
 
-/* Mobile */
+/* MOBILE */
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.6rem;
     min-height: 58px;
+    z-index: 1002;
+    position: relative;
+    background: transparent; /* Allow background to show through */
   }
-  
+
+  /* GRID instead of flex — column 1 flexible+shrinkable, column 2 fixed for hamburger */
   .navbar-container {
-    gap: 0rem;
+    display: grid;
+    grid-template-columns: 1fr auto;   /* logo area shrinks, hamburger stays fixed */
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    background: transparent;
   }
-  
+
   .logo-container {
-    gap: 0.4rem;
-    flex: 1;
-    margin-right: 12px; /* slight shift toward nav items */
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-width: 0;          /* CRITICAL — lets this grid cell shrink below content size */
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent; /* in case the <a> wrapper is what's highlighting */
+    /*
+    max-width: calc(100% - 50px); */
+    padding-right: 8px;
+    background: transparent;
   }
-  
+
   .logo {
-    height: 2.2rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    width: auto;
+    position: relative;
+    z-index: 1; 
   }
-  
+
   .club-name {
-    font-size: 1.25rem;
-    /* REMOVE max-width - let it show full name */
-    letter-spacing: 0.3px;
+    display: inline-block;      /* CRITICAL — ellipsis/overflow don't work reliably on inline elements */       /* CRITICAL — lets it actually respect the shrunk grid cell */
+    font-size: 2rem !important;
+    letter-spacing: 0.05px;
+    /* overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent; */
+    outline: none;
+   color: #ffffff; /* Ensure text is white */
+    background: transparent; /* CRITICAL - remove any background */
+    position: relative;
+    z-index: 1; /* Keep text above background */
+    text-shadow: none; /* Remove any text shadow that might cause issues */
   }
-  
-  /* Hide nav links on mobile */
+
+  .mobile-menu-toggle {
+    display: flex !important;
+    flex-shrink: 0;
+    justify-self: end;    /* pins it to the right edge of its grid column */
+    margin-left: auto;
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1003; /* Ensure hamburger is above overlay */
+    position: relative;
+    background: transparent; /* Ensure no background */
+  }
+.mobile-menu-toggle::before,
+  .mobile-menu-toggle::after {
+    display: none !important;
+    content: none !important;
+  }
+  /* Hamburger icon styling */
+  .mobile-menu-toggle .hamburger-icon {
+    width: 28px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+     position: relative;
+    z-index: 1;
+  }
+
+  .mobile-menu-toggle .hamburger-icon span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+     position: relative;
+    z-index: 1;
+  }
+
+  .mobile-menu-toggle:hover,
+  .mobile-menu-toggle:active,
+  .mobile-menu-toggle:focus {
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
   .center-nav {
     display: none !important;
   }
-  
+
   .right-nav {
     display: none !important;
   }
-  
-  /* Show hamburger on mobile */
-  .mobile-menu-toggle {
-    margin-left: 4px;
-    display: flex !important;
-  }
-  
-  /* Mobile sidebar */
+
   .mobile-nav-menu {
     position: fixed;
     top: 0;
     right: -100vw;
-    display: flex  !important;
+    display: flex !important;
     flex-direction: column;
     background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
     width: 75vw;
@@ -238,24 +317,41 @@
     height: 100vh;
     padding: 4rem 1.5rem 2rem;
     box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
-    transition: right 0.3s ease;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1001;
     overflow-y: auto;
     border-left: 2px solid rgba(255, 69, 0, 0.2);
     visibility: hidden;
     pointer-events: none;
   }
-  
+
   .mobile-nav-menu.active {
     right: 0;
     visibility: visible;
     pointer-events: auto;
   }
-  
+
+  /* Close button inside mobile menu */
+  .mobile-nav-menu .close-menu {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 4px 10px;
+    line-height: 1;
+    z-index: 1004;
+  }
+
   body.sidebar-open {
     overflow: hidden;
+    position: fixed;
+    width: 100%;
   }
-  
+
   .mobile-nav-overlay {
     display: none;
     position: fixed;
@@ -268,12 +364,13 @@
     opacity: 0;
     transition: opacity 0.3s ease;
   }
-  
+
   .mobile-nav-overlay.active {
-    display: block;
+    display: block !important;
     opacity: 1;
+    visibility: visible;
   }
-  
+
   .mobile-sidebar-logo {
     display: flex;
     align-items: center;
@@ -281,12 +378,12 @@
     padding-bottom: 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .mobile-sidebar-logo img {
     height: 2.6rem;
     margin-right: 1rem;
   }
-  
+
   .mobile-sidebar-logo h3 {
     color: #fff;
     font-size: 1.35rem;
@@ -294,14 +391,15 @@
     font-family: 'Rokkitt', serif;
     font-weight: 700;
   }
-  
+
   .mobile-nav-links {
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 0.5rem;
+    margin-top: 1rem;
   }
-  
+
   .mobile-nav-links .nav-link {
     width: 100%;
     padding: 0.75rem 0;
@@ -312,17 +410,19 @@
     color: #ffffff;
     transition: all 0.3s ease;
     font-family: 'Rokkitt', serif;
+    text-decoration: none;
+    cursor: pointer;
   }
-  
+
   .mobile-nav-links .nav-link:last-child {
     border-bottom: none;
   }
-  
+
   .mobile-nav-links .nav-link:hover {
     color: var(--primary);
     padding-left: 6px;
   }
-  
+
   .mobile-nav-links .event-pass-link {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     padding: 0.6rem 1rem !important;
@@ -332,7 +432,7 @@
     animation: pulse-glow 2s ease-in-out infinite;
     font-family: 'Space Grotesk', sans-serif;
   }
-  
+
   .mobile-nav-links .feedback-link {
     background-color: var(--primary);
     padding: 0.6rem 1rem !important;
@@ -341,12 +441,21 @@
     margin-top: 0.3rem;
     font-family: 'Space Grotesk', sans-serif;
   }
-  
+
   .mobile-nav-links .nav-link::after {
     display: none;
   }
 }
 
+/* Keyframes for pulse animation if not defined elsewhere */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 69, 0, 0.6);
+  }
+}
 /* Center navigation */
 .center-nav {
   display: flex;
@@ -470,10 +579,8 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-  .club-name {
-    font-size: 1.4rem;
-  }
+ @media (max-width: 768px) {
+
   .mobile-menu-toggle {
   display: none;
   flex-direction: column;
@@ -588,7 +695,7 @@
     font-size: 1.5rem;
     margin: 0;
   }
-}
+} 
 
 .feedback-link::after {
   display: none;
