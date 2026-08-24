@@ -8,20 +8,20 @@ function Navbar() {
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.classList.add('sidebar-open');
-    } else {
-      document.body.classList.remove('sidebar-open');
-    }
-    return () => document.body.classList.remove('sidebar-open');
-  }, [isMenuOpen]);
+  if (isMenuOpen) {
+    document.body.classList.add('sidebar-open');
+  } else {
+    document.body.classList.remove('sidebar-open');
+  }
+  return () => document.body.classList.remove('sidebar-open');
+}, [isMenuOpen]);
 
   return (
     <nav className="navbar">
-      <div className="container navbar-container">
+      <div className="navbar-container">
         <div className="logo-container">
           <img src="/vitera_logo.png" alt="VITERA Club Logo" className="logo" />
-          <Link to="/"><h2 className="club-name">VITERA Club</h2></Link>
+          <Link to="/"><h2 className="club-name">VITERA CLUB</h2></Link>
         </div>
 
         <div className="center-nav">
