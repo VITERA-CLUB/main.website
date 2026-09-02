@@ -7,13 +7,23 @@ dotenv.config();
 const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID;
 const SHEET_NAME = process.env.SHEET_NAME || 'Registrations';
 
-// Initialize Google Sheets API
-const auth = new google.auth.GoogleAuth({
-  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY),
-  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-});
+// Initialize Google Sheets API safely
+let auth = null;
+let sheets = null;
 
-const sheets = google.sheets({ version: 'v4', auth });
+if (process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+  try {
+    auth = new google.auth.GoogleAuth({
+      credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY),
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+    sheets = google.sheets({ version: 'v4', auth });
+  } catch (err) {
+    console.error('❌ Failed to parse GOOGLE_SERVICE_ACCOUNT_KEY:', err.message);
+  }
+} else {
+  console.warn('⚠️ GOOGLE_SERVICE_ACCOUNT_KEY is not defined in environment variables.');
+}
 
 // Cache for sheet IDs to avoid repeated metadata fetches
 let sheetIdCache = null;
@@ -22,6 +32,10 @@ let sheetIdCache = null;
  * Get sheet IDs with caching
  */
 async function getSheetIds() {
+  if (!sheets) {
+    throw new Error('Google Sheets API is not initialized. Please provide GOOGLE_SERVICE_ACCOUNT_KEY in .env');
+  }
+
   if (sheetIdCache) {
     return sheetIdCache;
   }
@@ -47,62 +61,165 @@ async function getSheetIds() {
 }
 
 /**
- * Fetch all team data from Google Sheet
+ * Fetch all registration data from Google Sheet
+ * Full Column Sequence (A to BH):
+ * A: Timestamp
+ * B: Name
+ * C: College Email ID
+ * D: Select your team type (SOLO, TRIO, QUINTET)
+ * E: Syndicate Name (SOLO)
+ * F: Participant Name (SOLO)
+ * G: Registration No (SOLO)
+ * H: Batch (SOLO)
+ * I: Reference (SOLO)
+ * J: Syndicate Name (DUO)
+ * K: Member 1 Name (DUO)
+ * L: Member 1 Reg (DUO)
+ * M: Member 2 Name (DUO)
+ * N: Member 2 Reg (DUO)
+ * O: Reference (DUO)
+ * P: Syndicate Name (TRIO)
+ * Q: Member 1 Name (TRIO)
+ * R: Member 1 Reg (TRIO)
+ * S: Member 2 Name (TRIO)
+ * T: Member 2 Reg (TRIO)
+ * U: Member 3 Name (TRIO)
+ * V: Member 3 Reg (TRIO)
+ * W: Reference (TRIO)
+ * X: Syndicate Name (QUARTET / 4)
+ * Y: Member 1 Name
+ * Z: Member 1 Reg
+ * AA: Member 2 Name
+ * AB: Member 2 Reg
+ * AC: Member 3 Name
+ * AD: Member 3 Reg
+ * AE: Member 4 Name
+ * AF: Member 4 Reg
+ * AG: Polaroid Pass Choice
+ * AH: Reference
+ * AI: Syndicate Name (QUINTET / 5)
+ * AJ: Member 1 Name
+ * AK: Member 1 Reg
+ * AL: Member 2 Name
+ * AM: Member 2 Reg
+ * AN: Member 3 Name
+ * AO: Member 3 Reg
+ * AP: Member 4 Name
+ * AQ: Member 4 Reg
+ * AR: Member 5 Name
+ * AS: Member 5 Reg
  */
 async function getAllTeams() {
   try {
+    if (!sheets) {
+      throw new Error('Google Sheets API is not initialized. Please provide GOOGLE_SERVICE_ACCOUNT_KEY in .env');
+    }
+
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A2:T`, // A-T: 20 columns including PolaroidPassUsed
+      range: `${SHEET_NAME}!A2:BH`, // Read all response columns
     });
 
     const rows = response.data.values || [];
     
-    return rows.map((row, index) => ({
-      rowIndex: index + 2, // +2 because row 1 is header, arrays start at 0
-      teamRowID: row[0],
-      teamSize: parseInt(row[1]) || 0,
-      mergedTeamID: row[2] || row[0], // Column C - Merged_TeamID, defaults to TeamRowID if not set
-      member1Name: row[3] || '',
-      reg1: row[4] || '',
-      entered1: row[5] === 'TRUE',
-      member2Name: row[6] || '',
-      reg2: row[7] || '',
-      entered2: row[8] === 'TRUE',
-      member3Name: row[9] || '',
-      reg3: row[10] || '',
-      entered3: row[11] === 'TRUE',
-      member4Name: row[12] || '',
-      reg4: row[13] || '',
-      entered4: row[14] === 'TRUE',
-      polaroidApplied: row[15] === 'YES',
-      polaroidPassType: row[16] || '',
-      polaroidUsed: row[17] === 'TRUE',
-      polaroidUsedTime: row[18] || '',
-      polaroidPassUsed: parseInt(row[19]) || 0,
-    }));
+    return rows.map((row, index) => {
+      const teamType = (row[3] || '').trim().toUpperCase();
+      const members = [];
+      let syndicateName = 'Default Syndicate';
+      let foundRegNo = '';
+
+      // Helper to add valid member
+      const addMember = (name, reg) => {
+        if (reg && reg.trim()) {
+          const cleanReg = reg.trim();
+          const cleanName = (name && name.trim()) ? name.trim() : cleanReg;
+          members.push({ name: cleanName, regNo: cleanReg });
+        }
+      };
+
+      // 1. Check Team Type specific mapping
+      if (teamType.includes('SOLO')) {
+        syndicateName = row[4] || row[1] || 'Solo Syndicate';
+        addMember(row[5] || row[1], row[6]);
+      } else if (teamType.includes('TRIO') || teamType.includes('3')) {
+        syndicateName = row[15] || 'Trio Syndicate';
+        addMember(row[16], row[17]);
+        addMember(row[18], row[19]);
+        addMember(row[20], row[21]);
+      } else if (teamType.includes('QUINTET') || teamType.includes('5')) {
+        syndicateName = row[34] || row[35] || 'Quintet Syndicate';
+        addMember(row[35], row[36]);
+        addMember(row[37], row[38]);
+        addMember(row[39], row[40]);
+        addMember(row[41], row[42]);
+        addMember(row[43], row[44]);
+      }
+
+      // 2. Comprehensive Row Scan (catches any registration number in any column cell)
+      row.forEach((cell, cellIdx) => {
+        if (cell && typeof cell === 'string') {
+          const val = cell.trim();
+          // Regex for VIT Registration Number pattern: 2 digits + 3 letters + 5 digits (e.g. 26BAI11062, 26BCE10412, 24MIM10166)
+          if (/^\d{2}[A-Z]{3}\d{5}$/i.test(val) || /^\d{2}[A-Z]{3}\d{4}$/i.test(val)) {
+            const isAlreadyAdded = members.some(m => m.regNo.toUpperCase() === val.toUpperCase());
+            if (!isAlreadyAdded) {
+              const possibleName = (cellIdx > 0 && row[cellIdx - 1]) ? row[cellIdx - 1] : val;
+              addMember(possibleName, val);
+            }
+          }
+        }
+      });
+
+      if (!syndicateName || syndicateName === 'Default Syndicate') {
+        syndicateName = row[4] || row[9] || row[15] || row[23] || row[34] || 'Syndicate';
+      }
+
+      return {
+        rowIndex: index + 2, // 1-indexed row number in Google Sheet
+        teamRowID: (index + 1).toString(),
+        timestamp: row[0] || '',
+        leaderName: row[1] || '',
+        email: row[2] || '',
+        teamType: row[3] || 'SOLO',
+        syndicateName: syndicateName,
+        members: members,
+        teamSize: members.length || 1,
+        mergedTeamID: (index + 1).toString(),
+        // Backwards compatibility properties
+        member1Name: members[0] ? members[0].name : '',
+        reg1: members[0] ? members[0].regNo : '',
+        entered1: false,
+        member2Name: members[1] ? members[1].name : '',
+        reg2: members[1] ? members[1].regNo : '',
+        entered2: false,
+        member3Name: members[2] ? members[2].name : '',
+        reg3: members[2] ? members[2].regNo : '',
+        entered3: false,
+        member4Name: members[3] ? members[3].name : '',
+        reg4: members[3] ? members[3].regNo : '',
+        entered4: false,
+        member5Name: members[4] ? members[4].name : '',
+        reg5: members[4] ? members[4].regNo : '',
+        entered5: false,
+      };
+    });
   } catch (error) {
-    console.error('Error fetching teams:', error);
-    throw new Error('Failed to fetch team data');
+    console.error('Error fetching registration data:', error);
+    throw new Error('Failed to fetch registration data');
   }
 }
 
 /**
- * Find team by Registration Number
- * Searches across Reg1, Reg2, Reg3, Reg4
+ * Find participant/team by Registration Number across any team size & column
  * Case-insensitive matching
  */
 async function findTeamByRegNo(regNo) {
   const teams = await getAllTeams();
-  
-  // Convert input to uppercase for case-insensitive matching
-  const regNoUpper = regNo.toUpperCase();
+  const searchReg = regNo.trim().toUpperCase();
   
   for (const team of teams) {
-    if (team.reg1.toUpperCase() === regNoUpper || 
-        team.reg2.toUpperCase() === regNoUpper || 
-        team.reg3.toUpperCase() === regNoUpper || 
-        team.reg4.toUpperCase() === regNoUpper) {
+    const match = team.members.find(m => m.regNo.toUpperCase() === searchReg);
+    if (match) {
       return team;
     }
   }
@@ -287,38 +404,53 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
 }
 
 /**
- * Mark a specific member as entered
+ * Mark a participant as entered / checked in Google Sheet
+ * - Highlights the ENTIRE row green (Soft Green background)
  */
-async function markMemberEntry(teamRowID, memberIndex) {
+async function markMemberEntry(teamRowID, memberIndex = 1) {
   try {
     const teams = await getAllTeams();
-    const team = teams.find(t => t.teamRowID === teamRowID);
+    const team = teams.find(t => t.teamRowID === teamRowID.toString());
     
     if (!team) {
-      throw new Error('Team not found');
+      throw new Error('Participant record not found');
     }
 
-    // Validate member index (1-4)
-    if (memberIndex < 1 || memberIndex > 4) {
-      throw new Error('Invalid member index');
-    }
+    const sheetIds = await getSheetIds();
+    const rowIdx = team.rowIndex - 1; // 0-indexed row index for batchUpdate
 
-    // Check if member exists
-    const regKey = `reg${memberIndex}`;
-    if (!team[regKey]) {
-      throw new Error('Member does not exist');
-    }
+    // Format entire row (Columns A to 60) with Soft Green background
+    const requests = [
+      {
+        repeatCell: {
+          range: {
+            sheetId: sheetIds.main,
+            startRowIndex: rowIdx,
+            endRowIndex: rowIdx + 1,
+            startColumnIndex: 0,
+            endColumnIndex: 60, // Covers all form response columns (A to BH)
+          },
+          cell: {
+            userEnteredFormat: {
+              backgroundColor: {
+                red: 0.8,   // Soft pastel green (~#C8E6C9)
+                green: 0.93,
+                blue: 0.8,
+              },
+            },
+          },
+          fields: 'userEnteredFormat.backgroundColor',
+        },
+      },
+    ];
 
-    // Check if already entered
-    const enteredKey = `entered${memberIndex}`;
-    if (team[enteredKey]) {
-      throw new Error('Member already entered');
-    }
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: SPREADSHEET_ID,
+      resource: { requests },
+    });
 
-    // Update both main sheet and team-status sheet in a single batched operation
-    await updateTeamStatusSheet(teamRowID, memberIndex, team);
-
-    return { success: true, message: 'Entry marked successfully' };
+    console.log(`✓ Checked in ${team.memberName} (${team.regNo}) at row ${team.rowIndex} & highlighted row GREEN`);
+    return { success: true, message: 'Checked in & row marked GREEN in Google Sheet!' };
   } catch (error) {
     console.error('Error marking entry:', error);
     throw error;
@@ -562,34 +694,15 @@ async function getAllRegistrations() {
 }
 
 /**
- * Highlight a registration number cell with orange background when ticket is generated
+ * Highlight a registration number cell (Column G) with orange background when ticket is generated
  * @param {string} regNo - Registration number to highlight
  * @param {object} team - Team object containing row and registration data
  */
 async function highlightRegNoCell(regNo, team) {
   try {
-    // Find which column contains this reg no (case-insensitive)
-    const regNoUpper = regNo.toUpperCase();
-    let columnIndex = -1;
-    
-    if (team.reg1.toUpperCase() === regNoUpper) {
-      columnIndex = 4; // Column E (Reg1)
-    } else if (team.reg2.toUpperCase() === regNoUpper) {
-      columnIndex = 7; // Column H (Reg2)
-    } else if (team.reg3.toUpperCase() === regNoUpper) {
-      columnIndex = 10; // Column K (Reg3)
-    } else if (team.reg4.toUpperCase() === regNoUpper) {
-      columnIndex = 13; // Column N (Reg4)
-    }
-
-    if (columnIndex === -1) {
-      throw new Error('Registration number not found in team');
-    }
-
-    // Get the correct sheet ID
     const sheetIds = await getSheetIds();
+    const columnIndex = 6; // Default to Column G
 
-    // Orange background color (RGB: 255, 69, 0)
     const requests = [{
       repeatCell: {
         range: {
@@ -617,10 +730,9 @@ async function highlightRegNoCell(regNo, team) {
       resource: { requests },
     });
 
-    console.log(`✓ Highlighted RegNo: ${regNo} at row ${team.rowIndex}, column ${String.fromCharCode(65 + columnIndex)}`);
+    console.log(`✓ Highlighted RegNo: ${regNo} at row ${team.rowIndex}`);
   } catch (error) {
     console.error('✗ Error highlighting RegNo cell:', error.message);
-    // Don't throw - highlighting failure shouldn't block ticket generation
   }
 }
 

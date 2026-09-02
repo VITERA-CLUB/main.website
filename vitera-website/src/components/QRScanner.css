@@ -11,13 +11,34 @@
 #qr-reader {
   width: 100%;
   border: none;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Hide html5-qrcode internal canvas overlay / default corners */
+#qr-reader canvas,
+#qr-shaded-region {
+  display: none !important;
 }
 
 #qr-reader video {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
   border-radius: 12px;
+  display: block;
+}
+
+/* Hide default html5-qrcode UI elements if any */
+#qr-reader__scan_region {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+#qr-reader__dashboard {
+  display: none !important;
 }
 
 .camera-error {
@@ -92,76 +113,90 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  z-index: 10;
+  box-sizing: border-box;
+  padding: 1rem;
 }
 
 .scan-box {
   position: relative;
-  width: 250px;
-  height: 250px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  width: 220px;
+  height: 220px;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  box-sizing: border-box;
 }
 
 .corner {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 3px solid var(--primary);
+  width: 24px;
+  height: 24px;
+  border: 3.5px solid var(--primary, #ff4500);
 }
 
 .corner.top-left {
-  top: -2px;
-  left: -2px;
+  top: -3px;
+  left: -3px;
   border-right: none;
   border-bottom: none;
+  border-top-left-radius: 12px;
 }
 
 .corner.top-right {
-  top: -2px;
-  right: -2px;
+  top: -3px;
+  right: -3px;
   border-left: none;
   border-bottom: none;
+  border-top-right-radius: 12px;
 }
 
 .corner.bottom-left {
-  bottom: -2px;
-  left: -2px;
+  bottom: -3px;
+  left: -3px;
   border-right: none;
   border-top: none;
+  border-bottom-left-radius: 12px;
 }
 
 .corner.bottom-right {
-  bottom: -2px;
-  right: -2px;
+  bottom: -3px;
+  right: -3px;
   border-left: none;
   border-top: none;
+  border-bottom-right-radius: 12px;
 }
 
 .scan-instruction {
-  margin-top: 2rem;
+  margin-top: 1.25rem;
   color: white;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-  background: rgba(0, 0, 0, 0.6);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .manual-entry-link {
-  margin-top: 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  margin-top: 0.75rem;
+  background: rgba(0, 0, 0, 0.75);
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border: 1px solid rgba(255, 69, 0, 0.6);
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
   font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
   pointer-events: all;
   transition: all 0.3s ease;
 }
 
 .manual-entry-link:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: var(--primary);
+  background: var(--primary, #ff4500);
+  border-color: var(--primary, #ff4500);
+  transform: translateY(-1px);
 }
 
 /* Manual Input Overlay */
