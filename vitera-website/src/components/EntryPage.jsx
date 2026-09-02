@@ -59,50 +59,67 @@ const EntryPage = () => {
       const response = await fetch(`${API_URL}${API_ENDPOINT}/entry/mark`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          teamRowID,
-          memberIndex,
-        }),
+        body: JSON.stringify({ teamRowID, memberIndex }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        // Update local state for both team and mergeInfo
         if (merged && mergeInfo) {
-          // Update mergeInfo state
           setMergeInfo((prev) => ({
             ...prev,
             teams: prev.teams.map((t) =>
               t.teamRowID === teamRowID
-                ? {
-                    ...t,
-                    members: t.members.map((m, idx) =>
-                      idx + 1 === memberIndex ? { ...m, entered: true } : m
-                    ),
-                  }
+                ? { ...t, members: t.members.map((m, idx) => idx + 1 === memberIndex ? { ...m, entered: true } : m) }
                 : t
             ),
           }));
         }
-        
-        // Update team state if it's the current team
         if (team.teamRowID === teamRowID) {
           setTeam((prev) => ({
             ...prev,
-            members: prev.members.map((m) =>
-              m.index === memberIndex ? { ...m, entered: true } : m
-            ),
+            members: prev.members.map((m) => m.index === memberIndex ? { ...m, entered: true } : m),
           }));
         }
-        
-        setSuccess(`${memberName} marked as entered ✓`);
+        setSuccess(`✓ ${memberName} marked as entered`);
       } else {
         setError(data.message || 'Failed to mark entry');
       }
     } catch (err) {
       console.error('Mark entry error:', err);
       setError('Failed to mark entry. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleMarkAllEntry = async () => {
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      const response = await fetch(`${API_URL}${API_ENDPOINT}/entry/mark-all`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamRowID: team.teamRowID }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Mark all members entered locally
+        setTeam((prev) => ({
+          ...prev,
+          members: prev.members.map((m) => ({ ...m, entered: true })),
+        }));
+        setSuccess('🎉 All members marked present — entire row highlighted green!');
+      } else {
+        setError(data.message || 'Failed to mark all entries');
+      }
+    } catch (err) {
+      console.error('Mark all error:', err);
+      setError('Failed to mark all entries. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -121,7 +138,7 @@ const EntryPage = () => {
     setSuccess('');
   };
 
-  // Check if all members are entered (including merged teams)
+  // Check if all members are entered
   const allEntered = merged && mergeInfo
     ? mergeInfo.teams.every((t) => t.members.every((m) => m.entered))
     : team?.members.every((m) => m.entered);
@@ -323,6 +340,16 @@ const EntryPage = () => {
                   <h2>{team.syndicateName || 'Syndicate'}</h2>
                   <span className="team-size-badge">{team.teamSize} Member{team.teamSize > 1 ? 's' : ''}</span>
                 </div>
+
+                {team.teamSize > 1 && !allEntered && (
+                  <button
+                    className="mark-all-btn"
+                    onClick={handleMarkAllEntry}
+                    disabled={loading}
+                  >
+                    ✅ All Present — Mark Entire Row Green
+                  </button>
+                )}
 
                 <div className="members-list">
                   {team.members.map((member) => (
