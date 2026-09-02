@@ -70,22 +70,37 @@ const QRScanner = ({ onScan, onError, isActive = true }) => {
           await qrCodeScanner.start(
             config,
             {
-              fps: 10,
-              qrbox: { width: 250, height: 250 },
-              aspectRatio: 1.0,
+              fps: 15,
+              experimentalFeatures: {
+                useBarCodeDetectorIfSupported: true
+              }
             },
             (decodedText) => {
-              // Extract RegNo from QR code
-              const match = decodedText.match(/REG_NO=(.+)/);
-              if (match) {
-                const regNo = match[1].trim();
-                onScan(regNo);
+              console.log('Decoded QR text:', decodedText);
+              if (!decodedText) return;
+              
+              let regNo = decodedText.trim();
+
+              // 1. Match REG_NO=XXXXX
+              const matchRegKey = decodedText.match(/REG_NO=([^&\s]+)/i);
+              if (matchRegKey && matchRegKey[1]) {
+                regNo = matchRegKey[1].trim();
               } else {
-                onError('Invalid QR code format');
+                // 2. Match standard Registration Number pattern (e.g. 26BAI11062, 26BCE10412) anywhere in decoded text
+                const matchRegNo = decodedText.match(/\b\d{2}[A-Z]{3}\d{4,5}\b/i);
+                if (matchRegNo) {
+                  regNo = matchRegNo[0].trim();
+                }
+              }
+
+              if (regNo) {
+                onScan(regNo.toUpperCase());
+              } else {
+                onError(`Unrecognized QR code format: ${decodedText}`);
               }
             },
             () => {
-              // Ignore scan errors (happens frequently during scanning)
+              // Ignore frame-by-frame scan attempts
             }
           );
 

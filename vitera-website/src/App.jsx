@@ -23,7 +23,7 @@ function TeamPage() {
     else document.body.classList.remove('sidebar-open');
     return () => document.body.classList.remove('sidebar-open');
   }, [isMenuOpen]);
-  return(
+  return (
     <TeamMembers />
   );
 }
@@ -44,19 +44,19 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/event/:name" element={<Event />} />
 
-           {/* Disabled Routes */}
-           {/* <Route path="/entry" element={<EntryPage />} /> */}
-           {/* <Route path="/polaroid" element={<PolaroidPage />} /> */}
-           {/* <Route path="/event-pass" element={<EventTicket />} /> */}
+        {/* Disabled Routes */}
+        <Route path="/entry" element={<EntryPage />} />
+        {/* <Route path="/polaroid" element={<PolaroidPage />} /> */}
+        <Route path="/event-pass" element={<EventTicket />} />
 
-         <Route path="/alumni" element={<Alumni />} />
-     </Routes>
+        <Route path="/alumni" element={<Alumni />} />
+      </Routes>
 
-     {/* Global scroll-to-top button */}
-     <ScrollToTopButton />
+      {/* Global scroll-to-top button */}
+      <ScrollToTopButton />
 
-     {/* Global Footer */}
-     <Footer />
+      {/* Global Footer */}
+      <Footer />
     </>
   );
 }

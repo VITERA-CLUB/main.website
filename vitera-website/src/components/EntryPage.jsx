@@ -279,7 +279,7 @@ const EntryPage = () => {
                       paddingLeft: '1rem',
                       marginBottom: '0.5rem'
                     }}>
-                      <h2>Team #{mergedTeam.teamRowID}</h2>
+                      <h2>{mergedTeam.syndicateName || `Syndicate #${mergedTeam.teamRowID}`}</h2>
                       <span className="team-size-badge">{mergedTeam.teamSize} Members</span>
                     </div>
 
@@ -320,8 +320,8 @@ const EntryPage = () => {
               // Show only current team members
               <div>
                 <div className="team-header">
-                  <h2>Team #{team.teamRowID}</h2>
-                  <span className="team-size-badge">{team.teamSize} Members</span>
+                  <h2>{team.syndicateName || 'Syndicate'}</h2>
+                  <span className="team-size-badge">{team.teamSize} Member{team.teamSize > 1 ? 's' : ''}</span>
                 </div>
 
                 <div className="members-list">

@@ -47,11 +47,11 @@ const EventTicket = () => {
 
       // Create ticket data
       const ticketData = {
-        ticketId: `HOR-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
-        eventName: 'The House of Royals',
-        date: '27/02/2026',
-        time: '10:00 AM - 3:00 PM',
-        venue: 'AR - 202',
+        ticketId: `OBM-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+        eventName: 'Operation Black Market',
+        date: '3rd September 2026',
+        time: 'Full Day Event',
+        venue: 'Auditorium 1, AB1',
         generatedAt: new Date().toISOString(),
         team: data.team,
         merged: data.merged,
@@ -108,7 +108,7 @@ const EventTicket = () => {
       pdf.setFontSize(22);
       pdf.setTextColor(255, 255, 255);
       yPos += 14;
-      pdf.text('The House of Royals', pageWidth / 2, yPos, { align: 'center' });
+      pdf.text('Operation Black Market', pageWidth / 2, yPos, { align: 'center' });
 
       yPos += 14;
 
@@ -180,14 +180,14 @@ const EventTicket = () => {
         
         yPos += 15;
       } else {
-        // Single Team
+        // Syndicate Header
         pdf.setFillColor(40, 40, 40);
         pdf.roundedRect(20, yPos, pageWidth - 40, 10, 2, 2, 'F');
         
         pdf.setFontSize(14);
         pdf.setTextColor(255, 140, 0);
         pdf.setFont('helvetica', 'bold');
-        pdf.text(`Team #${ticket.team.teamRowID}`, pageWidth / 2, yPos + 6.5, { align: 'center' });
+        pdf.text(ticket.team.syndicateName || `Syndicate`, pageWidth / 2, yPos + 6.5, { align: 'center' });
         
         yPos += 15;
 
@@ -233,9 +233,9 @@ const EventTicket = () => {
 
       // Event Details
       const details = [
-        { label: 'DATE', value: '27th February 2026' },
-        { label: 'TIME', value: '10:00 AM - 3:00 PM' },
-        { label: 'VENUE', value: 'AR - 202' },
+        { label: 'DATE', value: '3rd September 2026' },
+        { label: 'TIME', value: 'Full Day Event' },
+        { label: 'VENUE', value: 'Auditorium 1, AB1' },
       ];
 
       details.forEach((detail) => {
@@ -301,19 +301,19 @@ const EventTicket = () => {
               <h1 className="form-title">
                 Get Your <span className="highlight">Event Ticket</span>
               </h1>
-              <p className="event-name">The House of Royals</p>
+              <p className="event-name">Operation Black Market</p>
               <div className="event-details-preview">
                 <div className="detail-item">
                   <span className="icon">📅</span>
-                  <span>27th February 2026</span>
-                </div>
-                <div className="detail-item">
-                  <span className="icon">🕐</span>
-                  <span>10:00 AM - 3:00 PM</span>
+                  <span>3rd September 2026</span>
                 </div>
                 <div className="detail-item">
                   <span className="icon">📍</span>
-                  <span>AR - 202</span>
+                  <span>Auditorium 1, AB1</span>
+                </div>
+                <div className="detail-item">
+                  <span className="icon">👥</span>
+                  <span>Strategy & Syndicate Simulation</span>
                 </div>
               </div>
             </div>
@@ -382,9 +382,9 @@ const EventTicket = () => {
 
                 {/* Event Name */}
                 <div className="ticket-event-name">
-                  <h1>The House of Royals</h1>
+                  <h1>Operation Black Market</h1>
                   <div className="crown-decoration">
-                    <span>👑</span>
+                    <span>🕵️</span>
                   </div>
                 </div>
 
@@ -435,7 +435,7 @@ const EventTicket = () => {
                   ) : (
                     <>
                       <div className="team-header-single">
-                        <h3>Team #{ticket.team.teamRowID}</h3>
+                        <h3>{ticket.team.syndicateName || 'Syndicate'}</h3>
                         <span className="team-size-badge">{ticket.team.teamSize} Member{ticket.team.teamSize > 1 ? 's' : ''}</span>
                       </div>
                       <div className="members-grid">
@@ -468,21 +468,21 @@ const EventTicket = () => {
                     <span className="detail-icon">📅</span>
                     <div>
                       <p className="detail-label">Date</p>
-                      <p className="detail-value">27th February 2026</p>
-                    </div>
-                  </div>
-                  <div className="detail-row">
-                    <span className="detail-icon">🕐</span>
-                    <div>
-                      <p className="detail-label">Time</p>
-                      <p className="detail-value">10:00 AM - 3:00 PM</p>
+                      <p className="detail-value">3rd September 2026</p>
                     </div>
                   </div>
                   <div className="detail-row">
                     <span className="detail-icon">📍</span>
                     <div>
                       <p className="detail-label">Venue</p>
-                      <p className="detail-value">AR - 202</p>
+                      <p className="detail-value">Auditorium 1, AB1</p>
+                    </div>
+                  </div>
+                  <div className="detail-row">
+                    <span className="detail-icon">🎓</span>
+                    <div>
+                      <p className="detail-label">Eligibility</p>
+                      <p className="detail-value">All VIT Bhopal Students</p>
                     </div>
                   </div>
                 </div>

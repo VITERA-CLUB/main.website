@@ -36,19 +36,29 @@ router.post('/entry/fetch', async (req, res) => {
     }
 
     // Format team data for frontend
-    const members = [];
-    for (let i = 1; i <= team.teamSize; i++) {
-      const nameKey = `member${i}Name`;
-      const regKey = `reg${i}`;
-      const enteredKey = `entered${i}`;
-      
-      if (team[regKey]) {
-        members.push({
-          index: i,
-          name: team[nameKey],
-          regNo: team[regKey],
-          entered: team[enteredKey],
-        });
+    const members = (team.members && team.members.length > 0)
+      ? team.members.map((m, idx) => ({
+          index: idx + 1,
+          name: m.name,
+          regNo: m.regNo,
+          entered: m.entered || false,
+        }))
+      : [];
+
+    if (members.length === 0) {
+      for (let i = 1; i <= team.teamSize; i++) {
+        const nameKey = `member${i}Name`;
+        const regKey = `reg${i}`;
+        const enteredKey = `entered${i}`;
+        
+        if (team[regKey]) {
+          members.push({
+            index: i,
+            name: team[nameKey],
+            regNo: team[regKey],
+            entered: team[enteredKey] || false,
+          });
+        }
       }
     }
 
@@ -58,13 +68,15 @@ router.post('/entry/fetch', async (req, res) => {
 
     res.json({
       success: true,
-      merged: isMerged,
-      mergeInfo: mergeInfo,
       team: {
         teamRowID: team.teamRowID,
-        teamSize: team.teamSize,
-        members,
+        syndicateName: team.syndicateName || 'Syndicate',
+        teamSize: members.length,
+        mergedTeamID: team.mergedTeamID,
+        members: members,
       },
+      merged: isMerged,
+      mergeInfo: mergeInfo,
     });
   } catch (error) {
     console.error('Error fetching team:', error);
@@ -268,8 +280,9 @@ router.post('/ticket/generate', async (req, res) => {
       team: {
         teamRowID: team.teamRowID,
         teamSize: team.teamSize,
+        syndicateName: team.syndicateName || 'Syndicate',
         mergedTeamID: team.mergedTeamID,
-        members: members,
+        members: team.members && team.members.length > 0 ? team.members : members,
       },
       merged: isMerged,
       mergeInfo: mergeInfo,
