@@ -275,8 +275,11 @@ const EventTicket = () => {
       pdf.setFont('helvetica', 'bold');
       pdf.text('Organized with love by VITERA Club', pageWidth / 2, yPos, { align: 'center' });
 
-      // Save PDF
-      pdf.save(`VITERA-Ticket-Team${ticket.merged ? ticket.mergeInfo.mergedTeamID : ticket.team.teamRowID}.pdf`);
+      // Save PDF with Syndicate Name in filename
+      const syndicateName = (ticket.team.syndicateName || 'Syndicate')
+        .replace(/[^a-zA-Z0-9_-]/g, '_')
+        .replace(/_+/g, '_');
+      pdf.save(`VITERA-Ticket-${syndicateName}.pdf`);
     } catch (err) {
       console.error('Error generating PDF:', err);
       alert('Failed to generate PDF. Please try again.');
