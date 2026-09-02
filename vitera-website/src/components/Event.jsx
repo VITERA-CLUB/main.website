@@ -134,6 +134,19 @@ TRAILBLAZERS QUESTS proved that social awareness can be engaging, playful, and t
     },
     {
       id: 4,
+      name: "Operation Black Market",
+      description: "Operation Black Market is an immersive, strategy-based team event set in a fictional world where the global economy has collapsed and underground trading syndicates compete to build the most powerful black-market empire before the government shuts them down. Each team represents a syndicate that must earn the highest amount of fake currency by completing challenges, solving puzzles, negotiating deals, trading resources and making smart strategic decisions.",
+      bannerPath: "/images/Events_Pics/Operation Black Market/poster.jpg",
+      keyWords: ["Syndicates"],
+      date: "September 3, 2026",
+      imagesStrip1: ["/images/Events_Pics/Operation Black Market/poster.jpg"],
+      imagesStrip2: [],
+      featured: true,
+      registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSc10RLN4TGmHxvfU-tqKMEzjYfWQpq4H1Mw3qyVNnzCVV-YXA/viewform", // Add actual link
+      isOngoing: false
+    },
+    {
+      id: 5,
       name: "To Be Announced",
       description: "Details coming soon. Stay tuned for upcoming events from VITERA.",
       bannerPath: "/images/coming.jpg",
