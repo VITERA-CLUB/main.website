@@ -148,6 +148,15 @@ app.get("/api/feedback", async (req, res) => {
   }
 });
 
+// Root health check endpoint for monitoring/uptime tools
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "vitera-backend",
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Improved health check endpoint
 app.get("/api/health", async (req, res) => {
   const dbState = ['disconnected', 'connected', 'connecting', 'disconnecting'][mongoose.connection.readyState];

@@ -347,7 +347,7 @@ const EntryPage = () => {
                     onClick={handleMarkAllEntry}
                     disabled={loading}
                   >
-                    ✅ All Present — Mark Entire Row Green
+                    ✅ All Present
                   </button>
                 )}
 
