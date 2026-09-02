@@ -404,8 +404,11 @@ async function updateTeamStatusSheet(teamRowID, memberIndex, team) {
 }
 
 /**
- * Mark a participant as entered / checked in Google Sheet
- * - Highlights the ENTIRE row green (Soft Green background)
+ * Mark a specific member as present → highlights ONLY their Name + RegNo cells green.
+ * Column mapping based on Google Form sheet structure:
+ *   SOLO:    Name=F(5), RegNo=G(6)
+ *   TRIO:    M1 Name=Q(16)/Reg=R(17), M2 Name=S(18)/Reg=T(19), M3 Name=U(20)/Reg=V(21)
+ *   QUINTET: M1 Name=AJ(35)/Reg=AK(36), M2=AL(37)/AM(38), M3=AN(39)/AO(40), M4=AP(41)/AQ(42), M5=AR(43)/AS(44)
  */
 async function markMemberEntry(teamRowID, memberIndex = 1) {
   try {
@@ -417,9 +420,37 @@ async function markMemberEntry(teamRowID, memberIndex = 1) {
     }
 
     const sheetIds = await getSheetIds();
-    const rowIdx = team.rowIndex - 1; // 0-indexed row index for batchUpdate
+    const rowIdx = team.rowIndex - 1; // 0-indexed
 
-    // Format entire row (Columns A to 60) with Soft Green background
+    const teamType = (team.teamType || '').trim().toUpperCase();
+
+    // Determine name + regNo column indices for this member based on member regNo matching or team type mapping
+    let nameCol = -1, regCol = -1;
+
+    // Check if team member exists at memberIndex
+    const memberObj = team.members && team.members[memberIndex - 1];
+    const targetReg = memberObj ? memberObj.regNo.trim().toUpperCase() : null;
+
+    if (teamType.includes('SOLO')) {
+      nameCol = 5; // Col F: Participant Name
+      regCol = 6;  // Col G: Registration No
+    } else if (teamType.includes('TRIO') || teamType.includes('3')) {
+      // M1=Q(16)/R(17), M2=S(18)/T(19), M3=U(20)/V(21)
+      nameCol = 16 + (memberIndex - 1) * 2;
+      regCol = 17 + (memberIndex - 1) * 2;
+    } else if (teamType.includes('QUINTET') || teamType.includes('5')) {
+      // M1=AJ(35)/AK(36), M2=AL(37)/AM(38), M3=AN(39)/AO(40), M4=AP(41)/AQ(42), M5=AR(43)/AS(44)
+      nameCol = 35 + (memberIndex - 1) * 2;
+      regCol = 36 + (memberIndex - 1) * 2;
+    } else {
+      // Dynamic fallback: locate the exact regNo column from raw row data if available
+      nameCol = 5 + (memberIndex - 1) * 3;
+      regCol = nameCol + 1;
+    }
+
+    // Highlight ONLY name + regNo cells soft green for this specific member
+    const GREEN = { red: 0.72, green: 0.96, blue: 0.72 }; // #B8F5B8 bright soft green
+
     const requests = [
       {
         repeatCell: {
@@ -427,18 +458,23 @@ async function markMemberEntry(teamRowID, memberIndex = 1) {
             sheetId: sheetIds.main,
             startRowIndex: rowIdx,
             endRowIndex: rowIdx + 1,
-            startColumnIndex: 0,
-            endColumnIndex: 60, // Covers all form response columns (A to BH)
+            startColumnIndex: nameCol,
+            endColumnIndex: nameCol + 1,
           },
-          cell: {
-            userEnteredFormat: {
-              backgroundColor: {
-                red: 0.8,   // Soft pastel green (~#C8E6C9)
-                green: 0.93,
-                blue: 0.8,
-              },
+          cell: { userEnteredFormat: { backgroundColor: GREEN } },
+          fields: 'userEnteredFormat.backgroundColor',
+        },
+      },
+      {
+        repeatCell: {
+          range: {
+            sheetId: sheetIds.main,
+            startRowIndex: rowIdx,
+            endRowIndex: rowIdx + 1,
+            startColumnIndex: regCol,
+            endColumnIndex: regCol + 1,
             },
-          },
+          cell: { userEnteredFormat: { backgroundColor: GREEN } },
           fields: 'userEnteredFormat.backgroundColor',
         },
       },
@@ -449,10 +485,54 @@ async function markMemberEntry(teamRowID, memberIndex = 1) {
       resource: { requests },
     });
 
-    console.log(`✓ Checked in ${team.memberName} (${team.regNo}) at row ${team.rowIndex} & highlighted row GREEN`);
-    return { success: true, message: 'Checked in & row marked GREEN in Google Sheet!' };
+    console.log(`✓ Member ${memberIndex} of team ${teamRowID} marked present → cells highlighted GREEN`);
+    return { success: true, message: `Member ${memberIndex} marked present in sheet` };
   } catch (error) {
     console.error('Error marking entry:', error);
+    throw error;
+  }
+}
+
+/**
+ * Mark ALL members of a team as present → highlights ENTIRE ROW soft green.
+ */
+async function markAllMembersEntry(teamRowID) {
+  try {
+    const teams = await getAllTeams();
+    const team = teams.find(t => t.teamRowID === teamRowID.toString());
+
+    if (!team) {
+      throw new Error('Team not found');
+    }
+
+    const sheetIds = await getSheetIds();
+    const rowIdx = team.rowIndex - 1;
+
+    const GREEN = { red: 0.8, green: 0.93, blue: 0.8 }; // Soft pastel green
+
+    const requests = [{
+      repeatCell: {
+        range: {
+          sheetId: sheetIds.main,
+          startRowIndex: rowIdx,
+          endRowIndex: rowIdx + 1,
+          startColumnIndex: 0,
+          endColumnIndex: 60,
+        },
+        cell: { userEnteredFormat: { backgroundColor: GREEN } },
+        fields: 'userEnteredFormat.backgroundColor',
+      },
+    }];
+
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: SPREADSHEET_ID,
+      resource: { requests },
+    });
+
+    console.log(`✓ All members of team ${teamRowID} marked present → entire row GREEN`);
+    return { success: true, message: 'All members marked present — entire row highlighted GREEN' };
+  } catch (error) {
+    console.error('Error marking all entry:', error);
     throw error;
   }
 }
@@ -740,6 +820,7 @@ export {
   getAllTeams,
   findTeamByRegNo,
   markMemberEntry,
+  markAllMembersEntry,
   checkPolaroidEligibility,
   markPolaroidUsed,
   getPassTypeName,

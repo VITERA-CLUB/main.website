@@ -2,6 +2,7 @@ import express from 'express';
 import {
   findTeamByRegNo,
   markMemberEntry,
+  markAllMembersEntry,
   checkPolaroidEligibility,
   markPolaroidUsed,
   getPassTypeName,
@@ -115,6 +116,31 @@ router.post('/entry/mark', async (req, res) => {
       success: false, 
       message: error.message || 'Failed to mark entry' 
     });
+  }
+});
+
+/**
+ * POST /api/qr/entry/mark-all
+ * Mark ALL members of a team as present → highlights entire row green in Google Sheet
+ */
+router.post('/entry/mark-all', async (req, res) => {
+  try {
+    const { teamRowID } = req.body;
+
+    if (!teamRowID) {
+      return res.status(400).json({ success: false, message: 'teamRowID is required' });
+    }
+
+    const result = await markAllMembersEntry(teamRowID);
+
+    res.json({
+      success: true,
+      message: 'All members marked present — row highlighted green',
+      data: result,
+    });
+  } catch (error) {
+    console.error('Error marking all entries:', error);
+    res.status(400).json({ success: false, message: error.message || 'Failed to mark all entries' });
   }
 });
 
@@ -250,8 +276,10 @@ router.post('/ticket/generate', async (req, res) => {
       });
     }
 
-    // Highlight the registration number cell in the spreadsheet
-    await highlightRegNoCell(regNo, team);
+    // Highlight the registration number cell in the spreadsheet (non-blocking for performance)
+    highlightRegNoCell(regNo, team).catch(err => 
+      console.error('Non-blocking highlight error:', err.message)
+    );
 
     // Format team data
     const members = [];
