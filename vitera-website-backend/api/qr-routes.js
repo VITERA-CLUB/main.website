@@ -64,8 +64,8 @@ router.post('/entry/fetch', async (req, res) => {
     }
 
     // Check if team is merged and get merge info
-    const mergeInfo = await getMergedTeamInfo(team.teamRowID);
     const isMerged = team.teamRowID !== team.mergedTeamID;
+    const mergeInfo = isMerged ? await getMergedTeamInfo(team.teamRowID) : null;
 
     res.json({
       success: true,

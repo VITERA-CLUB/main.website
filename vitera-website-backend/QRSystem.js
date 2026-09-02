@@ -798,7 +798,28 @@ async function getAllRegistrations() {
 async function highlightRegNoCell(regNo, team) {
   try {
     const sheetIds = await getSheetIds();
-    const columnIndex = 6; // Default to Column G
+    const searchReg = regNo.trim().toUpperCase();
+    const teamType = (team.teamType || '').trim().toUpperCase();
+
+    // Find member index (1-based)
+    let memberIndex = 1;
+    if (team.members && team.members.length > 0) {
+      const idx = team.members.findIndex(m => m.regNo.toUpperCase() === searchReg);
+      if (idx !== -1) memberIndex = idx + 1;
+    }
+
+    let regCol = 6; // Default Column G (SOLO)
+    if (teamType.includes('SOLO')) {
+      regCol = 6;
+    } else if (teamType.includes('DUO') || teamType.includes('2')) {
+      regCol = 11 + (memberIndex - 1) * 2;
+    } else if (teamType.includes('TRIO') || teamType.includes('3')) {
+      regCol = 17 + (memberIndex - 1) * 2;
+    } else if (teamType.includes('QUARTET') || teamType.includes('4')) {
+      regCol = 25 + (memberIndex - 1) * 2;
+    } else if (teamType.includes('QUINTET') || teamType.includes('5')) {
+      regCol = 36 + (memberIndex - 1) * 2;
+    }
 
     const requests = [{
       repeatCell: {
@@ -806,8 +827,8 @@ async function highlightRegNoCell(regNo, team) {
           sheetId: sheetIds.main,
           startRowIndex: team.rowIndex - 1, // 0-indexed
           endRowIndex: team.rowIndex,
-          startColumnIndex: columnIndex,
-          endColumnIndex: columnIndex + 1,
+          startColumnIndex: regCol,
+          endColumnIndex: regCol + 1,
         },
         cell: {
           userEnteredFormat: {
@@ -827,7 +848,7 @@ async function highlightRegNoCell(regNo, team) {
       resource: { requests },
     });
 
-    console.log(`✓ Highlighted RegNo: ${regNo} at row ${team.rowIndex}`);
+    console.log(`✓ Highlighted RegNo: ${regNo} at row ${team.rowIndex} col ${regCol}`);
   } catch (error) {
     console.error('✗ Error highlighting RegNo cell:', error.message);
   }
