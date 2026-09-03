@@ -216,7 +216,7 @@ const EventTicket = () => {
       pdf.setFontSize(11);
       pdf.setTextColor(255, 140, 0);
       pdf.setFont('helvetica', 'bold');
-      pdf.text('SCAN FOR ENTRY & POLAROID', pageWidth / 2, yPos, { align: 'center' });
+      pdf.text('SCAN FOR ENTRY', pageWidth / 2, yPos, { align: 'center' });
       
       // Add QR Code
       yPos += 5;
@@ -461,7 +461,7 @@ const EventTicket = () => {
                   <div className="qr-code-wrapper">
                     <img src={qrCodeDataUrl} alt="Ticket QR Code" className="qr-code-img" />
                   </div>
-                  <p className="qr-label">Scan for Entry & Polaroid</p>
+                  <p className="qr-label">Scan for Entry</p>
                   <p className="ticket-id">ID: {ticket.ticketId}</p>
                 </div>
 
@@ -496,7 +496,7 @@ const EventTicket = () => {
                   <ul className="notes-list">
                     <li>Valid for all team members listed above</li>
                     <li>Please arrive 15 minutes before the event</li>
-                    <li>Keep this QR code for entry & polaroid verification</li>
+                    <li>Keep this QR code for entry</li>
                   </ul>
                 </div>
 
